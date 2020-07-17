@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config.properties</value>
+                <value>classpath:config_2.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+    <!--<bean id="delayObserver" class="org.egg.observer.subjects.CommonObserver">-->
+        <!--<constructor-arg>-->
+            <!--<list>-->
+                <!--<ref bean="finishOrderObserver"/>-->
+                <!--<ref bean="calcAccMoneyObserver"/>-->
+            <!--</list>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+    <!--注册成功-->
+    <bean id="registerSuccObserver" class="org.egg.observer.subjects.CommonObserver">
+        <constructor-arg>
+            <list>
+                <!--<ref bean="recommendRegObserver"/>-->
+            </list>
+        </constructor-arg>
+    </bean>
+    <!--申请跑手状态变更-->
+    <bean id="approveStatusObserver" class="org.egg.observer.subjects.CommonObserver">
+        <constructor-arg>
+            <list>
+                <ref bean="approveStatusObserverCommon"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <!--发布订单状态改变观察者-->
+    <bean id="publishOrderStatusChangeObserver" class="org.egg.observer.subjects.CommonObserver">
+        <constructor-arg>
+            <list>
+                <ref bean="publishOrderCancelObserver"/>
+                <ref bean="publishOrderSendNotifyObserver"/>
+                <ref bean="publishOrderSuccObserver"/>
+                <ref bean="baiduLink"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <!--接单订单状态改变观察者-->
+    <bean id="acceptOrderStatusChangeObserver" class="org.egg.observer.subjects.CommonObserver">
+        <constructor-arg>
+            <list>
+                <ref bean="acceptOrderSendNotifyObserver"/>
+                <ref bean="acceptOrdeSuccObserver"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <!--支付流水状态改变观察者-->
+    <bean id="accountFlowStatusChangeObserver" class="org.egg.observer.subjects.CommonObserver">
+        <constructor-arg>
+            <list>
+                <ref bean="updateOrderStatusObserver"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <!-- 发送模板消息线程池 -->
+    <bean id="poolExecutorSendMsg" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 初始化线程数 -->
+        <property name="corePoolSize" value="5" />
+        <!-- 允许的空闲时间 -->
+         <property name="keepAliveSeconds" value="200" />
+        <!-- 最大线程数 -->
+        <property name="maxPoolSize" value="20" />
+        <!-- 队列大小 -->
+        <property name="queueCapacity" value="100" />
+    </bean>
+    <import resource="provider.xml"/>
+    <!-- Enables the Spring Task @Scheduled programming model -->
+    <!--<task:executor id="executor" pool-size="5"/>-->
+    <!--<task:scheduler id="scheduler" pool-size="10"/>-->
+    <!--<task:annotation-driven executor="executor" scheduler="scheduler"/>-->
+</beans>

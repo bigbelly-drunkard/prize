@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHeader(title,links,scripts)">
+    <title th:replace="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="keywords" content="代练,王者荣耀,英雄联盟,LOL,绝地求生,赚钱,微信,免费"/>
+    <meta name="description" content="代练世界 - 专业的游戏代练代打平台，为您提供高质高效低价的代练选择、优质便捷的服务体验。涵盖LOL、绝地求生、王者荣耀、刺激战场、地下城与勇士dnf、球球大作战等电竞游戏陪玩服务"/>
+    <meta name="applicable-device"content="pc,mobile">
+    <script type="application/javascript" src="/js/common/jquery-3.2.1.min.js"></script>
+    <script src="/js/pc/common.js"></script>
+    <script src="/js/common/baidutongji.js" type="text/javascript"></script>
+    <link href="/css/pc/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/css/pc/index.css" rel='stylesheet' type='text/css'/>
+    <link rel="shortcut icon" href="/images/favicon.ico"/>
+    <!--/* Per-page placeholder for additional links */-->
+    <th:block th:replace="${links}"/>
+    <!--/* Per-page placeholder for additional styles */-->
+    <th:block th:replace="${scripts}"/>
+    <script>
+        $(function () {
+            $(".menu").click(function () {
+                $(".navigation").slideToggle("slow", function () {
+                    // Animation complete.
+                });
+            });
+        });
+    </script>
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https'){
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else{
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+    <!--360站长自动收录-->
+    <script>
+        (function(){
+            var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?3bf1bfd63760320db43dc92b863bf59b":"https://jspassport.ssl.qhimg.com/11.0.1.js?3bf1bfd63760320db43dc92b863bf59b";
+            document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+    <!--谷歌联盟-->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-5688272758549930",
+            enable_page_level_ads: true
+        });
+    </script>
+
+</head>
+<body>
+<div th:fragment="commonNav">
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="/" title="代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场-代练世界"><img src="/images/pc/logo.png" alt="logo_代练-代练世界"/></a></h1>
+            </div>
+            <span class="menu"></span>
+            <div class="navigation" style="position: relative;">
+                <ul class="navig cl-effect-3">
+                    <li><a href="/" title="首页_代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场-代练世界">首页</a></li>
+                    <li><a href="/showSpecification" title="平台说明_代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场-代练世界">平台介绍</a></li>
+                    <li><a href="/showSuccCase" title="成功案例_代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场-代练世界">成功案例</a></li>
+                    <li><a href="/showAboutUs" title="平台说明_代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场">关于我们</a></li>
+                    <li><a href="/showContact" title="联系我们_代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场">联系我们</a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<footer th:fragment="commonFooter">
+    <div style="bottom: 0;text-align: center;">
+        <a href="http://www.miitbeian.gov.cn/" style="display: block;">京ICP备18021316号-1</a>
+        <span style="font-size: 12px;color: #ccc;">Copyright © 2018  静大集团dailianshijie.com 版权所有</span>
+    </div>
+</footer>
+
+</body>
+</html>

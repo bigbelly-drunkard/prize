@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.egg.mapper.WxAccessTokenUserDAO">
+
+  <resultMap id="BaseResultMap" type="org.egg.model.DO.WxAccessTokenUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="user_no" jdbcType="VARCHAR" property="userNo" />
+    <result column="session_key" jdbcType="VARCHAR" property="sessionKey" />
+    <result column="expires_in" jdbcType="INTEGER" property="expiresIn" />
+    <result column="refresh_token" jdbcType="VARCHAR" property="refreshToken" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate" /></resultMap>
+  <sql id="WhereQueryEntity">
+    <if test="accessToken != null">
+       AND access_token = #{accessToken,jdbcType=VARCHAR}
+    </if>
+    <if test="userNo != null">
+       AND user_no = #{userNo,jdbcType=VARCHAR}
+    </if>
+    <if test="sessionKey != null">
+       AND session_key = #{sessionKey,jdbcType=VARCHAR}
+    </if>
+    <if test="expiresIn != null">
+       AND expires_in = #{expiresIn,jdbcType=INTEGER}
+    </if>
+    <if test="refreshToken != null">
+       AND refresh_token = #{refreshToken,jdbcType=VARCHAR}
+    </if>
+    <if test="createdDate != null">
+      AND created_date = #{createdDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifiedDate != null">
+      AND modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
+    </if>
+  </sql>
+  <sql id="Base_Column_List">
+    id, access_token, user_no,session_key, expires_in, refresh_token,created_date,modified_date
+  </sql>
+  <sql id="limitPage">
+    <if test="first != null">
+      limit #{first,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+    </if>
+  </sql>
+  <select id="queryList" parameterType="org.egg.model.VO.WxAccessTokenUserQueryReq" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from wx_access_token_user WHERE 1=1 
+    <include refid="WhereQueryEntity" />
+    order by id desc
+    <include refid="limitPage" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wx_access_token_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx_access_token_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" keyProperty="id" parameterType="org.egg.model.DO.WxAccessTokenUser" useGeneratedKeys="true">
+    insert into wx_access_token_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="accessToken != null">
+        access_token,
+      </if>
+      <if test="userNo != null">
+        user_no,
+      </if>
+      <if test="sessionKey != null">
+        session_key,
+      </if>
+      <if test="expiresIn != null">
+        expires_in,
+      </if>
+      <if test="refreshToken != null">
+        refresh_token,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="modifiedDate != null">
+        modified_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accessToken != null">
+        #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null">
+        #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresIn != null">
+        #{expiresIn,jdbcType=INTEGER},
+      </if>
+      <if test="refreshToken != null">
+        #{refreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedDate != null">
+        #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="queryCount" parameterType="org.egg.model.VO.WxAccessTokenUserQueryReq" resultType="java.lang.Integer">
+    select count(*) from wx_access_token_user WHERE 1=1 
+    <include refid="WhereQueryEntity" />
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="org.egg.model.DO.WxAccessTokenUser">
+    update wx_access_token_user
+    <set>
+      <if test="accessToken != null">
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null">
+        user_no = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null">
+        session_key = #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresIn != null">
+        expires_in = #{expiresIn,jdbcType=INTEGER},
+      </if>
+      <if test="refreshToken != null">
+        refresh_token = #{refreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <!--<if test="modifiedDate != null">-->
+        <!--modified_date = #{modifiedDate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.egg.model.DO.WxAccessTokenUser">
+    update wx_access_token_user
+    set access_token = #{accessToken,jdbcType=VARCHAR},
+      user_no = #{userNo,jdbcType=VARCHAR},
+      session_key = #{sessionKey,jdbcType=VARCHAR},
+      expires_in = #{expiresIn,jdbcType=INTEGER},
+      refresh_token = #{refreshToken,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryTokenNew" resultMap="BaseResultMap">
+    SELECT
+        t1.id, t1.access_token, t1.user_no, t1.expires_in, t1.refresh_token,t1.created_date,t1.modified_date
+     from wx_access_token_user t1,user_stu t2
+    where t1.user_no=t2.user_no and t1.access_token !='' and (t2.nick_name is NULL OR t2.nick_name ='')
+  </select>
+  <select id="queryTokenOld" resultMap="BaseResultMap">
+    SELECT
+            t1.id, t1.access_token, t1.user_no, t1.expires_in, t1.refresh_token,t1.created_date,t1.modified_date
+     from wx_access_token_user t1,user_stu t2
+    where t1.user_no=t2.user_no and t1.access_token !='' and (t2.nick_name is not NULL and  t2.nick_name != '')
+  </select>
+
+</mapper>

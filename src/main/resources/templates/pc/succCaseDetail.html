@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" class="htmlFontSize">
+<head th:replace="pc/common/common :: commonHeader(~{::title},~{::link},~{})">
+    <title th:title="${detail.gameTypeStr}+'代练单 - 成功案例 - 代练世界'">王者荣耀代练单 - 成功案例 - 代练世界</title>
+    <link href="/css/pc/succCaseDetail.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Header Starts Here -->
+<div th:replace="pc/common/common::commonNav"></div>
+<!-- Header Ends Here -->
+<div style="" class="hideHead"></div>
+<div class="container top4">
+    <div class="">
+        <ul class="succpath-list">
+            <li><a href="/" title="首页_代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场-代练世界">首页</a></li>
+            &nbsp;&nbsp;/&nbsp;&nbsp;
+            <li><a href="/showSuccCase" title="成功案例_代练_英雄联盟_lol_王者荣耀_绝地求生_刺激战场-代练世界">成功案例</a></li>
+            &nbsp;&nbsp;/&nbsp;&nbsp;
+            <li class="act">详情</li>
+        </ul>
+    </div>
+    <div class="">
+        <h2 style="margin: 2rem 0;" th:text="${detail.gameTypeStr+' '+detail.gameDistrictStr}+'代练单详情_成功案例_代练-代练世界'">201845151616单号详情_成功案例_代练-代练世界</h2>
+        <table cellpadding="0" cellspacing="0" class="prolastTable prolastTable2" width="100%">
+            <tbody>
+
+            <tr>
+                <th width="33%">游戏类型</th>
+                <td th:text="${detail.gameTypeStr}">英雄联盟lol </td>
+                <!--<td>王者荣耀 </td>-->
+            </tr>
+            <tr>
+                <th width="33%">游戏区域</th>
+                <td th:text="${detail.gameDistrictStr}">战争学院</td>
+            </tr>
+            <tr>
+                <th width="33%">游戏账号</th>
+                <td th:text="${detail.accountNo}">11321212221</td>
+            </tr>
+            <tr>
+                <th width="33%">赏金</th>
+                <td th:text="${detail.rewardAmount}+'¥'">30¥</td>
+            </tr>
+            <tr>
+                <th width="33%">信誉金</th>
+                <td th:text="${detail.creditAmount}+'¥'">30¥</td>
+            </tr>
+            <tr>
+                <th width="33%">逾期金</th>
+                <td th:text="${detail.delayAmount}+'¥'">30¥</td>
+            </tr>
+            <tr>
+                <th width="33%"><h2>代练价格</h2></th>
+                <td th:text="${detail.rewardAmount}+'¥'">30¥</td>
+            </tr>
+            <tr>
+                <th width="33%">发布时间</th>
+                <td th:text=" ${detail.createdDate}?${#dates.format(detail.createdDate,'yyyy-MM-dd HH:mm:ss')}:''">2018-01-13 12:23:46 </td>
+                <!--<td th:text="${#dates.format(detail.createdDate,'yyyy-MM-dd HH:mm:ss')}">2018-01-13 12:23:46</td>-->
+            </tr>
+            <tr >
+                <th width="33%">截止周期</th>
+                <td th:text="${detail.hopeFinishDay}+' 天'"></td>
+            </tr>
+            <tr>
+                <th width="33%">任务描述</th>
+                <td th:text="${detail.orderDesc}">2丹江口市大家福利就是到了房间爱上砥砺奋进拉丝机斐林试剂洒到了房间里撒大家时间的浪费的时间</td>
+            </tr>
+            <tr th:if="${detail.finishRemark!=null}">
+                <th width="33%">结算描述</th>
+                <td th:text="${detail.finishRemark}">2丹江口市大家福利就是到了房间爱上砥砺奋进拉丝机斐林试剂洒到了房间里撒大家时间的浪费的时间</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="padding:1rem 0 1rem 1rem;border-bottom: 1px #EEEEEE solid;margin: 1rem 0;color:#ff7105;">类似成功案例</p>
+    <div class="succCaseDetail">
+        <ul>
+            <a  th:each="items:${recommends}" th:href="'/showSuccCaseDetail/'+${items.orderNo}" th:title="${items.gameTypeStr+'代练单详情_成功案例_代练-代练世界'}">
+                <li>
+                    <section>
+                        <h3 th:text="${items.gameTypeStr+'代练单'}">王者荣耀代理单</h3>
+                        <div class="c">
+                            <img  th:if="${items.gameType==0}" src="/images/lol.jpg" alt="英雄联盟lol_代练-代练世界" th:alt="${items.orderDesc}"/>
+                            <img  th:if="${items.gameType==1}" src="/images/wzry1.jpg" alt="王者荣耀_代练-代练世界" th:alt="${items.orderDesc}"/>
+                            <img  th:if="${items.gameType==2}" src="/images/JDQS.jpg" alt="绝地求生刺激战场_代练-代练世界" th:alt="${items.orderDesc}"/>
+                            <img  th:if="${items.gameType==3}" src="/images/dnf.jpg" alt="地下城与勇士dnf_代练-代练世界" th:alt="${items.orderDesc}"/>
+                            <img  th:if="${items.gameType==4}" src="/images/qqdzz.jpg" alt="球球大作战_代练-代练世界" th:alt="${items.orderDesc}"/>
+                            <div class="content">
+                                <p>
+                                    <span th:text="${items.gameTypeStr+' '+items.gameDistrictStr}">王者荣耀 比尔吉沃特</span>
+                                    <span th:text="${'赏金 '+items.rewardAmount}+'¥ '">赏金 8888Y</span>
+                                </p>
+                                <span class="desc" th:text="${items.orderDesc}">八九</span>
+                            </div>
+                        </div>
+                    </section>
+                </li>
+            </a>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

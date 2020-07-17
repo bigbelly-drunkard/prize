@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>404</title>
+    <link rel="stylesheet" type="text/css" href="" th:href="'/css/404.css?v='+${V}"/>
+
+</head>
+<body >
+<div style="padding-top: 20rem;">
+<img style="height: 100%;width:100%;" src="/images/404.png" alt="404图片"/>
+</div>
+<!--<div style="position: relative;">-->
+    <!--<div class="bind-confim" >-->
+        <!--<a href="/" title="首页">返回首页</a>-->
+    <!--</div>-->
+    <!--<div class="bind-back">-->
+        <!--<a href="javascript:void (0);" onclick="back()">返回上一级</a>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<a style="color: orange;text-decoration: underline;" href="/showFeedBack" title="反馈页面"><p style="font-size: 30px;text-align: center;">我要吐槽</p></a>-->
+<script type="application/javascript">
+    function back() {
+        window.location.href = document.referrer;
+    }
+</script>
+</body>
+</html>

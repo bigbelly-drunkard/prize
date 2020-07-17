@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.egg.mapper.UserDAO">
+  <resultMap id="BaseResultMap" type="org.egg.model.DO.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_no" jdbcType="VARCHAR" property="userNo" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="user_head_pic" jdbcType="VARCHAR" property="userHeadPic" />
+    <result column="tel_no" jdbcType="VARCHAR" property="telNo" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="wx_open_id" jdbcType="VARCHAR" property="wxOpenId" />
+    <result column="wx_mini_open_id" jdbcType="VARCHAR" property="wxMiniOpenId" />
+    <result column="sch_name" jdbcType="VARCHAR" property="schName" />
+    <result column="address_l" jdbcType="VARCHAR" property="addressL" />
+    <result column="address_q" jdbcType="VARCHAR" property="addressQ" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="user_status" jdbcType="VARCHAR" property="userStatus" />
+    <result column="real_status" jdbcType="VARCHAR" property="realStatus" />
+    <result column="real_id_no" jdbcType="VARCHAR" property="realIdNo" />
+    <result column="credit_score" jdbcType="INTEGER" property="creditScore" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_no, real_name, gender, nick_name, user_head_pic, tel_no, password, wx_open_id, 
+    wx_mini_open_id, sch_name, address_l, address_q, remark, user_status, real_status, 
+    real_id_no, credit_score, balance, version, created_date, modified_date
+  </sql>
+  <select id="selectByExample" parameterType="org.egg.model.DO.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_stu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="start!=null">
+      limit #{start},#{end}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_stu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_stu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.egg.model.DO.UserExample">
+    delete from user_stu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.egg.model.DO.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_stu (user_no, real_name, gender, 
+      nick_name, user_head_pic, tel_no, 
+      password, wx_open_id, wx_mini_open_id, 
+      sch_name, address_l, address_q, 
+      remark, user_status, real_status, 
+      real_id_no, credit_score, balance, 
+      version, created_date, modified_date
+      )
+    values (#{userNo,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{userHeadPic,jdbcType=VARCHAR}, #{telNo,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{wxOpenId,jdbcType=VARCHAR}, #{wxMiniOpenId,jdbcType=VARCHAR}, 
+      #{schName,jdbcType=VARCHAR}, #{addressL,jdbcType=VARCHAR}, #{addressQ,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{userStatus,jdbcType=VARCHAR}, #{realStatus,jdbcType=VARCHAR}, 
+      #{realIdNo,jdbcType=VARCHAR}, #{creditScore,jdbcType=INTEGER}, #{balance,jdbcType=DECIMAL}, 
+      #{version,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.egg.model.DO.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_stu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userNo != null">
+        user_no,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="userHeadPic != null">
+        user_head_pic,
+      </if>
+      <if test="telNo != null">
+        tel_no,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="wxOpenId != null">
+        wx_open_id,
+      </if>
+      <if test="wxMiniOpenId != null">
+        wx_mini_open_id,
+      </if>
+      <if test="schName != null">
+        sch_name,
+      </if>
+      <if test="addressL != null">
+        address_l,
+      </if>
+      <if test="addressQ != null">
+        address_q,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="realStatus != null">
+        real_status,
+      </if>
+      <if test="realIdNo != null">
+        real_id_no,
+      </if>
+      <if test="creditScore != null">
+        credit_score,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="modifiedDate != null">
+        modified_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userNo != null">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadPic != null">
+        #{userHeadPic,jdbcType=VARCHAR},
+      </if>
+      <if test="telNo != null">
+        #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenId != null">
+        #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxMiniOpenId != null">
+        #{wxMiniOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="schName != null">
+        #{schName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressL != null">
+        #{addressL,jdbcType=VARCHAR},
+      </if>
+      <if test="addressQ != null">
+        #{addressQ,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realStatus != null">
+        #{realStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realIdNo != null">
+        #{realIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="creditScore != null">
+        #{creditScore,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedDate != null">
+        #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.egg.model.DO.UserExample" resultType="java.lang.Integer">
+    select count(*) from user_stu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_stu
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userNo != null">
+        user_no = #{record.userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realName != null">
+        real_name = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userHeadPic != null">
+        user_head_pic = #{record.userHeadPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telNo != null">
+        tel_no = #{record.telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxOpenId != null">
+        wx_open_id = #{record.wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxMiniOpenId != null">
+        wx_mini_open_id = #{record.wxMiniOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schName != null">
+        sch_name = #{record.schName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressL != null">
+        address_l = #{record.addressL,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressQ != null">
+        address_q = #{record.addressQ,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null">
+        user_status = #{record.userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realStatus != null">
+        real_status = #{record.realStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realIdNo != null">
+        real_id_no = #{record.realIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditScore != null">
+        credit_score = #{record.creditScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdDate != null">
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedDate != null">
+        modified_date = #{record.modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_stu
+    set id = #{record.id,jdbcType=BIGINT},
+      user_no = #{record.userNo,jdbcType=VARCHAR},
+      real_name = #{record.realName,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      user_head_pic = #{record.userHeadPic,jdbcType=VARCHAR},
+      tel_no = #{record.telNo,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      wx_open_id = #{record.wxOpenId,jdbcType=VARCHAR},
+      wx_mini_open_id = #{record.wxMiniOpenId,jdbcType=VARCHAR},
+      sch_name = #{record.schName,jdbcType=VARCHAR},
+      address_l = #{record.addressL,jdbcType=VARCHAR},
+      address_q = #{record.addressQ,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      user_status = #{record.userStatus,jdbcType=VARCHAR},
+      real_status = #{record.realStatus,jdbcType=VARCHAR},
+      real_id_no = #{record.realIdNo,jdbcType=VARCHAR},
+      credit_score = #{record.creditScore,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=DECIMAL},
+      version = #{record.version,jdbcType=INTEGER},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      modified_date = #{record.modifiedDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.egg.model.DO.User">
+    update user_stu
+    <set>
+      <if test="userNo != null">
+        user_no = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadPic != null">
+        user_head_pic = #{userHeadPic,jdbcType=VARCHAR},
+      </if>
+      <if test="telNo != null">
+        tel_no = #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenId != null">
+        wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxMiniOpenId != null">
+        wx_mini_open_id = #{wxMiniOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="schName != null">
+        sch_name = #{schName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressL != null">
+        address_l = #{addressL,jdbcType=VARCHAR},
+      </if>
+      <if test="addressQ != null">
+        address_q = #{addressQ,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realStatus != null">
+        real_status = #{realStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realIdNo != null">
+        real_id_no = #{realIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="creditScore != null">
+        credit_score = #{creditScore,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedDate != null">
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.egg.model.DO.User">
+    update user_stu
+    set user_no = #{userNo,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      user_head_pic = #{userHeadPic,jdbcType=VARCHAR},
+      tel_no = #{telNo,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      wx_mini_open_id = #{wxMiniOpenId,jdbcType=VARCHAR},
+      sch_name = #{schName,jdbcType=VARCHAR},
+      address_l = #{addressL,jdbcType=VARCHAR},
+      address_q = #{addressQ,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=VARCHAR},
+      real_status = #{realStatus,jdbcType=VARCHAR},
+      real_id_no = #{realIdNo,jdbcType=VARCHAR},
+      credit_score = #{creditScore,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=DECIMAL},
+      version = #{version,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.egg.mapper.WxAccessTokenDAO">
+
+    <resultMap id="BaseResultMap" type="org.egg.model.DO.WxAccessToken">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="access_token" jdbcType="VARCHAR" property="accessToken"/>
+        <result column="expires_in" jdbcType="INTEGER" property="expiresIn"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate"/>
+        <result column="jsapi_ticket" jdbcType="VARCHAR" property="jsapiTicket"/>
+        <result column="channel_code" jdbcType="VARCHAR" property="channelCode"/>
+        <result column="ticket_expires_in" jdbcType="INTEGER" property="ticketExpiresIn"/>
+    </resultMap>
+    <sql id="WhereQueryEntity">
+        <if test="accessToken != null">
+            AND access_token = #{accessToken,jdbcType=VARCHAR}
+        </if>
+        <if test="channelCode != null">
+            AND channel_code = #{channelCode,jdbcType=VARCHAR}
+        </if>
+        <if test="expiresIn != null">
+            AND expires_in = #{expiresIn,jdbcType=INTEGER}
+        </if>
+        <if test="createdDate != null">
+            AND created_date = #{createdDate,jdbcType=TIMESTAMP}
+        </if>
+        <!--<if test="modifiedDate != null">-->
+        <!--AND modified_date = #{modifiedDate,jdbcType=TIMESTAMP}-->
+        <!--</if>-->
+        <if test="jsapiTicket != null">
+            AND jsapi_ticket = #{jsapiTicket,jdbcType=VARCHAR}
+        </if>
+        <if test="ticketExpiresIn != null">
+            AND ticket_expires_in = #{ticketExpiresIn,jdbcType=INTEGER}
+        </if>
+    </sql>
+    <sql id="Base_Column_List">
+    id, access_token,channel_code, expires_in, created_date, modified_date, jsapi_ticket, ticket_expires_in
+  </sql>
+    <sql id="limitPage">
+        <if test="first != null">
+            limit #{first,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+        </if>
+    </sql>
+    <select id="queryList" parameterType="org.egg.model.VO.WxAccessTokenQueryReq" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_access_token WHERE 1=1
+        <include refid="WhereQueryEntity"/>
+        <include refid="limitPage"/>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_access_token
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx_access_token
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyProperty="id" parameterType="org.egg.model.DO.WxAccessToken" useGeneratedKeys="true">
+    insert into wx_access_token (id, access_token, channel_code,expires_in,
+    created_date, modified_date, jsapi_ticket,
+    ticket_expires_in)
+    values (#{id,jdbcType=INTEGER}, #{accessToken,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR}, #{expiresIn,jdbcType=INTEGER},
+    #{createdDate,jdbcType=TIMESTAMP}, #{modifiedDate,jdbcType=TIMESTAMP}, #{jsapiTicket,jdbcType=VARCHAR},
+    #{ticketExpiresIn,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" keyProperty="id" parameterType="org.egg.model.DO.WxAccessToken"
+            useGeneratedKeys="true">
+        insert into wx_access_token
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="accessToken != null">
+                access_token,
+            </if>
+            <if test="channelCode != null">
+                channel_code,
+            </if>
+            <if test="expiresIn != null">
+                expires_in,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="modifiedDate != null">
+                modified_date,
+            </if>
+            <if test="jsapiTicket != null">
+                jsapi_ticket,
+            </if>
+            <if test="ticketExpiresIn != null">
+                ticket_expires_in,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="accessToken != null">
+                #{accessToken,jdbcType=VARCHAR},
+            </if>
+            <if test="channelCode != null">
+                #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="expiresIn != null">
+                #{expiresIn,jdbcType=INTEGER},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedDate != null">
+                #{modifiedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="jsapiTicket != null">
+                #{jsapiTicket,jdbcType=VARCHAR},
+            </if>
+            <if test="ticketExpiresIn != null">
+                #{ticketExpiresIn,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into wx_access_token (id, access_token,channel_code, expires_in,
+        created_date, modified_date,
+        jsapi_ticket, ticket_expires_in)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id,jdbcType=INTEGER}, #{item.accessToken,jdbcType=VARCHAR}, #{item.channelCode,jdbcType=VARCHAR}, #{item.expiresIn,jdbcType=INTEGER},
+            #{item.createdDate,jdbcType=TIMESTAMP}, #{item.modifiedDate,jdbcType=TIMESTAMP},
+            #{item.jsapiTicket,jdbcType=VARCHAR}, #{item.ticketExpiresIn,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+    <insert id="insertBatchSelective" parameterType="java.util.List">
+        insert into wx_access_token
+        (id, access_token,channel_code, expires_in, created_date, modified_date, jsapi_ticket, ticket_expires_in
+        )
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">
+                    #{item.id,jdbcType=INTEGER},
+                </if>
+                <if test="item.id == null">
+                    NULL,
+                </if>
+                <if test="item.accessToken != null">
+                    #{item.accessToken,jdbcType=VARCHAR},
+                </if>
+                <if test="item.channelCode != null">
+                    #{item.channel_code,jdbcType=VARCHAR},
+                </if>
+                <if test="item.channelCode == null">
+                    NULL,
+                </if> <if test="item.accessToken == null">
+                    NULL,
+                </if>
+                <if test="item.expiresIn != null">
+                    #{item.expiresIn,jdbcType=INTEGER},
+                </if>
+                <if test="item.expiresIn == null">
+                    NULL,
+                </if>
+                <if test="item.createdDate != null">
+                    #{item.createdDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createdDate == null">
+                    NULL,
+                </if>
+                <if test="item.modifiedDate != null">
+                    #{item.modifiedDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.modifiedDate == null">
+                    NULL,
+                </if>
+                <if test="item.jsapiTicket != null">
+                    #{item.jsapiTicket,jdbcType=VARCHAR},
+                </if>
+                <if test="item.jsapiTicket == null">
+                    NULL,
+                </if>
+                <if test="item.ticketExpiresIn != null">
+                    #{item.ticketExpiresIn,jdbcType=INTEGER},
+                </if>
+                <if test="item.ticketExpiresIn == null">
+                    NULL,
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="queryCount" parameterType="org.egg.model.VO.WxAccessTokenQueryReq" resultType="java.lang.Integer">
+        select count(*) from wx_access_token WHERE 1=1
+        <include refid="WhereQueryEntity"/>
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="org.egg.model.DO.WxAccessToken">
+        update wx_access_token
+        <set>
+            <if test="accessToken != null">
+                access_token = #{accessToken,jdbcType=VARCHAR},
+            </if>
+            <if test="channelCode != null">
+                channel_code = #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="expiresIn != null">
+                expires_in = #{expiresIn,jdbcType=INTEGER},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <!--<if test="modifiedDate != null">-->
+            <!--modified_date = #{modifiedDate,jdbcType=TIMESTAMP},-->
+            <!--</if>-->
+            <if test="jsapiTicket != null">
+                jsapi_ticket = #{jsapiTicket,jdbcType=VARCHAR},
+            </if>
+            <if test="ticketExpiresIn != null">
+                ticket_expires_in = #{ticketExpiresIn,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.egg.model.DO.WxAccessToken">
+    update wx_access_token
+    set access_token = #{accessToken,jdbcType=VARCHAR},
+     channel_code = #{channelCode,jdbcType=VARCHAR},
+      expires_in = #{expiresIn,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+--       modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      jsapi_ticket = #{jsapiTicket,jdbcType=VARCHAR},
+      ticket_expires_in = #{ticketExpiresIn,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

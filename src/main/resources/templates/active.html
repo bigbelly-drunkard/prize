@@ -1,0 +1,98 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+<link href="/css/active.css" rel="stylesheet"/>
+<script type="text/javascript" src="/js/common/jquery.min.js"></script>
+<script type="text/javascript" src="/js/active.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+
+
+<body>
+<div class="progress_back hide" id="jifen">
+    <span class="title">队伍积分</span>
+    <!--积分进度-->
+    <div class="progress">
+            <div class="rp88">
+                <img class="" src="/images/redp88.png">
+                <div style="height: 1rem;"></div>
+            </div>
+
+        <div class="rp888">
+            <img class="" src="/images/redp888.png">
+            <div style="height: 1rem;"></div>
+        </div>
+        <!--1分 3%宽  3分~32分 初始化3分 15%-->
+        <span id="fen" class="color" style="width: 15%;">3分</span>
+    </div>
+
+</div>
+<!--<div class="ruleBlank"></div>-->
+<!--活动规则-->
+<div class="section">
+    <span class="title">活动规则</span>
+    <ul>
+        <li>1.每人只可组一支寝室队伍，组建队伍后可以要求室友进入寝室,首次创建队伍奖励3分。</li>
+        <li>2.队伍人数必须在4~8人才可以参与此活动</li>
+        <li>3.队伍内人员下单并完成后即可获得积分，每一单一积分，累计到队伍积分中。</li>
+        <li>4.队伍成员积分累计超过（包含）10分,所有成员即可获得最高<span>88</span>元随机红包。</li>
+        <li>5.队伍成员积分累计超过（包含）30分,所有成员即可获得最高<span>888</span>元随机红包。</li>
+        <li>6.积分越高，获取大红包几率越大。</li>
+        <li>7.活动将于2020年3月4日开奖，用户可以在此页面查看是否中奖，注意活动结束时间为2020年4月5日。</li>
+        <li>8.活动最终解释权归本公司所有。</li>
+    </ul>
+    <!--增加积分按钮-->
+    <div  class="button " onclick="toPubOrder()">下单加积分</div>
+</div>
+<!--中奖信息、领取按钮/未中奖-->
+<div class="price section hide" id="priceInfo">
+    <span class="title">中奖结果</span>
+    <div class="center" id="price">
+
+        <img class="i1  hide" id="price_888" src="/images/redp888.png"/>
+        <img class="i1 hide" id="price_88" src="/images/redp88.png"/>
+        <img class="i2 hide" id="priceButton" onclick="confirmPrice()" src="/images/redrain-click.gif"/>
+    </div>
+    <div id="failMsg" style="color: #aaa;font-weight: 700;" class="hide">未中奖</div>
+</div>
+<!--创建队伍-->
+<div class="section hide" id="createTeam">
+    <span class="title">创建队伍</span>
+    <input placeholder="请输入队伍名称" maxlength="10" class="teamInput"/>
+    <!--邀请组队按钮/创建队伍-->
+    <div class="button" onclick="createTeamSubmit()">创建队伍</div>
+</div>
+<!--队伍人员信息-->
+<div class="section hide" id="myTeam">
+    <span class="title">取个啥名字取个啥名字</span>
+    <div class="userList">
+        <!--<div class="item">-->
+            <!--<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583687663647&di=3b0ea6bd2a37200344ec0223db5afef9&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1208%2F02%2Fc0%2F12659156_1343874598199.jpg"/>-->
+            <!--<span class="score">+01分</span>-->
+            <!--<span class="nickName">吃饭了没</span>-->
+        <!--</div>-->
+    </div>
+    <!--邀请组队按钮/创建队伍-->
+    <div class="button " id="share" onclick="share()">邀请室友助力</div>
+    <div class="button hide" id="shareJoin"  onclick="joinTeam()">加入队伍</div>
+</div>
+
+<!--我的积分订单列表-->
+<div class="section hide" id="orderNos">
+    <!--<span class="title">我的积分订单</span>-->
+    <!--<div class="orderT">-->
+        <!--<div class="orderNoTitle">订单号</div>-->
+        <!--<div>积分</div>-->
+    <!--</div>-->
+    <!--<div class="orderT">-->
+        <!--<div class="orderNo">20115545615615</div>-->
+        <!--<div>+1分</div>-->
+    <!--</div>-->
+</div>
+</body>
+<div class="mask hide"></div>
+<div class="error hide" id="error">
+    <div class="content"></div>
+    <div class="btn" onclick="hideError()">我知道了</div>
+</div>
+
+</html>
