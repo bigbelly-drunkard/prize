@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.egg.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="org.egg.model.DO.Customer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DECIMAL" />
+    <result column="gold" property="gold" jdbcType="DECIMAL" />
+    <result column="load_factor" property="loadFactor" jdbcType="DECIMAL" />
+    <result column="uuid_id" property="uuidId" jdbcType="VARCHAR" />
+    <result column="uuid_type" property="uuidType" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="head_url" property="headUrl" jdbcType="VARCHAR" />
+    <result column="customer_status" property="customerStatus" jdbcType="VARCHAR" />
+    <result column="customer_type" property="customerType" jdbcType="VARCHAR" />
+    <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, customer_no, score, gold, load_factor, uuid_id, uuid_type, nick_name, head_url, 
+    customer_status, customer_type, created_date, modified_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.egg.model.DO.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from customer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.egg.model.DO.CustomerExample" >
+    delete from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.egg.model.DO.Customer" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into customer (customer_no, score, gold, 
+      load_factor, uuid_id, uuid_type, 
+      nick_name, head_url, customer_status, 
+      customer_type, created_date, modified_date
+      )
+    values (#{customerNo,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, #{gold,jdbcType=DECIMAL}, 
+      #{loadFactor,jdbcType=DECIMAL}, #{uuidId,jdbcType=VARCHAR}, #{uuidType,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, #{customerStatus,jdbcType=VARCHAR}, 
+      #{customerType,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.egg.model.DO.Customer" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerNo != null" >
+        customer_no,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="gold != null" >
+        gold,
+      </if>
+      <if test="loadFactor != null" >
+        load_factor,
+      </if>
+      <if test="uuidId != null" >
+        uuid_id,
+      </if>
+      <if test="uuidType != null" >
+        uuid_type,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="headUrl != null" >
+        head_url,
+      </if>
+      <if test="customerStatus != null" >
+        customer_status,
+      </if>
+      <if test="customerType != null" >
+        customer_type,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerNo != null" >
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="gold != null" >
+        #{gold,jdbcType=DECIMAL},
+      </if>
+      <if test="loadFactor != null" >
+        #{loadFactor,jdbcType=DECIMAL},
+      </if>
+      <if test="uuidId != null" >
+        #{uuidId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuidType != null" >
+        #{uuidType,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null" >
+        #{customerStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedDate != null" >
+        #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.egg.model.DO.CustomerExample" resultType="java.lang.Integer" >
+    select count(*) from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerNo != null" >
+        customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gold != null" >
+        gold = #{record.gold,jdbcType=DECIMAL},
+      </if>
+      <if test="record.loadFactor != null" >
+        load_factor = #{record.loadFactor,jdbcType=DECIMAL},
+      </if>
+      <if test="record.uuidId != null" >
+        uuid_id = #{record.uuidId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uuidType != null" >
+        uuid_type = #{record.uuidType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null" >
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headUrl != null" >
+        head_url = #{record.headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerStatus != null" >
+        customer_status = #{record.customerStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerType != null" >
+        customer_type = #{record.customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdDate != null" >
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedDate != null" >
+        modified_date = #{record.modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer
+    set id = #{record.id,jdbcType=BIGINT},
+      customer_no = #{record.customerNo,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=DECIMAL},
+      gold = #{record.gold,jdbcType=DECIMAL},
+      load_factor = #{record.loadFactor,jdbcType=DECIMAL},
+      uuid_id = #{record.uuidId,jdbcType=VARCHAR},
+      uuid_type = #{record.uuidType,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      head_url = #{record.headUrl,jdbcType=VARCHAR},
+      customer_status = #{record.customerStatus,jdbcType=VARCHAR},
+      customer_type = #{record.customerType,jdbcType=VARCHAR},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      modified_date = #{record.modifiedDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.egg.model.DO.Customer" >
+    update customer
+    <set >
+      <if test="customerNo != null" >
+        customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="gold != null" >
+        gold = #{gold,jdbcType=DECIMAL},
+      </if>
+      <if test="loadFactor != null" >
+        load_factor = #{loadFactor,jdbcType=DECIMAL},
+      </if>
+      <if test="uuidId != null" >
+        uuid_id = #{uuidId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuidType != null" >
+        uuid_type = #{uuidType,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        head_url = #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null" >
+        customer_status = #{customerStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        customer_type = #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.egg.model.DO.Customer" >
+    update customer
+    set customer_no = #{customerNo,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL},
+      gold = #{gold,jdbcType=DECIMAL},
+      load_factor = #{loadFactor,jdbcType=DECIMAL},
+      uuid_id = #{uuidId,jdbcType=VARCHAR},
+      uuid_type = #{uuidType,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      head_url = #{headUrl,jdbcType=VARCHAR},
+      customer_status = #{customerStatus,jdbcType=VARCHAR},
+      customer_type = #{customerType,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

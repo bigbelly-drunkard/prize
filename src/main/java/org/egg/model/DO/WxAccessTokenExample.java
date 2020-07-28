@@ -544,6 +544,76 @@ public class WxAccessTokenExample {
             addCriterion("ticket_expires_in not between", value1, value2, "ticketExpiresIn");
             return (Criteria) this;
         }
+
+        public Criteria andChannelCodeIsNull() {
+            addCriterion("channel_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeIsNotNull() {
+            addCriterion("channel_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeEqualTo(String value) {
+            addCriterion("channel_code =", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeNotEqualTo(String value) {
+            addCriterion("channel_code <>", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeGreaterThan(String value) {
+            addCriterion("channel_code >", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("channel_code >=", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeLessThan(String value) {
+            addCriterion("channel_code <", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeLessThanOrEqualTo(String value) {
+            addCriterion("channel_code <=", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeLike(String value) {
+            addCriterion("channel_code like", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeNotLike(String value) {
+            addCriterion("channel_code not like", value, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeIn(List<String> values) {
+            addCriterion("channel_code in", values, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeNotIn(List<String> values) {
+            addCriterion("channel_code not in", values, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeBetween(String value1, String value2) {
+            addCriterion("channel_code between", value1, value2, "channelCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelCodeNotBetween(String value1, String value2) {
+            addCriterion("channel_code not between", value1, value2, "channelCode");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

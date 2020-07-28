@@ -12,7 +12,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/feimaotui"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/prize"
                         userId="root" password="123456">
         </jdbcConnection>
         <javaTypeResolver>
@@ -112,15 +112,7 @@
         <!--&gt;-->
             <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="boss_user" domainObjectName="BossUser" enableCountByExample="true"-->
-               <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true" enableSelectByPrimaryKey="true"-->
-               <!--selectByPrimaryKeyQueryId="true"-->
-               <!--enableInsert="true"-->
-        <!--&gt;-->
-            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
-        <!--</table>-->
-        <table tableName="coupon" domainObjectName="Coupon" enableCountByExample="true"
+        <table tableName="flow_record" domainObjectName="FlowRecord" enableCountByExample="true"
                enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true" enableSelectByPrimaryKey="true"
                selectByPrimaryKeyQueryId="true"
@@ -128,21 +120,13 @@
         >
             <generatedKey column="id" sqlStatement="MYSQL" identity="true"/>
         </table>
-        <!--<table tableName="coupon_user" domainObjectName="CouponUser" enableCountByExample="true"-->
-               <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true" enableSelectByPrimaryKey="true"-->
-               <!--selectByPrimaryKeyQueryId="true"-->
-               <!--enableInsert="true"-->
-        <!--&gt;-->
-            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="user_history_address" domainObjectName="UserHistoryAddress" enableCountByExample="true"-->
-               <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true" enableSelectByPrimaryKey="true"-->
-               <!--selectByPrimaryKeyQueryId="true"-->
-               <!--enableInsert="true"-->
-        <!--&gt;-->
-            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="customer" domainObjectName="Customer" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true" enableSelectByPrimaryKey="true"
+               selectByPrimaryKeyQueryId="true"
+               enableInsert="true"
+        >
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

@@ -8,7 +8,6 @@ public class WxAccessTokenUser {
     private String accessToken;
 
     private String userNo;
-    private String sessionKey;
 
     private Integer expiresIn;
 
@@ -17,6 +16,8 @@ public class WxAccessTokenUser {
     private Date createdDate;
 
     private Date modifiedDate;
+
+    private String sessionKey;
 
     public Integer getId() {
         return id;
@@ -79,6 +80,6 @@ public class WxAccessTokenUser {
     }
 
     public void setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey;
+        this.sessionKey = sessionKey == null ? null : sessionKey.trim();
     }
 }

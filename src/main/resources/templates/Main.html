@@ -13,6 +13,11 @@
         margin: 0;
         background: #eeeeee;
     }
+    .main {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
 
     .top-bg {
         background-image: -webkit-linear-gradient(bottom, #f1503b, #c82519 50%);
@@ -135,6 +140,7 @@
         flex-flow: wrap;
 
         padding: 1rem 0;
+        color: #5a5a5a;
     }
 
     .explain .scoreExplain, .explain .goldExplain {
@@ -207,8 +213,9 @@
     }
 </style>
 <body>
-<!--<div class="top-bg">-->
-<!--</div>-->
+<div class="main">
+<div class="top-bg">
+</div>
 <div class="top-person">
     <div class="score">
         <div class="value">
@@ -293,25 +300,25 @@
 </div>
 <div class="explain">
     <div class="scoreExplain">
-        <svg class="maxIcon" aria-hidden="true">
-            <use xlink:href="#icon-jifen"></use>
+        <svg class="maxIcon" aria-hidden="true" color="#ffa106">
+            <use xlink:href="#icon-kaitonghuiyuanyuan"></use>
         </svg>
-        <span>积分说明</span>
+        <span>开通会员</span>
     </div>
     <div class="goldExplain">
-        <svg class="maxIcon" aria-hidden="true">
-            <use xlink:href="#icon-jindouyindou01"></use>
+        <svg class="maxIcon" aria-hidden="true"  color="#f83d85">
+            <use xlink:href="#icon-tixian1"></use>
         </svg>
-        <span>金豆说明</span>
+        <span>金豆提现</span>
     </div>
     <div class="scoreExplain">
-        <svg class="maxIcon" aria-hidden="true">
+        <svg class="maxIcon" aria-hidden="true" color="#fe393b">
             <use xlink:href="#icon-jifen"></use>
         </svg>
         <span>积分说明</span>
     </div>
     <div class="goldExplain">
-        <svg class="maxIcon" aria-hidden="true">
+        <svg class="maxIcon" aria-hidden="true" color="yellow">
             <use xlink:href="#icon-jindouyindou01"></use>
         </svg>
         <span>金豆说明</span>
@@ -337,6 +344,7 @@
             <span class="content">张三 兑换了30金豆</span>
         </li>
     </ul>
+</div>
 </div>
 </body>
 </html>

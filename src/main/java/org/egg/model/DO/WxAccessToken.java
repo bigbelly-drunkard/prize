@@ -14,9 +14,10 @@ public class WxAccessToken {
     private Date modifiedDate;
 
     private String jsapiTicket;
-    private String channelCode;
 
     private Integer ticketExpiresIn;
+
+    private String channelCode;
 
     public Integer getId() {
         return id;
@@ -54,14 +55,6 @@ public class WxAccessToken {
         return modifiedDate;
     }
 
-    public String getChannelCode() {
-        return channelCode;
-    }
-
-    public void setChannelCode(String channelCode) {
-        this.channelCode = channelCode;
-    }
-
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
@@ -80,5 +73,13 @@ public class WxAccessToken {
 
     public void setTicketExpiresIn(Integer ticketExpiresIn) {
         this.ticketExpiresIn = ticketExpiresIn;
+    }
+
+    public String getChannelCode() {
+        return channelCode;
+    }
+
+    public void setChannelCode(String channelCode) {
+        this.channelCode = channelCode == null ? null : channelCode.trim();
     }
 }

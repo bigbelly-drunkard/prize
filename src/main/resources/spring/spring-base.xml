@@ -9,62 +9,9 @@
         <property name="locations">
             <list>
                 <value>classpath:config.properties</value>
-                <value>classpath:config_2.properties</value>
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
-    </bean>
-    <!--<bean id="delayObserver" class="org.egg.observer.subjects.CommonObserver">-->
-        <!--<constructor-arg>-->
-            <!--<list>-->
-                <!--<ref bean="finishOrderObserver"/>-->
-                <!--<ref bean="calcAccMoneyObserver"/>-->
-            <!--</list>-->
-        <!--</constructor-arg>-->
-    <!--</bean>-->
-    <!--注册成功-->
-    <bean id="registerSuccObserver" class="org.egg.observer.subjects.CommonObserver">
-        <constructor-arg>
-            <list>
-                <!--<ref bean="recommendRegObserver"/>-->
-            </list>
-        </constructor-arg>
-    </bean>
-    <!--申请跑手状态变更-->
-    <bean id="approveStatusObserver" class="org.egg.observer.subjects.CommonObserver">
-        <constructor-arg>
-            <list>
-                <ref bean="approveStatusObserverCommon"/>
-            </list>
-        </constructor-arg>
-    </bean>
-    <!--发布订单状态改变观察者-->
-    <bean id="publishOrderStatusChangeObserver" class="org.egg.observer.subjects.CommonObserver">
-        <constructor-arg>
-            <list>
-                <ref bean="publishOrderCancelObserver"/>
-                <ref bean="publishOrderSendNotifyObserver"/>
-                <ref bean="publishOrderSuccObserver"/>
-                <ref bean="baiduLink"/>
-            </list>
-        </constructor-arg>
-    </bean>
-    <!--接单订单状态改变观察者-->
-    <bean id="acceptOrderStatusChangeObserver" class="org.egg.observer.subjects.CommonObserver">
-        <constructor-arg>
-            <list>
-                <ref bean="acceptOrderSendNotifyObserver"/>
-                <ref bean="acceptOrdeSuccObserver"/>
-            </list>
-        </constructor-arg>
-    </bean>
-    <!--支付流水状态改变观察者-->
-    <bean id="accountFlowStatusChangeObserver" class="org.egg.observer.subjects.CommonObserver">
-        <constructor-arg>
-            <list>
-                <ref bean="updateOrderStatusObserver"/>
-            </list>
-        </constructor-arg>
     </bean>
     <!-- 发送模板消息线程池 -->
     <bean id="poolExecutorSendMsg" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
@@ -77,7 +24,6 @@
         <!-- 队列大小 -->
         <property name="queueCapacity" value="100" />
     </bean>
-    <import resource="provider.xml"/>
     <!-- Enables the Spring Task @Scheduled programming model -->
     <!--<task:executor id="executor" pool-size="5"/>-->
     <!--<task:scheduler id="scheduler" pool-size="10"/>-->
