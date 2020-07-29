@@ -29,7 +29,7 @@ public class FlowRecordServiceImpl {
      *
      * @param customerId
      * @param flowRecordTypeEnum
-     * @param value 可能为正 可能为负数
+     * @param value              可能为正 可能为负数
      */
     @Transactional(rollbackFor = Exception.class)
     public void changeScoreOrGold(String customerId, FlowRecordTypeEnum flowRecordTypeEnum, BigDecimal value) {
@@ -58,8 +58,6 @@ public class FlowRecordServiceImpl {
         customerMapperExt.updateScoreOrGoldByCustomer(stringObjectHashMap);
     }
 
-    public void changeCustomerLoadFactor(String customerId) {
 
-    }
 
 }

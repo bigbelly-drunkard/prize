@@ -9,4 +9,5 @@ import java.util.Map;
  */
 public interface CustomerMapperExt {
     public void updateScoreOrGoldByCustomer(Map<String, Object> param);
+    public void updateLoadFactor(Map<String, Object> param);
 }

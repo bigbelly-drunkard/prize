@@ -22,4 +22,9 @@
     set score=score +  #{addScore,jdbcType=DECIMAL},gold=gold+#{addGold,jdbcType=DECIMAL}
     where customer_no=#{customerId,jdbcType=VARCHAR}
   </update>
+  <update id="updateLoadFactor" parameterMap="java.util.Map">
+    UPDATE customer
+    set load_factor=load_factor +  #{addLoadFactor,jdbcType=DECIMAL}
+    where customer_no=#{customerId,jdbcType=VARCHAR}
+  </update>
 </mapper>
