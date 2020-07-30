@@ -74,4 +74,7 @@ public class ConstantsUtil {
      */
     public static final BigDecimal REGISTER_SUCC_AGENT_REWARD_RECOMMEND_FEE=new BigDecimal("0.8");
 
+
+
+
 }
