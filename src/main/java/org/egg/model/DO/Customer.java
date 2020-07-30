@@ -14,9 +14,11 @@ public class Customer {
 
     private BigDecimal loadFactor;
 
-    private String uuidId;
+    private String wxMiniOpenId;
 
-    private String uuidType;
+    private String zfbOpenId;
+
+    private String wxOpenId;
 
     private String nickName;
 
@@ -70,20 +72,28 @@ public class Customer {
         this.loadFactor = loadFactor;
     }
 
-    public String getUuidId() {
-        return uuidId;
+    public String getWxMiniOpenId() {
+        return wxMiniOpenId;
     }
 
-    public void setUuidId(String uuidId) {
-        this.uuidId = uuidId == null ? null : uuidId.trim();
+    public void setWxMiniOpenId(String wxMiniOpenId) {
+        this.wxMiniOpenId = wxMiniOpenId == null ? null : wxMiniOpenId.trim();
     }
 
-    public String getUuidType() {
-        return uuidType;
+    public String getZfbOpenId() {
+        return zfbOpenId;
     }
 
-    public void setUuidType(String uuidType) {
-        this.uuidType = uuidType == null ? null : uuidType.trim();
+    public void setZfbOpenId(String zfbOpenId) {
+        this.zfbOpenId = zfbOpenId == null ? null : zfbOpenId.trim();
+    }
+
+    public String getWxOpenId() {
+        return wxOpenId;
+    }
+
+    public void setWxOpenId(String wxOpenId) {
+        this.wxOpenId = wxOpenId == null ? null : wxOpenId.trim();
     }
 
     public String getNickName() {

@@ -29,7 +29,7 @@ public class LocalCache {
      * k:时间
      * value:msg 内容
      */
-    private Map<String, String> msgMap = new LinkedHashMap<String, String>(10, .75F,
+    private Map<String, String> msgMap = new LinkedHashMap<String, String>(100, .75F,
             false) {
 
         @Override

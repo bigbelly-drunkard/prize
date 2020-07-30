@@ -104,7 +104,7 @@
         <!--&gt;-->
         <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
         <!--</table>-->
-        <!--<table tableName="grade_record" domainObjectName="GradeRecord" enableCountByExample="true"-->
+        <!--<table tableName="pay_record" domainObjectName="PayRecord" enableCountByExample="true"-->
                <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true" enableSelectByPrimaryKey="true"-->
                <!--selectByPrimaryKeyQueryId="true"-->
@@ -112,14 +112,14 @@
         <!--&gt;-->
             <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
         <!--</table>-->
-        <table tableName="flow_record" domainObjectName="FlowRecord" enableCountByExample="true"
-               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true" enableSelectByPrimaryKey="true"
-               selectByPrimaryKeyQueryId="true"
-               enableInsert="true"
-        >
-            <generatedKey column="id" sqlStatement="MYSQL" identity="true"/>
-        </table>
+        <!--<table tableName="flow_record" domainObjectName="FlowRecord" enableCountByExample="true"-->
+               <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true" enableSelectByPrimaryKey="true"-->
+               <!--selectByPrimaryKeyQueryId="true"-->
+               <!--enableInsert="true"-->
+        <!--&gt;-->
+            <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
+        <!--</table>-->
         <table tableName="customer" domainObjectName="Customer" enableCountByExample="true"
                enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true" enableSelectByPrimaryKey="true"

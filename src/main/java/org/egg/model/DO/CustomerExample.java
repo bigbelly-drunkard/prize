@@ -416,143 +416,213 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdIsNull() {
-            addCriterion("uuid_id is null");
+        public Criteria andWxMiniOpenIdIsNull() {
+            addCriterion("wx_mini_open_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdIsNotNull() {
-            addCriterion("uuid_id is not null");
+        public Criteria andWxMiniOpenIdIsNotNull() {
+            addCriterion("wx_mini_open_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdEqualTo(String value) {
-            addCriterion("uuid_id =", value, "uuidId");
+        public Criteria andWxMiniOpenIdEqualTo(String value) {
+            addCriterion("wx_mini_open_id =", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdNotEqualTo(String value) {
-            addCriterion("uuid_id <>", value, "uuidId");
+        public Criteria andWxMiniOpenIdNotEqualTo(String value) {
+            addCriterion("wx_mini_open_id <>", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdGreaterThan(String value) {
-            addCriterion("uuid_id >", value, "uuidId");
+        public Criteria andWxMiniOpenIdGreaterThan(String value) {
+            addCriterion("wx_mini_open_id >", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdGreaterThanOrEqualTo(String value) {
-            addCriterion("uuid_id >=", value, "uuidId");
+        public Criteria andWxMiniOpenIdGreaterThanOrEqualTo(String value) {
+            addCriterion("wx_mini_open_id >=", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdLessThan(String value) {
-            addCriterion("uuid_id <", value, "uuidId");
+        public Criteria andWxMiniOpenIdLessThan(String value) {
+            addCriterion("wx_mini_open_id <", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdLessThanOrEqualTo(String value) {
-            addCriterion("uuid_id <=", value, "uuidId");
+        public Criteria andWxMiniOpenIdLessThanOrEqualTo(String value) {
+            addCriterion("wx_mini_open_id <=", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdLike(String value) {
-            addCriterion("uuid_id like", value, "uuidId");
+        public Criteria andWxMiniOpenIdLike(String value) {
+            addCriterion("wx_mini_open_id like", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdNotLike(String value) {
-            addCriterion("uuid_id not like", value, "uuidId");
+        public Criteria andWxMiniOpenIdNotLike(String value) {
+            addCriterion("wx_mini_open_id not like", value, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdIn(List<String> values) {
-            addCriterion("uuid_id in", values, "uuidId");
+        public Criteria andWxMiniOpenIdIn(List<String> values) {
+            addCriterion("wx_mini_open_id in", values, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdNotIn(List<String> values) {
-            addCriterion("uuid_id not in", values, "uuidId");
+        public Criteria andWxMiniOpenIdNotIn(List<String> values) {
+            addCriterion("wx_mini_open_id not in", values, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdBetween(String value1, String value2) {
-            addCriterion("uuid_id between", value1, value2, "uuidId");
+        public Criteria andWxMiniOpenIdBetween(String value1, String value2) {
+            addCriterion("wx_mini_open_id between", value1, value2, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidIdNotBetween(String value1, String value2) {
-            addCriterion("uuid_id not between", value1, value2, "uuidId");
+        public Criteria andWxMiniOpenIdNotBetween(String value1, String value2) {
+            addCriterion("wx_mini_open_id not between", value1, value2, "wxMiniOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeIsNull() {
-            addCriterion("uuid_type is null");
+        public Criteria andZfbOpenIdIsNull() {
+            addCriterion("zfb_open_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeIsNotNull() {
-            addCriterion("uuid_type is not null");
+        public Criteria andZfbOpenIdIsNotNull() {
+            addCriterion("zfb_open_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeEqualTo(String value) {
-            addCriterion("uuid_type =", value, "uuidType");
+        public Criteria andZfbOpenIdEqualTo(String value) {
+            addCriterion("zfb_open_id =", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeNotEqualTo(String value) {
-            addCriterion("uuid_type <>", value, "uuidType");
+        public Criteria andZfbOpenIdNotEqualTo(String value) {
+            addCriterion("zfb_open_id <>", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeGreaterThan(String value) {
-            addCriterion("uuid_type >", value, "uuidType");
+        public Criteria andZfbOpenIdGreaterThan(String value) {
+            addCriterion("zfb_open_id >", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("uuid_type >=", value, "uuidType");
+        public Criteria andZfbOpenIdGreaterThanOrEqualTo(String value) {
+            addCriterion("zfb_open_id >=", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeLessThan(String value) {
-            addCriterion("uuid_type <", value, "uuidType");
+        public Criteria andZfbOpenIdLessThan(String value) {
+            addCriterion("zfb_open_id <", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeLessThanOrEqualTo(String value) {
-            addCriterion("uuid_type <=", value, "uuidType");
+        public Criteria andZfbOpenIdLessThanOrEqualTo(String value) {
+            addCriterion("zfb_open_id <=", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeLike(String value) {
-            addCriterion("uuid_type like", value, "uuidType");
+        public Criteria andZfbOpenIdLike(String value) {
+            addCriterion("zfb_open_id like", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeNotLike(String value) {
-            addCriterion("uuid_type not like", value, "uuidType");
+        public Criteria andZfbOpenIdNotLike(String value) {
+            addCriterion("zfb_open_id not like", value, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeIn(List<String> values) {
-            addCriterion("uuid_type in", values, "uuidType");
+        public Criteria andZfbOpenIdIn(List<String> values) {
+            addCriterion("zfb_open_id in", values, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeNotIn(List<String> values) {
-            addCriterion("uuid_type not in", values, "uuidType");
+        public Criteria andZfbOpenIdNotIn(List<String> values) {
+            addCriterion("zfb_open_id not in", values, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeBetween(String value1, String value2) {
-            addCriterion("uuid_type between", value1, value2, "uuidType");
+        public Criteria andZfbOpenIdBetween(String value1, String value2) {
+            addCriterion("zfb_open_id between", value1, value2, "zfbOpenId");
             return (Criteria) this;
         }
 
-        public Criteria andUuidTypeNotBetween(String value1, String value2) {
-            addCriterion("uuid_type not between", value1, value2, "uuidType");
+        public Criteria andZfbOpenIdNotBetween(String value1, String value2) {
+            addCriterion("zfb_open_id not between", value1, value2, "zfbOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdIsNull() {
+            addCriterion("wx_open_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdIsNotNull() {
+            addCriterion("wx_open_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdEqualTo(String value) {
+            addCriterion("wx_open_id =", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdNotEqualTo(String value) {
+            addCriterion("wx_open_id <>", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdGreaterThan(String value) {
+            addCriterion("wx_open_id >", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdGreaterThanOrEqualTo(String value) {
+            addCriterion("wx_open_id >=", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdLessThan(String value) {
+            addCriterion("wx_open_id <", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdLessThanOrEqualTo(String value) {
+            addCriterion("wx_open_id <=", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdLike(String value) {
+            addCriterion("wx_open_id like", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdNotLike(String value) {
+            addCriterion("wx_open_id not like", value, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdIn(List<String> values) {
+            addCriterion("wx_open_id in", values, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdNotIn(List<String> values) {
+            addCriterion("wx_open_id not in", values, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdBetween(String value1, String value2) {
+            addCriterion("wx_open_id between", value1, value2, "wxOpenId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxOpenIdNotBetween(String value1, String value2) {
+            addCriterion("wx_open_id not between", value1, value2, "wxOpenId");
             return (Criteria) this;
         }
 

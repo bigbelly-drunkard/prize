@@ -74,6 +74,15 @@ public class CustomerServiceImpl {
         }
     }
 
+    public Customer queryCustomerByCustomerId(String cid) {
+        CustomerExample customerExample = new CustomerExample();
+        CustomerExample.Criteria criteria = customerExample.createCriteria();
+        criteria.andCustomerNoEqualTo(cid);
+        List<Customer> customers = customerMapper.selectByExample(customerExample);
+        Customer customer = customers.get(0);
+        return customer;
+    }
+
 //    ========================================= private 区域 ============================================================
 
     /**

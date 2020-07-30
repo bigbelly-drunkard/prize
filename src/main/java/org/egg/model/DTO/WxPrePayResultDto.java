@@ -20,9 +20,6 @@ public class WxPrePayResultDto implements Serializable {
     /**
      * 支付类型
      * RECHARGE", "充值"),
-     * CASH", "提现"),
-     * PUBISH_PLEDGE", "发布单押金"),
-     * ACCEPT_PLEDGE", "接单押金"),
      */
     private String payType;
     /**

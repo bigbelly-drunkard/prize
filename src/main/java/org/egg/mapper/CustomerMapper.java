@@ -1,10 +1,9 @@
 package org.egg.mapper;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.egg.model.DO.Customer;
 import org.egg.model.DO.CustomerExample;
-
-import java.util.List;
 
 public interface CustomerMapper {
     int countByExample(CustomerExample example);
