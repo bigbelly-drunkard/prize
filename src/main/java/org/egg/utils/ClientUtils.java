@@ -39,7 +39,8 @@ public class ClientUtils {
      * @param request
      * @return ip
      */
-    public static String getIpAddr(HttpServletRequest request) {
+
+    private static String getIpAddr(HttpServletRequest request) {
         String remoteAddr = request.getRemoteAddr();
         String forwarded = request.getHeader("X-Forwarded-For") != null ? request.getHeader("X-Forwarded-For") : request.getHeader("j-forwarded-for");
         String realIp = request.getHeader("X-Real-IP");

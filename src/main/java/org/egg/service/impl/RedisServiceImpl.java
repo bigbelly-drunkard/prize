@@ -3,7 +3,6 @@ package org.egg.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.integration.redis.RedisUtil;
 import org.egg.utils.DateUtil;
-import org.egg.utils.SnowFlake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,8 +56,6 @@ public class RedisServiceImpl {
     private static final String PRODUCT_KEY = "PRODUCT_KEY_";
     @Autowired
     private RedisUtil redisUtil;
-    @Autowired
-    private SnowFlake snowFlake;
 
     /**
      * 用户当天剩余的取消次数

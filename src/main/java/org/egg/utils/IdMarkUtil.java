@@ -12,20 +12,29 @@ import java.util.Random;
  */
 public class IdMarkUtil {
     private static final long start = 1583225611000L;
+    private static SnowFlake snowFlake;
+    static{
+        SnowFlake snowFlake = new SnowFlake(1, 1);
+
+    }
     /**
      * 唯一标识
      * @return
      */
+    @Deprecated
     public static String getUniqId(TableTypeEnum tableTypeEnum) {
+
         Random random = new Random();
         long l = System.currentTimeMillis() - start;
         return new StringBuilder(tableTypeEnum.getCode()).append(l).append(String.format("%04d", Integer
-                .valueOf(StringUtils.left(String.valueOf(Math.abs(random.nextInt())),4)))).toString();
+                .valueOf(StringUtils.left(String.valueOf(Math.abs(random.nextInt())), 4)))).toString();
+    }
+
+    public static String getUuid(TableTypeEnum tableTypeEnum) {
+        return tableTypeEnum.getCode()+snowFlake.nextId()+"";
     }
 
     public static void main(String[] args) {
-        String uniqId = getUniqId(TableTypeEnum.USER_TABLE);
-        System.out.println(uniqId);
     }
 
     /**

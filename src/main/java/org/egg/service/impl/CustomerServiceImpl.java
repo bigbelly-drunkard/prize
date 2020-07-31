@@ -2,14 +2,19 @@ package org.egg.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.egg.cache.LocalCache;
+import org.egg.enums.CustomerTypeEnum;
+import org.egg.enums.TableTypeEnum;
+import org.egg.enums.UserStatusEnum;
 import org.egg.mapper.CustomerMapper;
 import org.egg.mapper.CustomerMapperExt;
 import org.egg.model.DO.Customer;
 import org.egg.model.DO.CustomerExample;
+import org.egg.utils.IdMarkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -81,6 +86,26 @@ public class CustomerServiceImpl {
         List<Customer> customers = customerMapper.selectByExample(customerExample);
         Customer customer = customers.get(0);
         return customer;
+    }
+
+    public Customer queryCustomerByWxMiniOpenId(String miniOpenId) {
+        CustomerExample customerExample = new CustomerExample();
+        CustomerExample.Criteria criteria = customerExample.createCriteria();
+        criteria.andWxMiniOpenIdEqualTo(miniOpenId);
+        List<Customer> customers = customerMapper.selectByExample(customerExample);
+        Customer customer = customers.get(0);
+        return customer;
+    }
+
+    public void createCustomer(Customer customer) {
+        customer.setCustomerStatus(UserStatusEnum.EFFECT.getCode());
+        customer.setCreatedDate(new Date());
+        customer.setCustomerType(CustomerTypeEnum.COMMON.getCode());
+        customer.setCustomerNo(IdMarkUtil.getUuid(TableTypeEnum.CUSTOMER));
+        customer.setGold(BigDecimal.ZERO);
+        customer.setScore(BigDecimal.ZERO);
+        customer.setLoadFactor(BigDecimal.ZERO);
+        customerMapper.insertSelective(customer);
     }
 
 //    ========================================= private 区域 ============================================================

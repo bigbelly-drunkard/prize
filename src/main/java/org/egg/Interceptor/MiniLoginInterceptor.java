@@ -1,6 +1,8 @@
 package org.egg.Interceptor;
 
 import org.egg.cache.LocalCache;
+import org.egg.model.DO.Customer;
+import org.egg.utils.CustomerUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,10 +25,12 @@ public class MiniLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String openId = httpServletRequest.getHeader("openId");
-        if (openId == null || localCache.getUserByMiniOpenId(openId) == null) {
+        Customer customerByMiniOpenId = localCache.getCustomerByMiniOpenId(openId);
+        if (openId == null || customerByMiniOpenId == null) {
             httpServletResponse.setStatus(403);
             return false;
         }
+        CustomerUtil.addCustomer(customerByMiniOpenId);
         return true;
     }
 

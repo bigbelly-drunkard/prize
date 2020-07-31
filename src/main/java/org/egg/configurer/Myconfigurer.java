@@ -2,7 +2,6 @@ package org.egg.configurer;
 
 import org.egg.model.DTO.EmailDto;
 import org.egg.utils.EmailUtil;
-import org.egg.utils.SnowFlake;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -75,9 +74,4 @@ public class Myconfigurer {
 
 
 
-    @Bean
-    public SnowFlake getSnowFlakeBean() {
-        SnowFlake snowFlake = new SnowFlake(1, 1);
-        return snowFlake;
-    }
 }

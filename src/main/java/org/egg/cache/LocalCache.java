@@ -1,6 +1,6 @@
 package org.egg.cache;
 
-import org.egg.model.DO.User;
+import org.egg.model.DO.Customer;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -17,9 +17,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class LocalCache {
     /**
-     * 所有miniopenid
+     * 所有miniopenid 登录session sessionId就是openId
+     * 登录时录入
+     * 暂无session超时设置
      */
-    private ConcurrentHashMap<String, User> miniOpenId_user_cache = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, Customer> miniOpenId_user_cache = new ConcurrentHashMap<>();
     /**
      * 所有用户的负载因子变动
      */
@@ -43,16 +45,16 @@ public class LocalCache {
         }
     };
 
-    public ConcurrentHashMap<String, User> getMiniOpenId_user_cache() {
+    public ConcurrentHashMap<String, Customer> getMiniOpenId_user_cache() {
         return miniOpenId_user_cache;
     }
 
 
-    public User getUserByMiniOpenId(String openId) {
+    public Customer getCustomerByMiniOpenId(String openId) {
         return miniOpenId_user_cache.get(openId);
     }
 
-    public void setMiniOpenId_user_cache(String openId, User user) {
+    public void setMiniOpenId_user_cache(String openId, Customer user) {
         miniOpenId_user_cache.put(openId, user);
     }
 

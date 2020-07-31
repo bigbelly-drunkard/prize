@@ -1,14 +1,17 @@
 package org.egg.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.enums.PayStatusEnum;
 import org.egg.enums.PayTypeEnum;
 import org.egg.mapper.PayRecordMapper;
 import org.egg.model.DO.PayRecord;
+import org.egg.model.DO.PayRecordExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author dataochen
@@ -32,6 +35,25 @@ public class PayRecordServiceImpl {
         payRecord.setCreatedDate(new Date());
         payRecord.setPayType(payTypeEnum.getCode());
         payRecordMapper.insertSelective(payRecord);
+    }
+
+    public PayRecord queryDetail(String payNo) {
+        PayRecordExample payRecordExample = new PayRecordExample();
+        PayRecordExample.Criteria criteria = payRecordExample.createCriteria();
+        criteria.andPayNoEqualTo(payNo);
+        List<PayRecord> payRecords = payRecordMapper.selectByExample(payRecordExample);
+        return payRecords.get(0);
+    }
+
+    public void updateStatus(PayRecord payRecord, String originStatus) {
+        PayRecordExample payRecordExample = new PayRecordExample();
+        PayRecordExample.Criteria criteria = payRecordExample.createCriteria();
+        criteria.andPayStatusEqualTo(originStatus);
+        int i = payRecordMapper.updateByPrimaryKeySelective(payRecord);
+        if (i > 0) {
+            log.info("更新支付单状态成功，originStatus={},payRecord={}", originStatus, JSONObject.toJSONString(payRecord));
+//            todo 支付单状态变更通知
+        }
     }
 
 }
