@@ -28,6 +28,12 @@ public class PayController {
     @Autowired
     private PayBiz payBiz;
 
+    /**
+     * 微信小程序支付
+     * @param payReq
+     * @param request
+     * @return
+     */
     @PostMapping("/wxMiniPay")
     public CommonSingleResult<WxPrePayResultDto> wxMiniPay(PayReq payReq, HttpServletRequest request) {
         payReq.setClientInfo(ClientUtils.getClientInfo(request));
@@ -35,6 +41,12 @@ public class PayController {
         return result;
     }
 
+    /**
+     * 查询支付结果
+     * @param payNo
+     * @param request
+     * @return
+     */
     @PostMapping("/wxMiniPay/{payNo}")
     public CommonSingleResult<PayRecord> queryPayRes(@PathVariable(value = "payNo") String payNo, HttpServletRequest request) {
         return payBiz.queryPayRes(CustomerUtil.getCustomer().getCustomerNo(), payNo);

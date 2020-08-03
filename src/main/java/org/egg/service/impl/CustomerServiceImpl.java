@@ -39,7 +39,7 @@ public class CustomerServiceImpl {
      * 比较负载因子 是否大于所需因子value
      * 用于控制资损
      *
-     * @param value
+     * @param value 因子数
      * @param customerId
      * @param sync
      * @return

@@ -56,56 +56,12 @@ public class WxController extends BaseController {
     @Autowired
     private PayBiz payBiz;
 
-//    /**
-//     * 回执获取网页授权
-//     * https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code
-//     * &scope=snsapi_userinfo&state=STATE#wechat_redirect
-//     * 用于自定义菜单 快速登录
-//     *
-//     * @param code
-//     * @param returnUrl 跳转页
-//     * @param response
-//     */
-//    @RequestMapping("/show")
-//    public void accessAuthWxCode(String code, String returnUrl, HttpServletRequest request, HttpServletResponse response) {
-//        LOGGER.info("accesAuthWxCode code={}", code);
-//        //1.请求access_token
-//        AccessTokenResult accessToken = new AccessTokenResult();
-//        try {
-//            accessToken = wechatService.getAccessToken(code);
-//        } catch (Exception e) {
-//            LOGGER.error("获取openId异常 e={}", e);
-//        }
-//        if (!StringUtils.isEmpty(accessToken.getOpenid())) {
-////            校验是否已经绑定
-//            UserQueryReq userStuQueryReq = new UserQueryReq();
-//            userStuQueryReq.setWxOpenId(accessToken.getOpenid());
-//            List<User> users = userService.queryList(userStuQueryReq);
-////            自动登录
-//            if (!CollectionUtils.isEmpty(users)) {
-//                HttpSession session = request.getSession();
-//                session.setAttribute(ConstantsUtil.USER_KEY, users.get(0));
-//                session.setAttribute(ConstantsUtil.OPEN_ID_KEY, accessToken.getOpenid());
-//                setCookie(response, ConstantsUtil.UMU, users.get(0).getUserNo());
-//                HashMap<String, String> stringStringHashMap = new HashMap<>();
-//                stringStringHashMap.put("un", users.get(0).getUserNo());
-//                setCookie(response, ConstantsUtil.SNO, EncryptionUtil.generateRequestSign(stringStringHashMap));
-//
-////             user token 入库
-//                wxTokenUserBiz.updateToken(accessToken, users.get(0).getUserNo());
-//            }
-//        }
-//        //            跳转到首页，无登录状态
-//        try {
-//            CommonUtil.sendRedirectForHttps(request, response, returnUrl);
-//            return;
-////            response.sendRedirect(returnUrl);
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-//
-//    }
-
+    /**
+     * 微信支付结果通知
+     *
+     * @param request
+     * @param response
+     */
 
     @RequestMapping("/wxNotify")
     public void wxNotify(HttpServletRequest request, HttpServletResponse response) {
@@ -122,7 +78,7 @@ public class WxController extends BaseController {
             LOGGER.info("wxNotifyDto={}", wxNotifyDto);
             try {
 //
-                payBiz.syncStatus4WxPay(wxNotifyDto.getOut_trade_no(),null);
+                payBiz.syncStatus4WxPay(wxNotifyDto.getOut_trade_no(), null);
 
                 result = setXml("SUCCESS", "OK");
             } catch (CommonException e) {
@@ -170,15 +126,6 @@ public class WxController extends BaseController {
         }
     }
 
-    //通过xml 发给微信消息
-    private static String setXml(String return_code, String return_msg) {
-        SortedMap<String, String> parameters = new TreeMap<String, String>();
-        parameters.put("return_code", return_code);
-        parameters.put("return_msg", return_msg);
-        return "<xml><return_code><![CDATA[" + return_code + "]]>" +
-                "</return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
-    }
-
 
     /**
      * 初始化小程序
@@ -213,6 +160,15 @@ public class WxController extends BaseController {
         return accessTokenMiniResultCommonSingleResult;
     }
 
+    //================================================ private ==================================================
+    //通过xml 发给微信消息
+    private static String setXml(String return_code, String return_msg) {
+        SortedMap<String, String> parameters = new TreeMap<String, String>();
+        parameters.put("return_code", return_code);
+        parameters.put("return_msg", return_msg);
+        return "<xml><return_code><![CDATA[" + return_code + "]]>" +
+                "</return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
+    }
 
     private String convertString4Request(HttpServletRequest request) throws IOException {
 

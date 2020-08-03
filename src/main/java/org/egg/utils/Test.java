@@ -6,7 +6,9 @@ import org.egg.integration.wx.WxConfig;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author cdt
@@ -15,236 +17,11 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException {
-        String s = "\n" +
-                "　你咋不上天\n" +
-                "凉氺朿リ喉═→\n" +
-                "我媳妇用不着蓝颜宠i\n" +
-                "。青锋先森\n" +
-                "哥。的女人不许碰\n" +
-                "不愿为妞再战\n" +
-                "傲影\n" +
-                "熟悉的侧脸\n" +
-                "辣条侠!\n" +
-                "神秘先生\n" +
-                "浪子提剑江湖走\n" +
-                "無所事事小青ňǐāň\n" +
-                "你若离去 巴掌扇去*\n" +
-                "纵酒\n" +
-                "施主别拽，俺脱\n" +
-                "?玍銹的lιe槍メ\n" +
-                "俯下身吻\n" +
-                "情话至深\n" +
-                "菠萝菠萝蜜^ǒ^\n" +
-                "爱了就要爱的起 ら\n" +
-                "懵懂的我学会了诈尸\n" +
-                "给力Man丶\n" +
-                "请你收拾好谎言丶滚吧！\n" +
-                "余情未了难免庸人自扰ゝ\n" +
-                "金钱兄弟\n" +
-                "ㄟщμ夜倾訴患者ㄟ\n" +
-                "℡此男洧點⒉\n" +
-                "暗痛\n" +
-                "脱空'    pomrise 〓\n" +
-                "曾经拥有的幸福是残忍的\n" +
-                "右眼皮跳跳姨妈要来到\n" +
-                "帅死一条街\n" +
-                "时间总嘲笑涐的痴心妄想°\n" +
-                "床前明光地上鞋两双\n" +
-                "tfboys发光少\n" +
-                "梦里射她千百次\n" +
-                "百面郎君i\n" +
-                "?孤獨漸濃\n" +
-                "帅裂天际\n" +
-                "猫o(v)o\n" +
-                "●烟囱\n" +
-                "心里心外\n" +
-                "假装不言语但是狠在乎 #\n" +
-                "王の強攻\n" +
-                "一无所有/**\n" +
-                "兄弟，今生缘*来生情\n" +
-                "哥ㄣ闪ㄑ亮ㄜ登场\n" +
-                "你爸妈在造你时肯定偷懒了\n" +
-                "你若安好，便是末\n" +
-                "一心和一意装的只有你/*\n" +
-                "神赐吾名丶Man\n" +
-                "踏天地荒芜\n" +
-                "笑癌晚期患者\n" +
-                "薄荷べ浅浅绿\n" +
-                "吸着香烟°de未成\n" +
-                "AntiWaR\n" +
-                "ＳＣメ尊上\n" +
-                "?唯獨忄跳還清χι灬\n" +
-                "许你三千笔墨画我绝世倾城\n" +
-                "<老公老婆>只是代号_\n" +
-                "爺丶独手毁天下\n" +
-                "怕軹怕菰獨催亼鮱\n" +
-                "┌иιαи砕好感♂\n" +
-                "请把我的心归还给我\n" +
-                "醉挽清风\n" +
-                "最新搞笑的男生网名设计\n" +
-                "窃笑\n" +
-                "ㄣ野χìηɡ杁ɡμ★\n" +
-                "金不唤伪君子\n" +
-                "爱难言\n" +
-                "包裹自己送出地球\n" +
-                "爷们应该有的范\n" +
-                "秒控皇权\n" +
-                "步子大了容易扯到蛋\n" +
-                "旧事甚歉\n" +
-                "\u0011δ斤说ωαη風\n" +
-                "作业你个小婊砸\n" +
-                "调戏呢只猴儿|\n" +
-                "恒小爷子#\n" +
-                "请叫我疯子/ A\n" +
-                "不屌不二不是我\n" +
-                "◇难承情长\n" +
-                "姑娘，你的内裤掉了\n" +
-                "荒笹獨擁\n" +
-                "卖钉子的小男孩#\n" +
-                "喜旧吻\n" +
-                "清茶薄暮\n" +
-                "董先生\n" +
-                "慌了风\n" +
-                "\\'大爷依旧是大爷\n" +
-                "屌丝男的梦 *\n" +
-                "﹟空梦空得我心痛\n" +
-                "°﹏生命里有太多不确定\n" +
-                "ゝ刺痛疲惫的眼睛\n" +
-                "导演，给我人生来次NG\n" +
-                "心酸的情歌∽\n" +
-                "抛弃了回忆最后只剩你\n" +
-                "`〃ωéι有相莣\n" +
-                "缺爱先生\n" +
-                "怪咖男渣!\n" +
-                "小三控 い\n" +
-                "走我们一起裸奔\n" +
-                "牛逼!青i\n" +
-                "發糞的小青\n" +
-                "帅比君\n" +
-                "再贱再也不见\n" +
-                "我想做个坏孩子\n" +
-                "。不再做别人的红颜知己\n" +
-                "…瞪大眼睛?着我\n" +
-                "空人空心空世界 -◢\n" +
-                "闷青BOY\n" +
-                "ヤ╄·爵爷\n" +
-                "邻居家的帅学霸i\n" +
-                "钻石王＠\n" +
-                "你的爱麻木了我的心×\n" +
-                "英雄霸天\n" +
-                "少不轻狂i\n" +
-                "男人的`眼泪有多煽情\n" +
-                "烟是我的情人。\n" +
-                "吐你一脸口水\n" +
-                "爷回来了！\n" +
-                "梦话伤人i\n" +
-                "听话，挖出心脏然后去死\n" +
-                "去你麻痹的爱情丿\n" +
-                "好久不见我的良人/*\n" +
-                "回忆是不可触摸的伤 -\n" +
-                "心有余悸成陌生人/*\n" +
-                "纸乔君^\n" +
-                "她变了/也许该写遗书了\n" +
-                "奮斗gg\n" +
-                "比迩妈更有气质\n" +
-                "哥‘K纯帅\n" +
-                "猥琐控。\n" +
-                "别跟我谈感情。虚伪°\n" +
-                "得我者° 珍惜\n" +
-                "波浪先生\n" +
-                "山穷水尽更词穷\n" +
-                "んёι眸清澈ゞ\n" +
-                "爱一瞬间的悲伤\n" +
-                "坏男孩\n" +
-                "别用你的骚来挑战我的底线\n" +
-                "他是我少时最蔚蓝的海\n" +
-                "南征北战一个浪\n" +
-                "海为鱼说尽了情话\n" +
-                "枯草哥\n" +
-                "- 磕磕绊绊绝不言分离\n" +
-                "︻◣善良の劊zι扌\n" +
-                "╰zu拽少′\n" +
-                "性感卜是骚要骚也没招\n" +
-                "时间是我全部的信仰/\n" +
-                "心痒之后一切归于平淡/*\n" +
-                "等待是最好的不离开╮\n" +
-                "我的世界再也没有你了﹏\n" +
-                "|;×侽紸角\n" +
-                "面膜男;\n" +
-                "拼爹又坑爹的代\n" +
-                "唱支忐忑给党听\n" +
-                "少总有装逼梦\n" +
-                "疯子别跑~\n" +
-                "∫ηι赱倦孒颩ωù﹏\n" +
-                "剩↓的字щΘ陪你写\n" +
-                "公告ァ此人伤不起\n" +
-                "还未白首便销声匿迹/*\n" +
-                "爱人，你的眸好敷衍\n" +
-                "◎-鬼龍■帝\n" +
-                "吻你眼下泪痣\n" +
-                "在她葬礼上唱好子\n" +
-                "沦落成爱人\n" +
-                "爆破男\n" +
-                "薄衫少\n" +
-                "你气势汹汹像放屁\n" +
-                "暧昧说穿了只是玩玩而已-\n" +
-                "男厕老大i\n" +
-                "回忆扯来扯去扯出了过去*\n" +
-                "上帝是个女Ren\n" +
-                "壞(_小少︶ㄣ\n" +
-                "做不了你的男人\n" +
-                "空空，给为师笑一个\n" +
-                "你的回眸已安慰不了我\n" +
-                "-怎样才能心如止水\n" +
-                "花衬衫\n" +
-                "理想变为尘埃\n" +
-                "ㄣ瓍膂亼﹏\n" +
-                "づよ帝dε安ρái♂\n" +
-                "今夕何夕\n" +
-                "捧着眼泪笑得没心没肺//\n" +
-                "在虚假的幸福里苟活°\n" +
-                "村头二傻子\n" +
-                "快播男 _\n" +
-                "两个人的子一个人过。\n" +
-                "我忘了`那是梦不是命。\n" +
-                "爷叫你滚没听到么\n" +
-                "蛋碎了一地\n" +
-                "与君长诀\n" +
-                "△ 破碎记忆再回不去\n" +
-                "花静幽然\n" +
-                "唥漠秖⒋ni魡名牸\n" +
-                "有原则的大帅比\n" +
-                "下个，路口，贱\n" +
-                "讨厌你一张欠操的脸。\n" +
-                "给你手爱会久\n" +
-                "我若不猖狂谁替我坚强\n" +
-                "傻子爱上骗子\n" +
-                "尔的情绪依然把莪牵动つ\n" +
-                "细鬼\n" +
-                "顾老大 i\n" +
-                "老衲法号情圣i\n" +
-                "莮魜卜狠荷以詀穩ㄝ\n" +
-                "不贱不散\n" +
-                "个性`懒散の小青`\n" +
-                "哥现在不需要女人\n" +
-                "骑猪去兜风\n" +
-                "萌比男人\n" +
-                "许久\n" +
-                "↓Ъμ忠情亻↑\n" +
-                "锦,不过是素锦流╮\n" +
-                "ゞ当这个世界还小的时候\n";
-        String s1 = s
-                .replaceAll("\\d*、【", "")
-                .replaceAll("】","")
-                .replaceAll(" ","")
-               ;
-//        String s2 = "   Exo男神控\n" +
-//                "   ﹍Mr男神℡";
-//        System.out.println(s2.replaceAll("  ",""));
-        System.out.println(s1);
+        pp();
+
     }
 
-    private static void testa(String notifyData ) throws Exception {
+    private static void testa(String notifyData) throws Exception {
         WxConfig config = new WxConfig();
         WXPay wxpay = new WXPay(config);
 
@@ -257,6 +34,47 @@ public class Test {
         }
     }
 
+    private static void pp() {
+        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+        AtomicInteger atomicInteger2 = new AtomicInteger(0);
+        AtomicInteger atomicInteger3 = new AtomicInteger(0);
+        AtomicInteger atomicInteger4 = new AtomicInteger(0);
+        AtomicInteger atomicInteger5 = new AtomicInteger(0);
+        Integer i = 1;
+        Integer i2 = 2;
+        Integer i3 = 5;
+        Integer i4 = 10;
+        Integer total = 1000000;
+        Integer tt=total;
+        for (int j = 0; j < tt; j++) {
+            double random = Math.random() * 100;
+            if (random < 2.5) {
+                atomicInteger4.incrementAndGet();
+                total -= 10;
+
+            } else if (random < 7.5) {
+                atomicInteger3.incrementAndGet();
+                total -= 5;
+
+            } else if (random < 20) {
+                atomicInteger2.incrementAndGet();
+                total -= 2;
+            } else if (random < 45) {
+                atomicInteger.incrementAndGet();
+                total -= 1;
+            } else {
+                atomicInteger5.incrementAndGet();
+
+            }
+        }
+        System.out.println("total="+total);
+        System.out.println(atomicInteger);
+        System.out.println(atomicInteger2);
+        System.out.println(atomicInteger3);
+        System.out.println(atomicInteger4);
+        System.out.println(atomicInteger5);
+    }
 
 
 }
