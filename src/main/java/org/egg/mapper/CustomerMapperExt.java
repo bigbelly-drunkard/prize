@@ -8,6 +8,6 @@ import java.util.Map;
  * @date: 2020/7/28 20:49
  */
 public interface CustomerMapperExt {
-    public void updateScoreOrGoldByCustomer(Map<String, Object> param);
+    public int updateScoreOrGoldByCustomer(Map<String, Object> param);
     public void updateLoadFactor(Map<String, Object> param);
 }

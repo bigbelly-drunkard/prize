@@ -9,6 +9,9 @@ package org.egg.enums;
  * @date: 2017/11/7 15:32
  */
 public enum CommonErrorEnum {
+    /**
+     *
+     */
     NULL("", ""),
 
     //成功
@@ -160,25 +163,10 @@ public enum CommonErrorEnum {
      */
     WX_REFUND_FAIL("PRO3300014", "WX_REFUND_FAIL"),
     /**
-     * 已领取
+     * 积分不足
      */
-    COUPON_EXIST("PRO3300014","COUPON_EXIST"),
-    /**
-     * 距离不够
-     */
-    DISTINCT_CHECK_FAIL("PRO3300015","DISTINCT_CHECK_FAIL"),
-    /**
-     * 队伍人数已满
-     */
-    TEAM_SIZE_ENOUGH("PRO3300016","TEAM_SIZE_ENOUGH"),
-    /**
-     * 活动已过期
-     */
-    ACTIVE_EXPIRE("PRO3300017","ACTIVE_EXPIRE"),
-    /**
-     * 用户已存在队伍
-     */
-    TEAM_USER_ALREADY_EXIST("PRO3300018","TEAM_USER_ALREADY_EXIST"),
+    SCORE_NOT_ENOUGH("PRO3300015", "SCORE_NOT_ENOUGH"),
+
 
     /**
      * 系统异常

@@ -1,5 +1,8 @@
 package org.egg.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author dataochen
  * @Description
@@ -11,7 +14,12 @@ public enum PayStatusEnum {
     SUCCESS("SUCCESS",""),
     FAIL("FAIL",""),
     ;
-
+    private static Map<String, PayStatusEnum> codeEnumMap = new HashMap<>();
+    static {
+        for (PayStatusEnum payStatusEnum : PayStatusEnum.values()) {
+            codeEnumMap.put(payStatusEnum.getCode(), payStatusEnum);
+        }
+    }
     PayStatusEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
@@ -26,5 +34,9 @@ public enum PayStatusEnum {
 
     public String getDesc() {
         return desc;
+    }
+
+    public static PayStatusEnum getEnumByCode(String code) {
+        return codeEnumMap.get(code);
     }
 }

@@ -20,7 +20,7 @@
   <update id="updateScoreOrGoldByCustomer" parameterMap="java.util.Map">
     UPDATE customer
     set score=score +  #{addScore,jdbcType=DECIMAL},gold=gold+#{addGold,jdbcType=DECIMAL}
-    where customer_no=#{customerId,jdbcType=VARCHAR}
+    where customer_no=#{customerId,jdbcType=VARCHAR} and score +  #{addScore,jdbcType=DECIMAL} >0 and gold +  #{addGold,jdbcType=DECIMAL} >0
   </update>
   <update id="updateLoadFactor" parameterMap="java.util.Map">
     UPDATE customer

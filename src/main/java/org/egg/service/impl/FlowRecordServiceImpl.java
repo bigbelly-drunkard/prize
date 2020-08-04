@@ -1,6 +1,9 @@
 package org.egg.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.egg.enums.CommonErrorEnum;
 import org.egg.enums.FlowRecordTypeEnum;
+import org.egg.exception.CommonException;
 import org.egg.mapper.CustomerMapperExt;
 import org.egg.mapper.FlowRecordMapper;
 import org.egg.model.DO.FlowRecord;
@@ -18,6 +21,7 @@ import java.util.HashMap;
  * @date: 2020/7/28 20:32
  */
 @Component
+@Slf4j
 public class FlowRecordServiceImpl {
     @Autowired
     private FlowRecordMapper flowRecordMapper;
@@ -55,9 +59,12 @@ public class FlowRecordServiceImpl {
                 break;
         }
         stringObjectHashMap.put("customerId", customerId);
-        customerMapperExt.updateScoreOrGoldByCustomer(stringObjectHashMap);
+        int i = customerMapperExt.updateScoreOrGoldByCustomer(stringObjectHashMap);
+        if (i <= 0) {
+            log.error("changeScoreOrGold更新数据库失败 回滚");
+            throw new CommonException(CommonErrorEnum.DB_UPDATE_VERSION_EXCEPTION);
+        }
     }
-
 
 
 }

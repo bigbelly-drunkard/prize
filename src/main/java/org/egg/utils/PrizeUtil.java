@@ -70,7 +70,7 @@ public class PrizeUtil {
         prizeBean.setName(split[0]);
         prizeBean.setFactor(new BigDecimal(split[1]));
         prizeBean.setRate(new BigDecimal(split[2]));
-        prizeBean.setRandomFlag(Boolean.valueOf(split[3]));
+        prizeBean.setTypeCode(split[3]);
         return prizeBean;
     }
 

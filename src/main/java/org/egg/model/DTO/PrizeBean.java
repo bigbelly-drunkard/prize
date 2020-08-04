@@ -19,5 +19,7 @@ public class PrizeBean {
     private BigDecimal factor;
 
     private BigDecimal rate;
-    private boolean randomFlag;
+    private String typeCode;
+    private BigDecimal needScore;
+    private BigDecimal needGold;
 }

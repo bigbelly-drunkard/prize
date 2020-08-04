@@ -24,6 +24,23 @@
         <!-- 队列大小 -->
         <property name="queueCapacity" value="100" />
     </bean>
+
+    <bean id="getPrizeSuccObserver" class="org.egg.observer.subjects.CommonObserver">
+        <constructor-arg>
+            <list>
+                <ref bean="prizeDbObserver"/>
+                <ref bean="prizeSendObserver"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="payRecordStatusUpdateObserver" class="org.egg.observer.subjects.CommonObserver">
+        <constructor-arg>
+            <list>
+            </list>
+        </constructor-arg>
+    </bean>
+
     <!-- Enables the Spring Task @Scheduled programming model -->
     <!--<task:executor id="executor" pool-size="5"/>-->
     <!--<task:scheduler id="scheduler" pool-size="10"/>-->

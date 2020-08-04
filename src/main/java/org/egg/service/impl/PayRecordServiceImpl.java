@@ -7,9 +7,11 @@ import org.egg.enums.PayTypeEnum;
 import org.egg.mapper.PayRecordMapper;
 import org.egg.model.DO.PayRecord;
 import org.egg.model.DO.PayRecordExample;
+import org.egg.observer.subjects.CommonObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,8 @@ import java.util.List;
 public class PayRecordServiceImpl {
     @Autowired
     private PayRecordMapper payRecordMapper;
+    @Resource(name = "payRecordStatusUpdateObserver")
+    private CommonObserver payRecordStatusUpdateObserver;
 
 
     /**
@@ -52,7 +56,8 @@ public class PayRecordServiceImpl {
         int i = payRecordMapper.updateByPrimaryKeySelective(payRecord);
         if (i > 0) {
             log.info("更新支付单状态成功，originStatus={},payRecord={}", originStatus, JSONObject.toJSONString(payRecord));
-//            todo 支付单状态变更通知
+//             支付单状态变更通知
+            payRecordStatusUpdateObserver.notifyObserver(payRecord);
         }
     }
 
