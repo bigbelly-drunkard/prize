@@ -47,6 +47,11 @@ public class RrpSendPrizeHandler extends AbstractSendPrize {
     }
 
     @Override
+    public void sendPrizeHandler(String customerId, PrizeBean prizeBean) {
+
+    }
+
+    @Override
     public BigDecimal getPrice(PrizeBean prizeBean) {
         BigDecimal bigDecimal = new BigDecimal(Math.random() + "").multiply(prizeBean.getFactor()).setScale(2);
         bigDecimal = bigDecimal.compareTo(BigDecimal.ZERO) != 1 ? new BigDecimal("0.01") : bigDecimal;

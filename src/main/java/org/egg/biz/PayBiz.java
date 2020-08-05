@@ -2,24 +2,25 @@ package org.egg.biz;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.egg.enums.ChannelEnum;
-import org.egg.enums.CommonErrorEnum;
-import org.egg.enums.PayStatusEnum;
-import org.egg.enums.PayTypeEnum;
+import org.egg.enums.*;
 import org.egg.exception.CommonException;
 import org.egg.integration.wx.WxCommonApi;
 import org.egg.model.DO.Customer;
 import org.egg.model.DO.PayRecord;
+import org.egg.model.DTO.WxCompanyPayRequestDto;
 import org.egg.model.DTO.WxPrePayRequestDto;
 import org.egg.model.DTO.WxPrePayResultDto;
 import org.egg.model.DTO.WxQueryPayOrderDto;
 import org.egg.model.VO.PayReq;
+import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.CustomerServiceImpl;
+import org.egg.service.impl.FlowRecordServiceImpl;
 import org.egg.service.impl.PayRecordServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
 import org.egg.utils.CheckUtil;
+import org.egg.utils.CustomerUtil;
 import org.egg.utils.DateUtil;
 import org.egg.utils.SnowFlake;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,8 @@ public class PayBiz {
     private WxCommonApi wxCommonApi;
     @Autowired
     private BizTemplate bizTemplate;
+    @Autowired
+    private FlowRecordServiceImpl flowRecordService;
     private List<String> FAIL_CODES = Arrays.asList("CLOSED", "REVOKED", "PAYERROR");
 
     public CommonSingleResult<WxPrePayResultDto> wxMiniPay(String customerId, PayReq payReq) {
@@ -195,5 +198,73 @@ public class PayBiz {
         }
         payRecordService.updateStatus(payRecord, PayStatusEnum.PENDING.getCode());
 
+    }
+
+    /**
+     * @param customerId
+     * @param amount     金豆数量
+     * @return
+     */
+    public BaseResult cash(String customerId, BigDecimal amount) {
+        log.info("#cash customerId={},amount={}", customerId, amount);
+        BaseResult result = new BaseResult();
+        Customer customer = customerService.queryCustomerByCustomerId(customerId);
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+                CheckUtil.isNotNull("amount", amount);
+                if (BigDecimal.ZERO.compareTo(amount) > -1) {
+                    log.error("金豆数量不合法");
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                if (!UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
+                    log.error("用户状态不对");
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                BigDecimal gold = customer.getGold();
+                if (gold.compareTo(amount) == -1) {
+                    log.error("金豆数量不足");
+                    throw new CommonException(CommonErrorEnum.GOLD_NOT_ENOUGH);
+                }
+
+            }
+
+            @Override
+            public void doAction() {
+                BigDecimal money = gold2Money(amount);
+                PayRecord payRecord = new PayRecord();
+                payRecord.setPayNo(snowFlake.nextId() + "");
+                payRecord.setPayChannel(ChannelEnum.WX_MINI.getCode());
+                payRecord.setPayAmount(money);
+                payRecord.setCustomerNo(customerId);
+                payRecord.setOrderMsg("金豆提现");
+                payRecordService.createPayNo(payRecord, PayTypeEnum.CASH);
+//                1.扣金豆
+                flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, amount.negate());
+//                2.转账
+                WxCompanyPayRequestDto wxCompanyPayRequestDto = new WxCompanyPayRequestDto();
+                wxCompanyPayRequestDto.setTotalAmount(payRecord.getPayAmount());
+                wxCompanyPayRequestDto.setMiniOpenId(customer.getWxMiniOpenId());
+                wxCompanyPayRequestDto.setOutTradeNo(payRecord.getPayNo());
+                BaseResult result1 = wxCommonApi.companyPay(wxCompanyPayRequestDto);
+                if (!result1.isSuccess()) {
+//                    失败回滚金豆
+                    flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, amount);
+                }
+            }
+        });
+        log.info("提现结果 result={}", JSONObject.toJSONString(result));
+        return result;
+    }
+
+    /**
+     * 金豆转换现金
+     *
+     * @param goldAmount
+     * @return
+     */
+    private BigDecimal gold2Money(BigDecimal goldAmount) {
+        BigDecimal bigDecimal = goldAmount.multiply(new BigDecimal("0.08")).setScale(2);
+        return bigDecimal;
     }
 }

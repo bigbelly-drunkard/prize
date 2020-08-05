@@ -47,6 +47,11 @@ public class RpSendPrizeHandler extends AbstractSendPrize {
     }
 
     @Override
+    public void sendPrizeHandler(String customerId, PrizeBean prizeBean) {
+
+    }
+
+    @Override
     public BigDecimal getPrice(PrizeBean prizeBean) {
         return prizeBean.getFactor();
     }

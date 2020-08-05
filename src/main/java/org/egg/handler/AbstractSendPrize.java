@@ -12,6 +12,8 @@ import org.egg.utils.ApplicationContextUtil;
 import org.egg.utils.IdMarkUtil;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author dataochen
@@ -21,6 +23,7 @@ import java.math.BigDecimal;
 @Slf4j
 public abstract class AbstractSendPrize implements SendPrizeHandler {
     private PayRecordServiceImpl payRecordService;
+    private List<String> needPay = Arrays.asList("RP", "RRP");
 
     public AbstractSendPrize() {
         payRecordService = (PayRecordServiceImpl) ApplicationContextUtil.getObject("payRecordService");
@@ -28,18 +31,28 @@ public abstract class AbstractSendPrize implements SendPrizeHandler {
 
     @Override
     public void sendPrize(String customerId, PrizeBean prizeBean) {
-        PayRecord payRecord = insertPayRecord(customerId, prizeBean);
-        try {
-            sendPrizeHandler(customerId, prizeBean, payRecord);
-            payRecord.setPayStatus(PayStatusEnum.SUCCESS.getCode());
-        } catch (Exception e) {
-            log.warn("发奖失败 降级默认为未中奖 e={}", e);
-            //  2020/8/4 降级默认为未中奖
-            prizeBean.setId(null);
-            payRecord.setPayStatus(PayStatusEnum.FAIL.getCode());
-        }
+        if (needPay.contains(prizeBean.getTypeCode())) {
+            PayRecord payRecord = insertPayRecord(customerId, prizeBean);
+            try {
+                sendPrizeHandler(customerId, prizeBean, payRecord);
+                payRecord.setPayStatus(PayStatusEnum.SUCCESS.getCode());
+            } catch (Exception e) {
+                log.warn("发奖失败 降级默认为未中奖 e={}", e);
+                //  2020/8/4 降级默认为未中奖
+                prizeBean.setId(null);
+                payRecord.setPayStatus(PayStatusEnum.FAIL.getCode());
+            }
 //          支付单状态变更
-        payRecordService.updateStatus(payRecord, PayStatusEnum.PENDING.getCode());
+            payRecordService.updateStatus(payRecord, PayStatusEnum.PENDING.getCode());
+        } else {
+            try {
+                sendPrizeHandler(customerId, prizeBean);
+            } catch (Exception e) {
+                log.warn("发奖失败 降级默认为未中奖 e={}", e);
+                //  2020/8/4 降级默认为未中奖
+                prizeBean.setId(null);
+            }
+        }
 
     }
 
@@ -51,6 +64,8 @@ public abstract class AbstractSendPrize implements SendPrizeHandler {
      * @param payRecord
      */
     public abstract void sendPrizeHandler(String customerId, PrizeBean prizeBean, PayRecord payRecord);
+
+    public abstract void sendPrizeHandler(String customerId, PrizeBean prizeBean);
 
     /**
      * 获取支付单金额

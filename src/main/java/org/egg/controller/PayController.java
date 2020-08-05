@@ -5,6 +5,7 @@ import org.egg.biz.PayBiz;
 import org.egg.model.DO.PayRecord;
 import org.egg.model.DTO.WxPrePayResultDto;
 import org.egg.model.VO.PayReq;
+import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.utils.ClientUtils;
 import org.egg.utils.CustomerUtil;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * @author dataochen
@@ -30,6 +32,7 @@ public class PayController {
 
     /**
      * 微信小程序支付
+     *
      * @param payReq
      * @param request
      * @return
@@ -43,6 +46,7 @@ public class PayController {
 
     /**
      * 查询支付结果
+     *
      * @param payNo
      * @param request
      * @return
@@ -50,6 +54,17 @@ public class PayController {
     @PostMapping("/wxMiniPay/{payNo}")
     public CommonSingleResult<PayRecord> queryPayRes(@PathVariable(value = "payNo") String payNo, HttpServletRequest request) {
         return payBiz.queryPayRes(CustomerUtil.getCustomer().getCustomerNo(), payNo);
+    }
+
+    /**
+     * 金豆提现
+     *
+     * @param amount
+     * @return
+     */
+    @PostMapping("/cash/{amount}")
+    public BaseResult cash(@PathVariable(value = "amount") BigDecimal amount) {
+        return payBiz.cash(CustomerUtil.getCustomer().getCustomerNo(), amount);
     }
 
 

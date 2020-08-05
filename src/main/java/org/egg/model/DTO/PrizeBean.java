@@ -1,6 +1,7 @@
 package org.egg.model.DTO;
 
 import lombok.Data;
+import org.egg.enums.PrizeTypeEnum;
 
 import java.math.BigDecimal;
 
@@ -19,6 +20,9 @@ public class PrizeBean {
     private BigDecimal factor;
 
     private BigDecimal rate;
+    /**
+     * @see PrizeTypeEnum
+     */
     private String typeCode;
     private BigDecimal needScore;
     private BigDecimal needGold;

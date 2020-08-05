@@ -166,6 +166,10 @@ public enum CommonErrorEnum {
      * 积分不足
      */
     SCORE_NOT_ENOUGH("PRO3300015", "SCORE_NOT_ENOUGH"),
+    /**
+     * 金豆不足
+     */
+    GOLD_NOT_ENOUGH("PRO3300016", "GOLD_NOT_ENOUGH"),
 
 
     /**

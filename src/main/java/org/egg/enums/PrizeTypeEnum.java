@@ -13,13 +13,16 @@ public enum PrizeTypeEnum {
     RANDOM_RED_PACKAGE("RRP", "随机红包"),
     ZREO("ZR", "未中奖"),
     COUPON("CP", "代金券"),
-    ;
+    GOLD("GD", "金豆"),
+    RANDOM_GOLD("RGD", "随机金豆"),;
     private static Map<String, PrizeTypeEnum> codeEnum = new HashMap<>(4);
+
     static {
         for (PrizeTypeEnum prizeTypeEnum : PrizeTypeEnum.values()) {
             codeEnum.put(prizeTypeEnum.getCode(), prizeTypeEnum);
         }
     }
+
     PrizeTypeEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;

@@ -22,6 +22,11 @@ public class ZeSendPrizeHandler extends AbstractSendPrize {
     }
 
     @Override
+    public void sendPrizeHandler(String customerId, PrizeBean prizeBean) {
+
+    }
+
+    @Override
     public BigDecimal getPrice(PrizeBean prizeBean) {
         return BigDecimal.ZERO;
     }
