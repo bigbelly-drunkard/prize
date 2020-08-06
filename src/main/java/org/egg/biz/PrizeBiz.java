@@ -1,9 +1,13 @@
 package org.egg.biz;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.enums.CommonErrorEnum;
+import org.egg.enums.PrizeTypeEnum;
+import org.egg.enums.TableTypeEnum;
 import org.egg.enums.UserStatusEnum;
 import org.egg.exception.CommonException;
+import org.egg.handler.Observer.PrizeSendObserver;
 import org.egg.model.DO.Customer;
 import org.egg.model.DTO.PrizeBean;
 import org.egg.model.VO.GameTenRes;
@@ -11,9 +15,10 @@ import org.egg.observer.subjects.CommonObserver;
 import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.CustomerServiceImpl;
+import org.egg.service.impl.RedisServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
-import org.egg.utils.CheckUtil;
+import org.egg.utils.IdMarkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -39,7 +44,13 @@ public class PrizeBiz {
     private BizTemplate bizTemplate;
     @javax.annotation.Resource(name = "getPrizeSuccObserver")
     private CommonObserver getPrizeSuccObserver;
+    @Autowired
+    private RedisServiceImpl redisService;
+    @Autowired
+    private PrizeSendObserver prizeSendObserver;
+
     private static final String PRIZE_PATH = "/file/prize.properties";
+    private Map<String, PrizeBean> gameTenCache = new HashMap<>(8);
 
     private Map<String, List<PrizeBean>> prizeListCache = new HashMap<>(4);
     private Map<String, PrizeBean> prizeDefaultCache = new HashMap<>(2);
@@ -75,6 +86,53 @@ public class PrizeBiz {
             prizeBeans.sort(Comparator.comparing(PrizeBean::getId));
             prizeListCache.put(ss, prizeBeans);
         }
+//        gameTenCache
+    }
+
+    private void initGameTen() {
+        PrizeBean prizeBean1 = new PrizeBean();
+        prizeBean1.setTypeCode(PrizeTypeEnum.RED_PACKAGE.getCode());
+        prizeBean1.setFactor(new BigDecimal("5"));
+        prizeBean1.setRate(new BigDecimal("0.4"));
+        prizeBean1.setName("5元现金红包");
+        gameTenCache.put("1", prizeBean1);
+        PrizeBean prizeBean2 = new PrizeBean();
+        prizeBean2.setTypeCode(PrizeTypeEnum.GOLD.getCode());
+        prizeBean2.setFactor(new BigDecimal("5"));
+        prizeBean2.setRate(new BigDecimal("0.4"));
+        prizeBean2.setName("50金豆");
+        gameTenCache.put("2", prizeBean2);
+        PrizeBean prizeBean3 = new PrizeBean();
+        prizeBean3.setTypeCode(PrizeTypeEnum.RED_PACKAGE.getCode());
+        prizeBean3.setFactor(new BigDecimal("9.8"));
+        prizeBean3.setRate(new BigDecimal("0.2"));
+        prizeBean3.setName("9.8元现金红包");
+        gameTenCache.put("3", prizeBean3);
+        PrizeBean prizeBean4 = new PrizeBean();
+        prizeBean4.setTypeCode(PrizeTypeEnum.SCORE.getCode());
+        prizeBean4.setFactor(new BigDecimal("6.6"));
+        prizeBean4.setRate(new BigDecimal("0.4"));
+        prizeBean4.setName("66积分礼包");
+        gameTenCache.put("4", prizeBean4);
+        PrizeBean prizeBean5 = new PrizeBean();
+        prizeBean5.setTypeCode(PrizeTypeEnum.RANDOM_RED_PACKAGE.getCode());
+        prizeBean5.setFactor(new BigDecimal("8.8"));
+        prizeBean5.setRate(new BigDecimal("0.2"));
+        prizeBean5.setName("最高8.8元随机现金红包");
+        gameTenCache.put("5", prizeBean5);
+        PrizeBean prizeBean6 = new PrizeBean();
+        prizeBean6.setTypeCode(PrizeTypeEnum.RED_PACKAGE.getCode());
+        prizeBean6.setFactor(new BigDecimal("2"));
+        prizeBean6.setRate(new BigDecimal("1"));
+        prizeBean6.setName("2元现金红包");
+        gameTenCache.put("6", prizeBean6);
+        PrizeBean prizeBean7 = new PrizeBean();
+        prizeBean7.setTypeCode(PrizeTypeEnum.RANDOM_SCORE.getCode());
+        prizeBean7.setFactor(new BigDecimal("10"));
+        prizeBean7.setRate(new BigDecimal("0.2"));
+        prizeBean7.setName("最高100随机积分礼包");
+        gameTenCache.put("7", prizeBean7);
+
     }
 
     /**
@@ -156,12 +214,18 @@ public class PrizeBiz {
 
     }
 
-    public CommonSingleResult<GameTenRes> game4TenHit(String customerId, BigDecimal amount) {
+    /**
+     * 是否可以命中
+     * 一次10积分
+     *
+     * @param customerId
+     * @return
+     */
+    public CommonSingleResult<GameTenRes> game4TenHit(String customerId) {
         CommonSingleResult<GameTenRes> result = new CommonSingleResult<>();
         bizTemplate.process(result, new TemplateCallBack() {
             @Override
             public void doCheck() {
-                CheckUtil.isNotNull("amount", amount);
                 //         check 积分够不够
                 Customer customer = customerService.queryCustomerByCustomerId(customerId);
                 if (!UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
@@ -169,7 +233,7 @@ public class PrizeBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 BigDecimal score = customer.getScore();
-                if (score.compareTo(amount) != 1) {
+                if (score.compareTo(new BigDecimal("10")) != 1) {
                     log.error(" 用户积分不够");
                     throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
                 }
@@ -177,7 +241,25 @@ public class PrizeBiz {
 
             @Override
             public void doAction() {
-//                1.中奖几率 1/j
+                GameTenRes gameTenRes = new GameTenRes();
+//                1.中奖几率 1/3
+                double random = Math.random();
+                if (random < 2 / 3) {
+                    log.info("此处不可中奖");
+                    gameTenRes.setHitFlag(false);
+                    result.setData(gameTenRes);
+                    return;
+                }
+                Calendar calendar = Calendar.getInstance();
+                int firstDayOfWeek = calendar.getFirstDayOfWeek();
+                PrizeBean prizeBean = gameTenCache.get(firstDayOfWeek + 1 + "");
+                String uuid = IdMarkUtil.getUuid(TableTypeEnum.OTHER);
+                redisService.setPid(customerId, uuid, prizeBean);
+                gameTenRes.setHitFlag(true);
+                gameTenRes.setPid(uuid);
+                gameTenRes.setName(prizeBean.getName());
+                result.setData(gameTenRes);
+                log.info("此次中奖了，gameTenRes={}", JSONObject.toJSONString(gameTenRes));
 
             }
         });
@@ -186,12 +268,37 @@ public class PrizeBiz {
 
     /**
      * 领取hit
+     *
      * @param cid
      * @param pid
      * @return
      */
     public BaseResult confirmHit(String cid, String pid) {
-        return null;
+        log.info("领取hit cid={},pid={}", cid, pid);
+        BaseResult result = new BaseResult();
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+                Customer customer = customerService.queryCustomerByCustomerId(cid);
+                if (!UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
+                    log.warn("用户状态不合法 customerId={}", cid);
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+
+            }
+
+            @Override
+            public void doAction() {
+                PrizeBean prizeBean = redisService.checkPid(cid, pid);
+                if (null == prizeBean) {
+                    log.warn("没有pid或pid已过期");
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                prizeSendObserver.update(prizeBean);
+            }
+        });
+        log.info("领取hit result={}", JSONObject.toJSONString(result));
+        return result;
     }
 
 

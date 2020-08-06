@@ -14,7 +14,9 @@ public enum PrizeTypeEnum {
     ZREO("ZR", "未中奖"),
     COUPON("CP", "代金券"),
     GOLD("GD", "金豆"),
-    RANDOM_GOLD("RGD", "随机金豆"),;
+    RANDOM_GOLD("RGD", "随机金豆"),
+    SCORE("SC", "积分"),
+    RANDOM_SCORE("RSC", "随机积分"),;
     private static Map<String, PrizeTypeEnum> codeEnum = new HashMap<>(4);
 
     static {

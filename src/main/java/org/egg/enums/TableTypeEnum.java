@@ -9,6 +9,7 @@ public enum TableTypeEnum {
     CUSTOMER("1", ""),
     FLOW_RECORD("2", ""),
     PAY_RECORD("3", ""),
+    OTHER("4", ""),
     ;
     private String code;
     private String desc;

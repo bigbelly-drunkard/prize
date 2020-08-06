@@ -3,6 +3,8 @@ package org.egg.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.biz.PrizeBiz;
 import org.egg.model.DTO.PrizeBean;
+import org.egg.model.VO.GameTenRes;
+import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,18 @@ public class PrizeController extends BaseController {
     private PrizeBiz prizeBiz;
 
     @PostMapping("/r/{activeNo}")
-    public CommonSingleResult<PrizeBean> run(@PathVariable(value = "activeNo") String activeNo) {
+    public CommonSingleResult<PrizeBean> p(@PathVariable(value = "activeNo") String activeNo) {
         return prizeBiz.p(activeNo, CustomerUtil.getCustomer().getCustomerNo());
+    }
+
+    @PostMapping("/g}")
+    public CommonSingleResult<GameTenRes> getHit() {
+        return prizeBiz.game4TenHit(CustomerUtil.getCustomer().getCustomerNo());
+    }
+
+    @PostMapping("/c/{pid}")
+    public BaseResult confirmHit(@PathVariable(value = "pid") String pid) {
+        return prizeBiz.confirmHit(CustomerUtil.getCustomer().getCustomerNo(), pid);
     }
 
 

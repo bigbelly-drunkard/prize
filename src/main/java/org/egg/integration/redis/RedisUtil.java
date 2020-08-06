@@ -122,6 +122,13 @@ public class RedisUtil {
         return aBoolean == null ? false : aBoolean;
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     * @param timeout 毫秒
+     * @return
+     */
     public boolean setEx(String key, Object value, long timeout) {
         Boolean aBoolean = redisTemplate.opsForValue().setIfAbsent(key, value, timeout, TimeUnit.MILLISECONDS);
         return aBoolean == null ? false : aBoolean;
