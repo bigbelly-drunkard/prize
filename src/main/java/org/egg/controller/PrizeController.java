@@ -27,4 +27,6 @@ public class PrizeController extends BaseController {
     public CommonSingleResult<PrizeBean> run(@PathVariable(value = "activeNo") String activeNo) {
         return prizeBiz.p(activeNo, CustomerUtil.getCustomer().getCustomerNo());
     }
+
+
 }

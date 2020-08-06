@@ -170,6 +170,10 @@ public enum CommonErrorEnum {
      * 金豆不足
      */
     GOLD_NOT_ENOUGH("PRO3300016", "GOLD_NOT_ENOUGH"),
+    /**
+     * 已经做了
+     */
+    ALREADY_DO("PRO3300017", "ALREADY_DO"),
 
 
     /**

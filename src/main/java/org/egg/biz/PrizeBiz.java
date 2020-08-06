@@ -6,11 +6,14 @@ import org.egg.enums.UserStatusEnum;
 import org.egg.exception.CommonException;
 import org.egg.model.DO.Customer;
 import org.egg.model.DTO.PrizeBean;
+import org.egg.model.VO.GameTenRes;
 import org.egg.observer.subjects.CommonObserver;
+import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.CustomerServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
+import org.egg.utils.CheckUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -151,6 +154,44 @@ public class PrizeBiz {
      */
     public void pWeight() {
 
+    }
+
+    public CommonSingleResult<GameTenRes> game4TenHit(String customerId, BigDecimal amount) {
+        CommonSingleResult<GameTenRes> result = new CommonSingleResult<>();
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+                CheckUtil.isNotNull("amount", amount);
+                //         check 积分够不够
+                Customer customer = customerService.queryCustomerByCustomerId(customerId);
+                if (!UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
+                    log.warn("用户状态不合法 customerId={}", customerId);
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                BigDecimal score = customer.getScore();
+                if (score.compareTo(amount) != 1) {
+                    log.error(" 用户积分不够");
+                    throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
+                }
+            }
+
+            @Override
+            public void doAction() {
+//                1.中奖几率 1/j
+
+            }
+        });
+        return result;
+    }
+
+    /**
+     * 领取hit
+     * @param cid
+     * @param pid
+     * @return
+     */
+    public BaseResult confirmHit(String cid, String pid) {
+        return null;
     }
 
 
