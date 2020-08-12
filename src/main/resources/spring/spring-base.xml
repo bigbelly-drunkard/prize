@@ -37,6 +37,7 @@
     <bean id="payRecordStatusUpdateObserver" class="org.egg.observer.subjects.CommonObserver">
         <constructor-arg>
             <list>
+                <ref bean="paySuccLoadFactorObserver"/>
             </list>
         </constructor-arg>
     </bean>

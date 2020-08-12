@@ -21,16 +21,28 @@ public class IndexController {
     @Autowired
     private RedisBiz redisBiz;
 
+    /**
+     * 签到
+     * @return
+     */
     @PostMapping("/qd")
     public BaseResult qd() {
         return redisBiz.qd(CustomerUtil.getCustomer().getCustomerNo());
     }
 
+    /**
+     *答题
+     * @return
+     */
     @PostMapping("/dt")
     public BaseResult dt() {
         return redisBiz.dt(CustomerUtil.getCustomer().getCustomerNo());
     }
 
+    /**
+     * 分享
+     * @return
+     */
     @PostMapping("/share")
     public BaseResult share() {
         return redisBiz.share(CustomerUtil.getCustomer().getCustomerNo());

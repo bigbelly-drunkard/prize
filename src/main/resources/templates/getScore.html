@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+    <title>领取积分</title>
+</head>
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+        background: #eeeeee;
+    }
+
+    .main {
+        position: fixed;
+        top:20%;
+        padding: 1rem;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        /*justify-content:;*/
+    }
+
+    .everyDay {
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid #eeeeee;
+        padding: 0.7rem 1rem;
+        margin-top: 1rem;
+    }
+
+    .title {
+        /*background: #e375cd;*/
+        background-image: radial-gradient(rgb(227,117,205), rgb(253, 130, 228));
+        color: #ffffff;
+        font-size: 1.25rem;
+        font-family: cursive;
+        text-align: center;
+        padding: .5rem;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .item {
+        border-bottom: 1px solid #eeeeee;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .item .ct {
+        padding: 1rem;
+        margin-right: 1rem;
+    }
+
+    .item .btn {
+        background: #ff849b;
+        box-shadow: 2px 0 2px 2px #eeeeee;
+        color: #ffffff;
+        /*width: 3rem;*/
+        /*height: 4rem;*/
+        border: 1px solid #fb8ca2;
+        border-radius: 7px;
+        padding: .5rem;
+    }
+
+
+    .getMore {
+        width: 7rem;
+        padding: 1rem;
+        color: #ffffff;
+        background: #ff849b;
+        box-shadow: 2px 0 2px 2px #eeeeee;
+        border: 1px solid #fb8ca2;
+        border-radius: 7px;
+        text-align: center;
+        margin-top: 2rem;
+    }
+</style>
+<body>
+<div class="main">
+    <div class="everyDay">
+        <div class="title">每日任务</div>
+        <div class="item">
+            <div class="ct">
+                每天签到赠送10积分，一天只能领取一次。
+            </div>
+            <div class="btn">签到</div>
+        </div>
+        <div class="item">
+            <div class="ct">
+                每天分享给好友或好友群后赠送15积分，一天只能领取一次。
+            </div>
+            <div class="btn">前往</div>
+        </div>
+    </div>
+    <div class="getMore">
+        获取更多
+
+    </div>
+</div>
+</body>
+</html>

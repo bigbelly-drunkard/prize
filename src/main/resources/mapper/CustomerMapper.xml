@@ -14,6 +14,7 @@
     <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
     <result column="customer_status" jdbcType="VARCHAR" property="customerStatus" />
     <result column="customer_type" jdbcType="VARCHAR" property="customerType" />
+    <result column="member_expire" jdbcType="TIMESTAMP" property="memberExpire" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate" />
   </resultMap>
@@ -77,7 +78,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, customer_no, score, gold, load_factor, wx_mini_open_id, zfb_open_id, wx_open_id, 
-    nick_name, head_url, customer_status, customer_type, created_date, modified_date
+    nick_name, head_url, customer_status, customer_type, member_expire, created_date, 
+    modified_date
   </sql>
   <select id="selectByExample" parameterType="org.egg.model.DO.CustomerExample" resultMap="BaseResultMap">
     select
@@ -117,13 +119,13 @@
     insert into customer (customer_no, score, gold, 
       load_factor, wx_mini_open_id, zfb_open_id, 
       wx_open_id, nick_name, head_url, 
-      customer_status, customer_type, created_date, 
-      modified_date)
+      customer_status, customer_type, member_expire, 
+      created_date, modified_date)
     values (#{customerNo,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL}, #{gold,jdbcType=DECIMAL}, 
       #{loadFactor,jdbcType=DECIMAL}, #{wxMiniOpenId,jdbcType=VARCHAR}, #{zfbOpenId,jdbcType=VARCHAR}, 
       #{wxOpenId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, 
-      #{customerStatus,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
-      #{modifiedDate,jdbcType=TIMESTAMP})
+      #{customerStatus,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR}, #{memberExpire,jdbcType=TIMESTAMP}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{modifiedDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.egg.model.DO.Customer">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -163,6 +165,9 @@
       </if>
       <if test="customerType != null">
         customer_type,
+      </if>
+      <if test="memberExpire != null">
+        member_expire,
       </if>
       <if test="createdDate != null">
         created_date,
@@ -204,6 +209,9 @@
       </if>
       <if test="customerType != null">
         #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberExpire != null">
+        #{memberExpire,jdbcType=TIMESTAMP},
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
@@ -258,6 +266,9 @@
       <if test="record.customerType != null">
         customer_type = #{record.customerType,jdbcType=VARCHAR},
       </if>
+      <if test="record.memberExpire != null">
+        member_expire = #{record.memberExpire,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       </if>
@@ -283,6 +294,7 @@
       head_url = #{record.headUrl,jdbcType=VARCHAR},
       customer_status = #{record.customerStatus,jdbcType=VARCHAR},
       customer_type = #{record.customerType,jdbcType=VARCHAR},
+      member_expire = #{record.memberExpire,jdbcType=TIMESTAMP},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       modified_date = #{record.modifiedDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -325,6 +337,9 @@
       <if test="customerType != null">
         customer_type = #{customerType,jdbcType=VARCHAR},
       </if>
+      <if test="memberExpire != null">
+        member_expire = #{memberExpire,jdbcType=TIMESTAMP},
+      </if>
       <if test="createdDate != null">
         created_date = #{createdDate,jdbcType=TIMESTAMP},
       </if>
@@ -347,6 +362,7 @@
       head_url = #{headUrl,jdbcType=VARCHAR},
       customer_status = #{customerStatus,jdbcType=VARCHAR},
       customer_type = #{customerType,jdbcType=VARCHAR},
+      member_expire = #{memberExpire,jdbcType=TIMESTAMP},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

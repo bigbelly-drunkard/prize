@@ -28,6 +28,8 @@ public class Customer {
 
     private String customerType;
 
+    private Date memberExpire;
+
     private Date createdDate;
 
     private Date modifiedDate;
@@ -126,6 +128,14 @@ public class Customer {
 
     public void setCustomerType(String customerType) {
         this.customerType = customerType == null ? null : customerType.trim();
+    }
+
+    public Date getMemberExpire() {
+        return memberExpire;
+    }
+
+    public void setMemberExpire(Date memberExpire) {
+        this.memberExpire = memberExpire;
     }
 
     public Date getCreatedDate() {

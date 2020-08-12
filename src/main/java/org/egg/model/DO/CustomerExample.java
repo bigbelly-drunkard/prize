@@ -906,6 +906,66 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
+        public Criteria andMemberExpireIsNull() {
+            addCriterion("member_expire is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireIsNotNull() {
+            addCriterion("member_expire is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireEqualTo(Date value) {
+            addCriterion("member_expire =", value, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireNotEqualTo(Date value) {
+            addCriterion("member_expire <>", value, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireGreaterThan(Date value) {
+            addCriterion("member_expire >", value, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireGreaterThanOrEqualTo(Date value) {
+            addCriterion("member_expire >=", value, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireLessThan(Date value) {
+            addCriterion("member_expire <", value, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireLessThanOrEqualTo(Date value) {
+            addCriterion("member_expire <=", value, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireIn(List<Date> values) {
+            addCriterion("member_expire in", values, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireNotIn(List<Date> values) {
+            addCriterion("member_expire not in", values, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireBetween(Date value1, Date value2) {
+            addCriterion("member_expire between", value1, value2, "memberExpire");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberExpireNotBetween(Date value1, Date value2) {
+            addCriterion("member_expire not between", value1, value2, "memberExpire");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedDateIsNull() {
             addCriterion("created_date is null");
             return (Criteria) this;
