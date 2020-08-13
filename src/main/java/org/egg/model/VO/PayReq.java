@@ -19,4 +19,6 @@ public class PayReq implements Serializable {
      * 用于记录支付的商品信息
      */
     private String orderMsg;
+
+    private String orderType;
 }

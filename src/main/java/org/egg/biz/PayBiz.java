@@ -65,6 +65,21 @@ public class PayBiz {
                     log.error("支付金额不对 amount={}", amount);
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
+                OrderTypeEnum enumByCode = OrderTypeEnum.getEnumByCode(payReq.getOrderType());
+                if (null == enumByCode) {
+                    log.error("非法参数");
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+//                 校验商品价格是否合法
+//                会员类 校验金额
+                if (OrderTypeEnum.SCORE != enumByCode) {
+                    if (enumByCode.getPrize().compareTo(amount) != 1) {
+                        log.error("非法参数,下单金额不一致 amount={},prize={}", amount, enumByCode.getPrize());
+                        throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                    }
+                }
+
+
             }
 
             @Override
@@ -88,6 +103,7 @@ public class PayBiz {
                 payRecord.setPayAmount(payReq.getAmount());
                 payRecord.setCustomerNo(customerId);
                 payRecord.setOrderMsg(payReq.getOrderMsg());
+                payRecord.setOrderType(payReq.getOrderType());
                 payRecordService.createPayNo(payRecord, PayTypeEnum.PAY);
                 result.setData(pay);
             }

@@ -7,8 +7,8 @@ package org.egg.enums;
  */
 public enum CustomerTypeEnum {
     COMMON("COMMON", "普通用户"),
-    MEMBER_01("COMMON", "黄金会员"),
-    MEMBER_02("COMMON", "铂金会员"),
+    MEMBER_01("MEMBER_01", "黄金会员"),
+//    MEMBER_02("MEMBER_02", "铂金会员"),
     ;
 
     CustomerTypeEnum(String code, String dec) {

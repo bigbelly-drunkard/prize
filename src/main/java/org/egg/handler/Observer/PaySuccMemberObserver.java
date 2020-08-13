@@ -1,11 +1,11 @@
 package org.egg.handler.Observer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.egg.biz.LoadFactorBiz;
+import org.egg.enums.OrderTypeEnum;
 import org.egg.enums.PayStatusEnum;
-import org.egg.enums.PayTypeEnum;
 import org.egg.model.DO.PayRecord;
 import org.egg.observer.Observer;
+import org.egg.service.impl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,19 +14,20 @@ import org.springframework.stereotype.Component;
  * @Description
  * @date: 2020/8/4 20:36
  */
-@Component("paySuccScoreObserver")
+@Component("paySuccMemberObserver")
 @Slf4j
 public class PaySuccMemberObserver implements Observer {
     @Autowired
-    private LoadFactorBiz loadFactorBiz;
+    private CustomerServiceImpl customerService;
 
     @Override
     public void update(Object obj) {
         PayRecord obj1 = (PayRecord) obj;
+        OrderTypeEnum enumByCode1 = OrderTypeEnum.getEnumByCode(obj1.getOrderType());
         PayStatusEnum enumByCode = PayStatusEnum.getEnumByCode(obj1.getPayStatus());
         switch (enumByCode) {
             case SUCCESS:
-                loadFactorLogic(obj1);
+                exe(obj1.getCustomerNo(),enumByCode1);
                 break;
             case FAIL:
                 break;
@@ -41,12 +42,24 @@ public class PaySuccMemberObserver implements Observer {
 
     }
 
-    private void loadFactorLogic(PayRecord payRecord) {
-        String payType = payRecord.getPayType();
-        if (PayTypeEnum.PAY.getCode().equals(payType)) {
-            loadFactorBiz.buyGood(payRecord.getPayAmount(), payRecord.getCustomerNo());
-        } else if (PayTypeEnum.CASH.getCode().equals(payType)) {
-            loadFactorBiz.cash(payRecord.getPayAmount(), payRecord.getCustomerNo());
+    private void exe(String cid, OrderTypeEnum enumByCode) {
+        int day = 0;
+        switch (enumByCode) {
+            case MEMBER_7:
+                day=7;
+                break;
+            case MEMBER_30:
+                day=30;
+                break;
+            case MEMBER_365:
+                day=365;
+                break;
+            case MEMBER_1095:
+                day=1095;
+                break;
+            default:
+                break;
         }
+        customerService.updateMember(cid, day);
     }
 }

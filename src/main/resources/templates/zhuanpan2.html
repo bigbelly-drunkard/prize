@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+    <title>main</title>
+</head>
+<style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .main {
+        background-image: url(../static/zhuanpan/bg1.png);
+        background-color: #fa3d3e;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        background-size: cover;
+        color: #606266;
+        overflow: hidden;
+    }
+
+    .t {
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .t img {
+        width: 70%;
+    }
+
+    .sec img {
+        width: 1.5rem;
+        padding-top: 0.5rem;
+    }
+
+    .zp {
+
+    }
+
+    .turntable {
+        width: 20rem;
+        height: 20rem;
+        position: relative;
+        margin-top: 2rem;
+        min-height: 20rem;
+    }
+
+    .bg {
+        width: 100%;
+        height: 100%;
+        background-image: url(../static/zhuanpan/turntable-outer-bg2.png);
+        background-size: cover;
+        -webkit-animation: xuanzhuan 5s linear infinite;
+        animation: xuanzhuan 5s linear infinite;
+        position: absolute;
+        top: 0;
+    }
+
+    .zhuanpan {
+
+    }
+
+    .secs {
+
+    }
+
+    .secs .sec {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        text-align: center;
+        padding-top: 3rem;
+        color: #303133;
+        font-size: 0.8rem;
+    }
+
+    .turntable .but {
+        position: relative;
+        top: 0;
+        left: 0;
+        text-align: center;
+    }
+
+    .turntable .canvas {
+        position: absolute;
+        top: 0;
+    }
+
+    canvas {
+        display: inline-block;
+    }
+
+    .turntable .but img {
+        width: 4rem;
+        padding-top: 7rem;
+        cursor: pointer;
+    }
+
+    @keyframes xuanzhuan {
+        0% {
+            -webkit-transform: rotate(0turn);
+            transform: rotate(0turn);
+            -webkit-transition: rotate(0turn);
+        }
+        100% {
+            -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+            -webkit-transition: rotate(1turn);
+        }
+    }
+
+    .score {
+        margin-top: 2rem;
+        padding: 0.2rem 2rem;
+        background: #fea603;
+        color: #FFFFFF;
+        border-radius: 1rem;
+    }
+
+    .getPrizeRecords {
+        background: #ffffff;
+        /*opacity: 0.7;*/
+        color: #5a5a5a;
+        width: 20rem;
+        font-size: 0.75rem;
+        border: 1px solid #eeeeee;
+        border-radius: 1rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .getPrizeRecords .item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        /*border-bottom:1px solid #aaaaaa;*/
+    }
+
+    .getPrizeRecords .item .name {
+        color: orange;
+        padding: 0 5px;
+    }
+</style>
+<body>
+<div class="main">
+    <div class="t">
+        <img src="../static/zhuanpan/lottery.png">
+    </div>
+    <div class="score">
+        剩余 10 积分
+    </div>
+    <div class="zp">
+        <div class="turntable">
+            <div class="bg"></div>
+            <div class="zhuanpan" style="transform-origin: 10rem 10rem ;transform: rotate(0deg);">
+                <canvas id="myCanvas" width="300" height="300" class="canvas"></canvas>
+                <div class="secs">
+                    <div class="sec" style="transform: rotate(0deg); transform-origin: 10rem 10rem">
+                        <div>谢谢参与</div>
+                        <div class="img"><img src="../static/zhuanpan/thanks.png"></div>
+                    </div>
+                    <div class="sec" style="transform: rotate(45deg); transform-origin: 10rem 10rem">
+                        <div>礼物</div>
+                        <div class="img"><img src="../static/zhuanpan/gift.png"></div>
+                    </div>
+                    <div class="sec" style="transform: rotate(90deg); transform-origin: 10rem 10rem">
+                        <div>抽奖券</div>
+                        <div class="img"><img src="../static/zhuanpan/red-packet.png"></div>
+                    </div>
+                    <div class="sec" style="transform: rotate(135deg); transform-origin: 10rem 10rem">
+                        <div>元宝</div>
+                        <div class="img"><img src="../static/zhuanpan/yuanbao.png"></div>
+                    </div>
+                    <div class="sec" style="transform: rotate(180deg); transform-origin: 10rem 10rem">
+                        <div>元宝</div>
+                        <div class="img"><img src="../static/zhuanpan/yuanbao2.png"></div>
+                    </div>
+                    <div class="sec" style="transform: rotate(225deg); transform-origin: 10rem 10rem">
+                        <div>抽奖券</div>
+                        <div class="img"><img src="../static/zhuanpan/red-packet.png"></div>
+                    </div>
+                    <div class="sec" style="transform: rotate(270deg); transform-origin: 10rem 10rem">
+                        <div>元宝</div>
+                        <div class="img"><img src="../static/zhuanpan/yuanbao3.png"></div>
+                    </div>
+                    <div class="sec" style="transform: rotate(315deg); transform-origin: 10rem 10rem">
+                        <div>抽奖券</div>
+                        <div class="img"><img src="../static/zhuanpan/red-packet.png"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="but"><img src="../static/zhuanpan/button.png"></div>
+        </div>
+    </div>
+    <div class="getPrizeRecords">
+        <div class="item">
+            <span>21:53:25</span>
+            <span>恭喜<span class="name">张三</span>获取到5元现金红包</span>
+        </div>
+        <div class="item">
+            <span>21:53:25</span>
+            <span>恭喜<span class="name">张三</span>获取到5元现金红包</span>
+        </div>
+        <div class="item">
+            <span>21:53:25</span>
+            <span>恭喜<span class="name">张三</span>获取到5元现金红包</span>
+        </div>
+
+    </div>
+</div>
+</body>
+<script>
+    function init() {
+        var t = {prizeNum: 8}, e = getComputedStyle(window.document.documentElement)["font-size"];
+        e = parseFloat(e), t.fontSize = e, t.centerOrigin = 10 * e, t.canvasLength = 8 * e, setTimeout(function () {
+                for (var e = document.getElementById("myCanvas").getContext("2d"), i = t.prizeNum, s = 360 / i / 2 + 90, r = 0; r < i; r++) {
+                    e.save(), e.beginPath(), e.translate(t.centerOrigin, t.centerOrigin), e.moveTo(0, 0), e.rotate((360 / i * r - s) * Math.PI / 180),
+                        e.arc(0, 0, 8 * t.fontSize, 0, 2 * Math.PI / i, !1);
+                    var n = ["#D7D7D7", "#FEF43E", "#EF7683"][r % 3];
+                    e.fillStyle = n, e.fill(), e.lineWidth = .5, e.strokeStyle = "#e4370e", e.stroke(), e.restore()
+                }
+                t.is_complete = !0
+            }
+            ,
+            100
+        )
+    }
+    function doIt() {
+        var t = this;
+        1 != this.is_draw && (0 != this.lottery.draw_amount ? (this.is_draw = !0, this.$http.get("mobile/doDraw").then(function (e) {
+            return 102 == e.flag ? (t.is_draw = !1, void(t.$refs.apply.apply_dialog = !0)) : 103 == e.flag ? (t.is_draw = !1, void t.$refs.common.showCode())
+                : 100 != e.flag ? (t.is_draw = !1, void t.$toast.fail(e.msg)) : void t.doAction(e)
+        })) : this.$toast.fail("抽奖次数已用完！"))
+    }
+    function doAction(t) {
+//        for (var e = this, i = t.prize.id, s = 0; s < this.prizeNum; s++) {
+//            if (this.prizes[s].id == i) {
+//                var r = s;
+//                break
+//            }
+//        }
+        r = 3;
+        t = {prizeNum: 8}
+        var n = 3600 + 360 / t.prizeNum * (t.prizeNum - r);
+        t.runRotate = n;
+//        transform旋转
+//        {staticClass:"zhuanpan",style:{transformOrigin:t.centerOrigin+"px "+t.centerOrigin+"px",transform:"rotate("+t.runRotate+"deg)"}}
+    }
+    init();
+    doAction();
+    ;
+</script>

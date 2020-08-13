@@ -23,10 +23,22 @@ public class PayRecord {
     private String customerNo;
 
     private String orderMsg;
+    /**
+     * @see org.egg.enums.OrderTypeEnum
+     */
+    private String orderType;
 
     private Date createdDate;
 
     private Date modifiedDate;
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
 
     public Long getId() {
         return id;

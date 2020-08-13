@@ -27,4 +27,9 @@
     set load_factor=load_factor +  #{addLoadFactor,jdbcType=DECIMAL}
     where customer_no=#{customerId,jdbcType=VARCHAR}
   </update>
+
+  <!--<update id="updateMember" parameterMap="java.util.Map">-->
+    <!--UPDATE  customer-->
+    <!--set -->
+  <!--</update>-->
 </mapper>

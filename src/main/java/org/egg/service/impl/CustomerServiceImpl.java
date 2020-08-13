@@ -9,6 +9,7 @@ import org.egg.mapper.CustomerMapper;
 import org.egg.mapper.CustomerMapperExt;
 import org.egg.model.DO.Customer;
 import org.egg.model.DO.CustomerExample;
+import org.egg.utils.DateUtil;
 import org.egg.utils.IdMarkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,7 +40,7 @@ public class CustomerServiceImpl {
      * 比较负载因子 是否大于所需因子value
      * 用于控制资损
      *
-     * @param value 因子数
+     * @param value      因子数
      * @param customerId
      * @param sync
      * @return
@@ -108,6 +109,24 @@ public class CustomerServiceImpl {
         customerMapper.insertSelective(customer);
     }
 
+    /**
+     * 暂时只有普通会员
+     * 1.查询是否是会员  如果是 追加时长 否则初始化
+     *
+     * @param cid
+     * @param day
+     */
+    public void updateMember(String cid, int day) {
+        Customer customer = queryCustomerByCustomerId(cid);
+        if (CustomerTypeEnum.MEMBER_01.getCode().equals(customer.getCustomerType())) {
+            Date date = DateUtil.addDay(day, customer.getMemberExpire());
+            customer.setMemberExpire(date);
+        } else {
+            customer.setCustomerType(CustomerTypeEnum.MEMBER_01.getCode());
+            customer.setMemberExpire(DateUtil.addDay(day));
+        }
+        customerMapper.updateByPrimaryKey(customer);
+    }
 //    ========================================= private 区域 ============================================================
 
     /**
