@@ -58,7 +58,11 @@ public class PayController {
 
     /**
      * 金豆提现
-     *
+     *todo 一天最多提5次；
+     * 提手续费：
+     * 500以下 7.5元；
+     * 500-1000 1%；
+     * 1000+ 0.6%；
      * @param amount
      * @return
      */

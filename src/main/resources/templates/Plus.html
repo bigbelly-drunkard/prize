@@ -2,15 +2,199 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+    <title>main</title>
+    <script src="http://at.alicdn.com/t/font_1969634_mvt2sb2xpvc.js"></script>
+
 </head>
 <style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .main {
+        padding: 1rem;
+        background: #eeeeee;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .head {
+        border-bottom: 1px solid #eeeeee;
+        background: #ffffff;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        color: #aaaaaa;
+        font-size: 0.75rem;
+        width: 100%;
+        padding: 1rem 0;
+    }
+
+    .head .headImg {
+        background: #ffffff;
+        width: 5rem;
+        height: 5rem;
+        margin: 1rem 0 1rem 0;
+        border-bottom: 2px solid #eeeeee;
+
+        border-radius: 100%;
+
+    }
+
+    .quanyi {
+        width: 100%;
+        margin-top: 1rem;
+        display: flex;
+        flex-flow: column;
+        /*align-items:flex-start;*/
+        border: 1px solid #f0f8fc;
+        background: #ffffff;
+        border-radius: 14px;
+    }
+
+    .quanyi .title {
+        font-size: 1.25rem;
+        padding: 0.5rem 1rem;
+        font-family: cursive;
+    }
+
+    .quanyi .ct {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-flow: wrap;
+        padding: 0 2rem;
+        font-size: 0.75rem;
+    }
+
+    .quanyi .item {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 0;
+        width: 5rem;
+    }
+
+    .quanyi .item .icon {
+        margin-bottom: 1rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .quanyi .item span {
+        font-weight: bold;
+        font-family: cursive;
+    }
+
+    .pack {
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-around;
+        background: #ffffff;
+        width: 100%;
+        border-radius: 14px;
+        /*margin-top: 1rem;*/
+    }
+
+    .pack .item {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border: 1px solid #eeeeee;
+        width: 7rem;
+        box-shadow: 2px 2px #eeeeee;
+
+    }
+
+    .pack .item .prize {
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: orange;
+        padding-top: 0.5rem;
+    }
 
 </style>
 <body>
 <div class="main">
+    <div class="head">
+        <svg class="headImg" aria-hidden="true">
+            <use xlink:href="#icon-huiyuan"></use>
+        </svg>
+        <span>过期时间: 2020年8月13日18:00:36</span>
+    </div>
+    <div class="quanyi">
+        <span class="title">会员权益</span>
+        <div class="ct">
+            <!--提高幸运值，每天送积分，所有商品9.5折，专属客服，快速提现，提现次数翻倍-->
+            <div class="item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-zidongtishengyouxianshengji"></use>
+                </svg>
+                <span>提高幸运值</span>
+            </div>
+            <div class="item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-ziyuan"></use>
+                </svg>
+                <span>每天送积分</span>
+            </div>
+            <div class="item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-huabanfuben"></use>
+                </svg>
+                <span>商品9.5折</span>
+            </div>
+            <div class="item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-kefu"></use>
+                </svg>
+                <span>专属客服</span>
+            </div>
+            <div class="item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-tixian2"></use>
+                </svg>
+                <span>快速提现</span>
+            </div>
+            <div class="item">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-leijicishu"></use>
+                </svg>
+                <span>提现次数翻倍</span>
+            </div>
+        </div>
+    </div>
+    <div class="quanyi">
+        <span class="title">会员包</span>
 
-
+        <div class="pack">
+            <div class="item">
+                <span>7天会员包</span>
+                <span class="prize">¥  9.9</span>
+            </div>
+            <div class="item">
+                <span>包月会员包</span>
+                <span class="prize">¥  29.9</span>
+            </div>
+            <div class="item">
+                <span>包年会员包</span>
+                <span class="prize">¥  299</span>
+            </div>
+            <div class="item">
+                <span>3年会员包</span>
+                <span class="prize">¥  889</span>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
