@@ -1,8 +1,11 @@
 package org.egg.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.egg.biz.MsgBiz;
 import org.egg.biz.RedisBiz;
+import org.egg.model.VO.MsgRes;
 import org.egg.response.BaseResult;
+import org.egg.response.CommonListResult;
 import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
     @Autowired
     private RedisBiz redisBiz;
+    @Autowired
+    private MsgBiz msgBiz;
 
     /**
      * 签到
@@ -46,5 +51,10 @@ public class IndexController {
     @PostMapping("/share")
     public BaseResult share() {
         return redisBiz.share(CustomerUtil.getCustomer().getCustomerNo());
+    }
+
+    @PostMapping("/qml")
+    public CommonListResult<MsgRes> queryMsgList() {
+        return msgBiz.queryMsgList();
     }
 }

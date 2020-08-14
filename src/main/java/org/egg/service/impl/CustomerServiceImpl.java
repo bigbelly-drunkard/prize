@@ -110,6 +110,14 @@ public class CustomerServiceImpl {
     }
 
     /**
+     * 根据id来更新
+     * @param customer
+     */
+    public void updateCustomer(Customer customer) {
+        customerMapper.updateByPrimaryKeySelective(customer);
+    }
+
+    /**
      * 暂时只有普通会员
      * 1.查询是否是会员  如果是 追加时长 否则初始化
      *

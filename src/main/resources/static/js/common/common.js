@@ -146,51 +146,7 @@ function checkTime(i) { //将0-9的数字前面加上0，例1变为01
     return i;
 }
 
-/**
- * 查询账号信息
- */
-function queryInfo() {
-    var orderNo = $("#orderNo").val();
-    var p = $("#p").val();
-    if (!orderNo || !p) {
-        return;
-    }
-    var c = 'da' + asedt();
-    var param = {
-        "orderNo": orderNo, "loginPwd": p
-    };
-    var reqStr = Encrypt(JSON.stringify(param), c);
-    $.ajax({
-        url: '/publishOrder/queryInfo',
-        type: 'post',
-        dataType: 'json',
-        data: {'reqStr': reqStr},
-        success: function (data) {
-            if (data.success) {
-                var rst = data.data;
-                $("#pwd").html(rst.accountPwd);
-            } else {
-                if (data.respCode == 'PRO3300002') {
-                    $(".warn").show();
-                    return;
-                }
-                if (data.respCode == 'PRO3300003') {
-                    location.href = '/toLogin?returnUrl=' + encodeURIComponent(location.href);
-                    return;
-                }
-                location.href = "/error/500";
 
-            }
-            //成功
-            $(".warn").hide();
-            $("#mask").hide();
-            $("#alert1").hide();
-        },
-        error: function () {
-            location.href = "/error/500";
-        }
-    });
-}
 /**
  * 显示查看密码弹窗
  */

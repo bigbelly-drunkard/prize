@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+    <meta charset="UTF-8">
+    <script src="http://at.alicdn.com/t/font_1969634_16rvgividvl.js"></script>
+</head>
+<style>
+    .mask {
+        background: #000000;
+        opacity: 0.5;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right:0;
+    }
+    .alertMsg {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        width: 70%;
+        padding: 1rem;
+        border: 1px solid #eeeeee;
+        border-radius: 14px;
+        position: fixed;
+        top: 25%;
+        left: 15%;
+        box-sizing: border-box;
+        background: #ffffff;
+    }
+
+    .alertMsg .icon {
+        width: 4rem;
+        height: 5rem;
+        margin: 1rem 0;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
+    }
+
+    .alertMsg span {
+        font-size: 1rem;
+        color: #aaaaaa;
+    }
+
+    .alertMsg .btn {
+        padding: 0.5rem 2rem;
+        background: #EE5456;
+        color: #ffffff;
+        /*border-top: 1px solid #aaaaaa;*/
+        border-radius: 2rem;
+        margin-top: 1rem;
+    }
+
+</style>
+<body>
+<div class="mask"></div>
+<div class="alertMsg">
+    <svg class="icon" aria-hidden="true" color="#aaaaaa">
+        <use xlink:href="#icon-wangluo"></use>
+        <!--<use xlink:href="#icon-error"></use>-->
+    </svg>
+    <span>网络出小差了，请稍后再试</span>
+    <div class="btn">知道了</div>
+</div>
+</body>
+</html>

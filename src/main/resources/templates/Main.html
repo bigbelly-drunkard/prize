@@ -2,359 +2,154 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
     <title>main</title>
-    <script src="http://at.alicdn.com/t/font_1969634_b07l0xfxx6.js"></script>
+    <script src="../static/js/common/commonJs.js"></script>
+    <script src="../static/js/common/commonCss.js"></script>
+    <link rel="stylesheet" href="../static/css/main.css"/>
 </head>
 <style>
-    body {
-        padding: 0;
-        margin: 0;
-        background: #f6f6f6;
-    }
-    .main {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-    }
 
-    .top-bg {
-        background-image: -webkit-linear-gradient(bottom, #f1503b, #c82519 50%);
-        position: absolute;
-        top: 0;
-        left: -25%;
-        height: 7.25rem;
-        width: 150%;
-        border-bottom-left-radius: 100%;
-        border-bottom-right-radius: 100%;
-    }
-
-    .top-person {
-        position: relative;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        color: #ffffff;
-        font-size: 1.25rem;
-        height: 4rem;
-        top: 1rem;
-    }
-
-    .score, .gold {
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-        padding: 0 2rem;
-    }
-
-    .score .value, .gold .value {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    .vv {
-        font-weight: 700;
-        font-size: 1.25rem;
-        padding-right: .25rem;
-    }
-
-    .unit {
-        font-size: .75rem;
-    }
-
-    .desc img {
-        width: .5rem;
-        height: .5rem;
-    }
-
-    .icon {
-        width: 1em;
-        height: 1em;
-        vertical-align: -0.15em;
-        fill: currentColor;
-        overflow: hidden;
-    }
-
-    .maxIcon {
-        width: 2rem;
-        height: 2rem;
-        vertical-align: -0.15em;
-        fill: currentColor;
-        overflow: hidden;
-    }
-
-    .head {
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-    }
-
-    .head img {
-        width: 2rem;
-        height: 2rem;
-        -webkit-border-radius: 100%;
-        -moz-border-radius: 100%;
-        border-radius: 100%;
-
-    }
-
-    /*补白*/
-    .buBlank {
-        width: 100%;
-        height: 3.25rem;
-    }
-
-    /*菜单*/
-    .menu {
-        display: flex;
-        flex-flow: wrap;
-        justify-content: space-around;
-        /*background: #eeeeee;*/
-        position: relative;
-    }
-
-    .menu .item {
-        width: 5rem;
-        height: 5rem;
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-        justify-content: center;
-        /*padding: 0.5rem 0;*/
-    }
-
-    .menu .item span {
-        margin-top: .3rem;
-        font-size: .6rem;
-        color: #666;
-    }
-
-    .explain {
-        /*margin-top: 1rem;*/
-        background: #ffffff;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        flex-flow: wrap;
-
-        padding: 0.5rem 0;
-        color: #5a5a5a;
-    }
-
-    .explain .scoreExplain, .explain .goldExplain {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.25rem;
-        /*font-weight:700;*/
-        padding: 1rem;
-        border: 1px solid #eee;
-        margin: 0.5rem 0;
-        /*border-radius:14px;*/
-        box-shadow: 2px 0px 2px 0px #eee;
-    }
-
-    .explain .scoreExplain svg, .explain .goldExplain svg {
-        margin-right: 0.5rem;
-    }
-
-    /*msg*/
-    .msg {
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-        justify-content: center;
-        background: #ffffff;
-        margin-top: 0.5rem;
-        border-top: 1px;
-        box-sizing: border-box;
-    }
-
-    .msg .title {
-        width: 100%;
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: orange;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding:.5rem 0;
-        border-bottom:1px solid #eeeeee;
-    }
-
-    .msg ul {
-        display: flex;
-        font-size: .75rem;
-        /*width:100%;*/
-        flex-flow: wrap;
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-        margin-block-start: 0em;
-        margin-block-end: 0em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        padding-inline-start: 0px;
-        padding: 0 2rem;
-    }
-
-    .msg .time {
-        color: orange;
-        padding-right: 1.5rem;
-    }
-
-    .msg .content {
-        color: #aaaaaa;
-
-    }
-
-    ul li {
-        list-style-type: none;
-        width:100%;
-        display: flex;
-        justify-content:flex-start;
-        align-items:center;
-        border-bottom:1px solid #eeeeee;
-        padding:0.5rem 0;
-    }
-    ul span {
-        /*display: inline-block;*/
-    }
 </style>
 <body>
 <div class="main">
-<div class="top-bg">
-</div>
-<div class="top-person">
-    <div class="score">
-        <div class="value">
-            <span class="vv">0</span>
-            <span class="unit">分</span>
+    <div class="personNoLogin ">点击登录</div>
+    <div class="top-bg ">
+    </div>
+    <div class="top-person ">
+        <div class="score">
+            <div class="value">
+                <span class="vv" id="score">0</span>
+                <span class="unit">分</span>
+            </div>
+            <div class="desc">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-jifen"></use>
+                </svg>
+                <span>积分</span>
+            </div>
         </div>
-        <div class="desc">
-            <svg class="icon" aria-hidden="true">
+        <div class="head">
+            <img id="headUrl" src="../static/images/defaultHead.jpg"/>
+            <span id="nickName"></span>
+        </div>
+        <div class="gold">
+            <div class="value">
+                <span class="vv" id="gold">0.00</span>
+                <span class="unit">豆</span>
+            </div>
+            <div class="desc">
+                <svg class="icon" aria-hidden="true" color="yellow">
+                    <use xlink:href="#icon-jindouyindou01"></use>
+                </svg>
+                <span>金豆</span>
+            </div>
+        </div>
+    </div>
+    <div class="buBlank"></div>
+    <div class="menu">
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true" color="#ff3436">
+                <use xlink:href="#icon-shangcheng1"></use>
+            </svg>
+            <span>积分商城</span>
+        </div>
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true">
+                <use xlink:href="#icon-zhuanpanshezhi" color="#7fb5f0"></use>
+            </svg>
+            <span>积分活动</span>
+        </div>
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true" color="#ff1459">
+                <use xlink:href="#icon-ljlq"></use>
+            </svg>
+            <span>领取积分</span>
+        </div>
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true" color="#ffa106">
+                <use xlink:href="#icon-kaitonghuiyuanyuan"></use>
+            </svg>
+            <span>开通会员</span>
+        </div>
+        <!--金豆-->
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true" color="#6389f3">
+                <use xlink:href="#icon-shenghuodianmianduihuan"></use>
+            </svg>
+            <span>金豆兑换</span>
+        </div>
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true" color="#fe393b">
+                <use xlink:href="#icon-ai-hongbao"></use>
+            </svg>
+            <span>金豆活动</span>
+        </div>
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true" color="#5dc20f">
+                <use xlink:href="#icon-shangpin"></use>
+            </svg>
+            <span>金豆商品</span>
+        </div>
+        <div class="item">
+            <svg class="maxIcon" aria-hidden="true" color="#f83d85">
+                <use xlink:href="#icon-tixian1"></use>
+            </svg>
+            <span>金豆提现</span>
+        </div>
+    </div>
+    <div class="explain">
+        <div class="scoreExplain">
+            <svg class="maxIcon" aria-hidden="true" color="#ffa106">
+                <use xlink:href="#icon-kaitonghuiyuanyuan"></use>
+            </svg>
+            <span>开通会员</span>
+        </div>
+        <div class="goldExplain">
+            <svg class="maxIcon" aria-hidden="true" color="#f83d85">
+                <use xlink:href="#icon-tixian1"></use>
+            </svg>
+            <span>金豆提现</span>
+        </div>
+        <div class="scoreExplain">
+            <svg class="maxIcon" aria-hidden="true" color="#fe393b">
                 <use xlink:href="#icon-jifen"></use>
             </svg>
-            <span>积分</span>
+            <span>积分说明</span>
         </div>
-    </div>
-    <div class="head">
-        <img src="../static/images/defaultHead.jpg"/>
-        <span>Tao</span>
-    </div>
-    <div class="gold">
-        <div class="value">
-            <span class="vv">0.00</span>
-            <span class="unit">豆</span>
-        </div>
-        <div class="desc">
-            <svg class="icon" aria-hidden="true" color="yellow">
+        <div class="goldExplain">
+            <svg class="maxIcon" aria-hidden="true" color="yellow">
                 <use xlink:href="#icon-jindouyindou01"></use>
             </svg>
-            <span>金豆</span>
+            <span>金豆说明</span>
         </div>
     </div>
-</div>
-<div class="buBlank"></div>
-<div class="menu">
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true" color="#ff3436">
-            <use xlink:href="#icon-shangcheng1"></use>
-        </svg>
-        <span>积分商城</span>
+    <div class="msg">
+        <span class="title">历史记录</span>
+        <ul>
+            <li>
+                <span class="time">2020-7-27 20:32:04</span>
+                <span class="content">张三 兑换了30金豆</span>
+            </li>
+            <li>
+                <span class="time">2020-7-27 20:32:04</span>
+                <span class="content">张三 兑换了30金豆</span>
+            </li>
+            <li>
+                <span class="time">2020-7-27 20:32:04</span>
+                <span class="content">张三 兑换了30金豆</span>
+            </li>
+            <li>
+                <span class="time">2020-7-27 20:32:04</span>
+                <span class="content">张三 兑换了30金豆</span>
+            </li>
+            <li>
+                <span class="time">2020-7-27 20:32:04</span>
+                <span class="content">张三 兑换了30金豆</span>
+            </li>
+        </ul>
     </div>
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true">
-            <use xlink:href="#icon-zhuanpanshezhi" color="#7fb5f0"></use>
-        </svg>
-        <span>积分活动</span>
-    </div>
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true" color="#ff1459">
-            <use xlink:href="#icon-ljlq"></use>
-        </svg>
-        <span>领取积分</span>
-    </div>
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true" color="#ffa106">
-            <use xlink:href="#icon-kaitonghuiyuanyuan"></use>
-        </svg>
-        <span>开通会员</span>
-    </div>
-    <!--金豆-->
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true" color="#6389f3">
-            <use xlink:href="#icon-shenghuodianmianduihuan"></use>
-        </svg>
-        <span>金豆兑换</span>
-    </div>
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true" color="#fe393b">
-            <use xlink:href="#icon-ai-hongbao"></use>
-        </svg>
-        <span>金豆活动</span>
-    </div>
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true" color="#5dc20f">
-            <use xlink:href="#icon-shangpin"></use>
-        </svg>
-        <span>金豆商品</span>
-    </div>
-    <div class="item">
-        <svg class="maxIcon" aria-hidden="true" color="#f83d85">
-            <use xlink:href="#icon-tixian1"></use>
-        </svg>
-        <span>金豆提现</span>
-    </div>
-</div>
-<div class="explain">
-    <div class="scoreExplain">
-        <svg class="maxIcon" aria-hidden="true" color="#ffa106">
-            <use xlink:href="#icon-kaitonghuiyuanyuan"></use>
-        </svg>
-        <span>开通会员</span>
-    </div>
-    <div class="goldExplain">
-        <svg class="maxIcon" aria-hidden="true"  color="#f83d85">
-            <use xlink:href="#icon-tixian1"></use>
-        </svg>
-        <span>金豆提现</span>
-    </div>
-    <div class="scoreExplain">
-        <svg class="maxIcon" aria-hidden="true" color="#fe393b">
-            <use xlink:href="#icon-jifen"></use>
-        </svg>
-        <span>积分说明</span>
-    </div>
-    <div class="goldExplain">
-        <svg class="maxIcon" aria-hidden="true" color="yellow">
-            <use xlink:href="#icon-jindouyindou01"></use>
-        </svg>
-        <span>金豆说明</span>
-    </div>
-</div>
-<div class="msg">
-    <span class="title">历史记录</span>
-    <ul>
-        <li>
-            <span class="time">2020-7-27 20:32:04</span>
-            <span class="content">张三 兑换了30金豆</span>
-        </li>  <li>
-            <span class="time">2020-7-27 20:32:04</span>
-            <span class="content">张三 兑换了30金豆</span>
-        </li>  <li>
-            <span class="time">2020-7-27 20:32:04</span>
-            <span class="content">张三 兑换了30金豆</span>
-        </li>  <li>
-            <span class="time">2020-7-27 20:32:04</span>
-            <span class="content">张三 兑换了30金豆</span>
-        </li>  <li>
-            <span class="time">2020-7-27 20:32:04</span>
-            <span class="content">张三 兑换了30金豆</span>
-        </li>
-    </ul>
-</div>
 </div>
 </body>
 </html>

@@ -7,13 +7,17 @@ import org.egg.enums.CommonErrorEnum;
 import org.egg.enums.UserStatusEnum;
 import org.egg.exception.CommonException;
 import org.egg.model.DO.Customer;
+import org.egg.model.VO.CustomerVo;
 import org.egg.model.wechat.AccessTokenMiniResult;
+import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.CustomerServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
+import org.egg.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * @author dataochen
@@ -62,6 +66,53 @@ public class CustomerBiz {
                 }
             }
         });
+        return result;
+    }
+
+    public CommonSingleResult<CustomerVo> queryCustomer(String cid) {
+        log.info("queryCustomer cid={}", cid);
+        CommonSingleResult<CustomerVo> result = new CommonSingleResult<>();
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+
+            }
+
+            @Override
+            public void doAction() {
+                CustomerVo customerVo = new CustomerVo();
+                Customer customer = customerService.queryCustomerByCustomerId(cid);
+                BeanUtil.copyProperties(customer, customerVo);
+                result.setData(customerVo);
+            }
+        });
+        log.info("queryCustomer result={}", JSONObject.toJSONString(result));
+        return result;
+    }
+
+    public BaseResult updateHead(String cid, String headUrl, String nickName) {
+        log.info("updateHead {},headUrl={},nickName={}",cid,headUrl,nickName);
+        BaseResult result = new BaseResult();
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+
+            }
+
+            @Override
+            public void doAction() {
+                Customer customer = customerService.queryCustomerByCustomerId(cid);
+                if (!StringUtils.isEmpty(headUrl)) {
+                    customer.setHeadUrl(headUrl);
+                }
+                if (!StringUtils.isEmpty(nickName)) {
+                    customer.setNickName(nickName);
+                }
+                customerService.updateCustomer(customer);
+
+            }
+        });
+        log.info("updateHead result={}", JSONObject.toJSONString(result));
         return result;
     }
 }

@@ -1,0 +1,230 @@
+body {
+    padding: 0;
+    margin: 0;
+    background: #f6f6f6;
+}
+
+.main {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.top-bg {
+    background-image: -webkit-linear-gradient(bottom, #f1503b, #c82519 50%);
+    position: absolute;
+    top: 0;
+    left: -25%;
+    height: 7.25rem;
+    width: 150%;
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
+}
+
+.top-person {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #ffffff;
+    font-size: 1.25rem;
+    height: 4rem;
+    top: 1rem;
+}
+
+.score, .gold {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.score .value, .gold .value {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.vv {
+    font-weight: 700;
+    font-size: 1.25rem;
+    padding-right: .25rem;
+}
+
+.unit {
+    font-size: .75rem;
+}
+
+.desc img {
+    width: .5rem;
+    height: .5rem;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.maxIcon {
+    width: 2rem;
+    height: 2rem;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.head {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.head img {
+    width: 2rem;
+    height: 2rem;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+
+}
+
+/*补白*/
+.buBlank {
+    width: 100%;
+    height: 3.25rem;
+}
+
+/*菜单*/
+.menu {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+    /*background: #eeeeee;*/
+    position: relative;
+}
+
+.menu .item {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    /*padding: 0.5rem 0;*/
+}
+
+.menu .item span {
+    margin-top: .3rem;
+    font-size: .6rem;
+    color: #666;
+}
+
+.explain {
+    /*margin-top: 1rem;*/
+    background: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: wrap;
+
+    padding: 0.5rem 0;
+    color: #5a5a5a;
+}
+
+.explain .scoreExplain, .explain .goldExplain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    /*font-weight:700;*/
+    padding: 1rem;
+    border: 1px solid #eee;
+    margin: 0.5rem 0;
+    /*border-radius:14px;*/
+    box-shadow: 2px 0px 2px 0px #eee;
+}
+
+.explain .scoreExplain svg, .explain .goldExplain svg {
+    margin-right: 0.5rem;
+}
+
+/*msg*/
+.msg {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    margin-top: 0.5rem;
+    border-top: 1px;
+    box-sizing: border-box;
+}
+
+.msg .title {
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.msg ul {
+    display: flex;
+    font-size: .75rem;
+    /*width:100%;*/
+    flex-flow: wrap;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    padding: 0 2rem;
+    overflow: hidden;
+}
+
+.msg .time {
+    color: orange;
+    padding-right: 1.5rem;
+}
+
+.msg .content {
+    color: #aaaaaa;
+
+}
+
+ul li {
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    padding: 0.5rem 0;
+}
+
+ul span {
+    /*display: inline-block;*/
+}
+
+.personNoLogin {
+    background: #000;
+    opacity: 0.7;
+    position: fixed;
+    top: 0;
+    height: 7.25rem;
+    width: 100%;
+    z-index: 1;
+    text-align: center;
+    color: #ffffff;
+    line-height: 7.25rem;
+}
