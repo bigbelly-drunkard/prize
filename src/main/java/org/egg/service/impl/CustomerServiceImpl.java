@@ -67,7 +67,8 @@ public class CustomerServiceImpl {
         List<Customer> customers = customerMapper.selectByExample(customerExample);
         Customer customer = customers.get(0);
         BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
-        double cos = Math.cos(loadFactor.doubleValue());
+//        https://zh.numberempire.com/graphingcalculator.php 函数绘图可视化 100*cos(x/1000)
+        double cos = Math.cos(loadFactor.doubleValue() / 1000);
         if (cos < -1) {
             cos = -cos;
         }
