@@ -7,6 +7,7 @@ import org.egg.model.DTO.WxPrePayResultDto;
 import org.egg.model.VO.PayReq;
 import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
+import org.egg.service.impl.FlowRecordServiceImpl;
 import org.egg.utils.ClientUtils;
 import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ import java.math.BigDecimal;
 public class PayController {
     @Autowired
     private PayBiz payBiz;
+    @Autowired
+    private FlowRecordServiceImpl flowRecordService;
 
     /**
      * 微信小程序支付
@@ -58,11 +61,12 @@ public class PayController {
 
     /**
      * 金豆提现
-     *todo 一天最多提5次；
+     * todo 一天最多提5次；
      * 提手续费：
      * 500以下 7.5元；
      * 500-1000 1%；
      * 1000+ 0.6%；
+     *
      * @param amount
      * @return
      */
@@ -70,9 +74,13 @@ public class PayController {
     public BaseResult cash(@PathVariable(value = "amount") BigDecimal amount) {
         return payBiz.cash(CustomerUtil.getCustomer().getCustomerNo(), amount);
     }
+
     /**
      * 金豆兑换
      */
-
+    @PostMapping
+    public BaseResult exchange(BigDecimal bigDecimal) {
+        return payBiz.exchange(bigDecimal, CustomerUtil.getCustomer().getCustomerNo());
+    }
 
 }

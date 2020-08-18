@@ -272,6 +272,38 @@ public class PayBiz {
         return result;
     }
 
+    public BaseResult exchange(BigDecimal amount, String customerId) {
+        log.info("exchange amount={}", amount);
+        BaseResult result = new BaseResult();
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+                if (amount == null || amount.compareTo(BigDecimal.ZERO) < 1) {
+                    log.error("金豆兑换 金额不合法");
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                Customer customer = customerService.queryCustomerByCustomerId(customerId);
+                if (null == customer || !UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
+                    log.error("用户状态不对");
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                BigDecimal score = customer.getScore();
+                if (score.compareTo(amount) == -1) {
+                    log.error("积分数量不足");
+                    throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
+                }
+            }
+
+            @Override
+            public void doAction() {
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, amount.negate(), "金豆兑换");
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, amount, "金豆兑换");
+            }
+        });
+        log.info("exchange result={}",JSONObject.toJSONString(result));
+        return result;
+    }
+
     /**
      * 金豆转换现金
      *
@@ -279,7 +311,7 @@ public class PayBiz {
      * @return
      */
     private BigDecimal gold2Money(BigDecimal goldAmount) {
-        BigDecimal bigDecimal = goldAmount.multiply(new BigDecimal("0.08")).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal bigDecimal = goldAmount.multiply(new BigDecimal("0.08")).setScale(2, BigDecimal.ROUND_HALF_UP);
         return bigDecimal;
     }
 }

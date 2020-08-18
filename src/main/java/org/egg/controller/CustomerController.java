@@ -9,7 +9,6 @@ import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,13 +24,11 @@ public class CustomerController extends BaseController {
     private CustomerBiz customerBiz;
 
     @PostMapping("/qc")
-    @ResponseBody
     public CommonSingleResult<CustomerVo> queryCustomer() {
         return customerBiz.queryCustomer(CustomerUtil.getCustomer().getCustomerNo());
     }
 
     @PostMapping("/uh")
-    @ResponseBody
     public BaseResult updateHead(String headUrl, String nickName) {
         return customerBiz.updateHead(CustomerUtil.getCustomer().getCustomerNo(), headUrl, nickName);
     }

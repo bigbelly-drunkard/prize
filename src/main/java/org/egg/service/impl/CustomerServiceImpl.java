@@ -35,11 +35,15 @@ public class CustomerServiceImpl {
     private CustomerMapper customerMapper;
     @Autowired
     private LocalCache localCache;
+    @Autowired
+    private RedisServiceImpl redisService;
 
 
     /**
-     * 比较负载因子 是否大于所需因子value
+     * 比较负载因子
      * 用于控制资损
+     * 1.比较奖金池是否满足
+     * 2.计算用户负载因子 算法：使用cos函数绝对值 [0,1]，使用cos绝对值来计算此次奖品是否可以再次命中
      *
      * @param value      因子数
      * @param customerId
@@ -47,19 +51,27 @@ public class CustomerServiceImpl {
      * @return
      */
     public boolean checkLoadFactor(BigDecimal value, String customerId, boolean sync) {
-//        todo 控制不合理
-        return true;
-//        if (sync) {
-////             同步累计缓存中的因子值
-//            sumLoadFactor4Cache(customerId);
-//        }
-//        CustomerExample customerExample = new CustomerExample();
-//        CustomerExample.Criteria criteria = customerExample.createCriteria();
-//        criteria.andCustomerNoEqualTo(customerId);
-//        List<Customer> customers = customerMapper.selectByExample(customerExample);
-//        Customer customer = customers.get(0);
-//        BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
-//        return loadFactor.compareTo(value) >- 1;
+        boolean b = redisService.checkLoadFactory(value);
+        if (!b) {
+            log.info("奖金池不满足此奖品 value={}", value);
+            return false;
+        }
+//        计算用户负载因子 算法：用户因子越大 中奖奖励越小 最后趋近为0
+        if (sync) {
+//             同步累计缓存中的因子值
+            sumLoadFactor4Cache(customerId);
+        }
+        CustomerExample customerExample = new CustomerExample();
+        CustomerExample.Criteria criteria = customerExample.createCriteria();
+        criteria.andCustomerNoEqualTo(customerId);
+        List<Customer> customers = customerMapper.selectByExample(customerExample);
+        Customer customer = customers.get(0);
+        BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
+        double cos = Math.cos(loadFactor.doubleValue());
+        if (cos < -1) {
+            cos = -cos;
+        }
+        return Math.random() > cos;
     }
 
     /**
@@ -120,6 +132,7 @@ public class CustomerServiceImpl {
 
     /**
      * 根据id来更新
+     *
      * @param customer
      */
     public void updateCustomer(Customer customer) {

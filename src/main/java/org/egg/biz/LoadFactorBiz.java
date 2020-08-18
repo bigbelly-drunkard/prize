@@ -3,6 +3,7 @@ package org.egg.biz;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.cache.LocalCache;
 import org.egg.service.impl.CustomerServiceImpl;
+import org.egg.service.impl.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,8 @@ public class LoadFactorBiz {
     private CustomerServiceImpl customerService;
     @Autowired
     private LocalCache localCache;
+    @Autowired
+    private RedisServiceImpl redisService;
 
     /**
      * 现金购买商品
@@ -29,6 +32,7 @@ public class LoadFactorBiz {
      */
     public void buyGood(BigDecimal amount, String customerId) {
         localCache.addLoadFactorChangeCache(customerId, amount);
+        changeAllLoadFactory(amount);
     }
 //=============================扣减 区域=========================================================
 
@@ -44,6 +48,7 @@ public class LoadFactorBiz {
             amount = amount.negate();
         }
         localCache.addLoadFactorChangeCache(customerId, amount);
+        changeAllLoadFactory(amount);
 
     }
 
@@ -59,6 +64,7 @@ public class LoadFactorBiz {
             amount = amount.negate();
         }
         localCache.addLoadFactorChangeCache(customerId, amount);
+        changeAllLoadFactory(amount);
     }
 
     /**
@@ -73,6 +79,15 @@ public class LoadFactorBiz {
             amount = amount.negate();
         }
         localCache.addLoadFactorChangeCache(customerId, amount);
+        changeAllLoadFactory(amount);
+    }
+
+    /**
+     * 修改奖金池的负载因子
+     * @param amount
+     */
+    private void changeAllLoadFactory(BigDecimal amount) {
+        redisService.addLoadFactory(amount);
     }
 
 }

@@ -7,6 +7,7 @@ import org.egg.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -26,6 +27,11 @@ public class RedisServiceImpl {
      * pid
      */
     private static final String KEY_04 = "P_";
+    /**
+     * 核心负载因子 总值
+     * 奖金池=核心负载因子*盈利率
+     */
+    private static final String LOAD_FACTORY_ALL = "LOAD_FACTORY_ALL";
 
     /**
      * 检查每日的key是否存在
@@ -56,18 +62,42 @@ public class RedisServiceImpl {
 
     /**
      * pid 有效期5分钟
+     *
      * @param customerId
      * @param pid
      */
     public void setPid(String customerId, String pid, PrizeBean prizeBean) {
         String s = KEY_04 + customerId + pid;
-        redisUtil.setEx(s, prizeBean, 5 * 60*1000L);
+        redisUtil.setEx(s, prizeBean, 5 * 60 * 1000L);
     }
 
     public PrizeBean checkPid(String customerId, String pid) {
         String s = KEY_04 + customerId + pid;
-        PrizeBean o = (PrizeBean)redisUtil.get(s);
+        PrizeBean o = (PrizeBean) redisUtil.get(s);
         return o;
+    }
+
+    /**
+     * 校验是否超过奖金池
+     * 30% 盈利率
+     * 奖金池=核心负载因子*盈利率
+     * @return
+     */
+    public boolean checkLoadFactory(BigDecimal needAmount) {
+        BigDecimal o = (BigDecimal) redisUtil.get(LOAD_FACTORY_ALL);
+        BigDecimal bigDecimal = o.multiply(new BigDecimal("0.3")).setScale(2, BigDecimal.ROUND_HALF_UP);
+        return bigDecimal.compareTo(needAmount) > -1;
+
+    }
+
+    /**
+     * 增加或减少 负载因子
+     * 目前标准：1元 1因子
+     *
+     * @param amount
+     */
+    public void addLoadFactory(BigDecimal amount) {
+        redisUtil.incr(LOAD_FACTORY_ALL, Long.valueOf(amount.setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
     }
 
 }

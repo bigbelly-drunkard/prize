@@ -3,19 +3,12 @@ package org.egg.utils;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayUtil;
 import org.egg.integration.wx.WxConfig;
-import org.egg.model.DTO.PrizeBean;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -25,35 +18,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException, IOException {
-        final String PRIZE_PATH = "/file/prize.properties";
-        Resource resource = new ClassPathResource(PRIZE_PATH);
-        Properties properties = PropertiesLoaderUtils.loadProperties(resource);
-        String activeNames = properties.get("active.name").toString();
-        String[] split = activeNames.split(";");
-        for (String ss : split) {
-            String aDefault = properties.get(ss + "." + "default").toString();
-            String need = properties.get(ss + "." + "need").toString();
-            String[] split1 = need.split("\\|");
-            String score = split1[0];
-            String gold = split1[1];
-            ArrayList<PrizeBean> prizeBeans = new ArrayList<>();
-            properties.forEach((key, value) -> {
-
-                if (key.toString().startsWith(ss + "." + "S.")) {
-                    String s = value.toString();
-                    PrizeBean prizeBean = new PrizeBean();
-                    String substring = key.toString().substring(key.toString().indexOf("S.") + 2);
-                    prizeBean.setId(Long.valueOf(substring));
-                    prizeBean.setNeedScore(new BigDecimal(score));
-                    prizeBean.setNeedGold(new BigDecimal(gold));
-                    prizeBeans.add(prizeBean);
-                    if (key.equals(ss + "." + "S." + aDefault)) {
-                        System.out.println("...");
-                    }
-                }
-            });
-        }
-
+        double cos = Math.cos(2000 / 1000d);
+        double cos2 = Math.cos(1000 / 1000d);
+        System.out.println(cos);
+        System.out.println(cos2);
     }
 
     private static void testa(String notifyData) throws Exception {
