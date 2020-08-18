@@ -2,6 +2,7 @@ package org.egg.configurer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.egg.Interceptor.AccessOriginInterceptor;
 import org.egg.Interceptor.MiniLoginInterceptor;
 import org.egg.cache.LocalCache;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class MyWebAppConfigurer
                 .addPathPatterns("/prize/**")
                 .excludePathPatterns("/swagger-ui.html").excludePathPatterns("/i/qml")
         ;
+        registry.addInterceptor(new AccessOriginInterceptor()).addPathPatterns("/**");
     }
     //定义时间格式转换器
     @Bean

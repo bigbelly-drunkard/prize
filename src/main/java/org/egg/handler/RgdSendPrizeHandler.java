@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 /**
  * @author dataochen
- * @Description 随机金豆奖励
+ * @Description 随机金豆奖励 最低1金豆
  * @date: 2020/8/4 9:50
  */
 @Component(value = "RGD")
@@ -31,15 +31,16 @@ public class RgdSendPrizeHandler extends AbstractSendPrize {
     public void sendPrizeHandler(String customerId, PrizeBean prizeBean) {
         log.info("发送随机金豆，customerId={},prizeBean={}", customerId,
                 JSONObject.toJSONString(prizeBean));
-        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, getPrice(prizeBean));
+        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, getPrice(prizeBean),"随机金豆奖品"+prizeBean.getName());
         log.info("发送随机金豆成功");
     }
 
     @Override
     public BigDecimal getPrice(PrizeBean prizeBean) {
-        BigDecimal bigDecimal = new BigDecimal(Math.random() + "").multiply(prizeBean.getFactor()).setScale(2);
-        bigDecimal = bigDecimal.compareTo(BigDecimal.ZERO) != 1 ? new BigDecimal("0.01") : bigDecimal;
+        BigDecimal bigDecimal = new BigDecimal(Math.random() + "").multiply(prizeBean.getFactor()).setScale(1,BigDecimal.ROUND_HALF_UP);
+        bigDecimal = bigDecimal.compareTo(new BigDecimal("1")) != 1 ? new BigDecimal("1") : bigDecimal;
         log.info("随机金豆 bigDecimal={}", bigDecimal);
+        prizeBean.setPrizeNum(bigDecimal);
         return bigDecimal;
     }
 }

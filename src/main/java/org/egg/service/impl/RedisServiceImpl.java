@@ -37,7 +37,9 @@ public class RedisServiceImpl {
         Date date = new Date();
         String format = DateUtil.format(date, DateUtil.DMY);
         String s = key + format + customerId;
-        return redisUtil.setNx(s, customerId);
+        boolean b = redisUtil.setNx(s, customerId);
+        redisUtil.expire(s, 24 * 3600L);
+        return b;
     }
 
     public boolean checkCustomer4Day1(String customerId) {

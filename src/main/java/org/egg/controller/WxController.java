@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -63,7 +64,7 @@ public class WxController extends BaseController {
      * @param response
      */
 
-    @RequestMapping("/wxNotify")
+    @PostMapping("/wxNotify")
     public void wxNotify(HttpServletRequest request, HttpServletResponse response) {
         String result = "init";
         try {
@@ -135,7 +136,7 @@ public class WxController extends BaseController {
      * 3.登录或注册
      * 4.更新sessionKey
      */
-    @RequestMapping("/mini")
+    @PostMapping("/mini")
     @ResponseBody
     public CommonSingleResult<AccessTokenMiniResult> init(String code, HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("init code={}", code);
@@ -151,7 +152,7 @@ public class WxController extends BaseController {
         accessToken = wechatService.getAccessTokenForMini(code);
         String openId = accessToken.getOpenid();
 //登录
-        CommonSingleResult<Customer> customerCommonSingleResult = customerBiz.miniLoginFast(accessToken);
+        CommonSingleResult<Customer> customerCommonSingleResult = customerBiz.miniLoginFast(accessToken.getOpenid());
         accessTokenMiniResultCommonSingleResult.setSuccess(true);
         accessTokenMiniResultCommonSingleResult.setError(CommonErrorEnum.SUCCESS);
         accessTokenMiniResultCommonSingleResult.setData(accessToken);
@@ -159,7 +160,13 @@ public class WxController extends BaseController {
         LOGGER.info("accessTokenMiniResultCommonSingleResult={}", JSONObject.toJSONString(accessTokenMiniResultCommonSingleResult));
         return accessTokenMiniResultCommonSingleResult;
     }
-
+    @PostMapping("/miniMock")
+    @ResponseBody
+    public CommonSingleResult<Customer> mockFastMini() {
+        String openId = "cdt";
+        CommonSingleResult<Customer> customerCommonSingleResult = customerBiz.miniLoginFast(openId);
+        return customerCommonSingleResult;
+    }
     //================================================ private ==================================================
     //通过xml 发给微信消息
     private static String setXml(String return_code, String return_msg) {

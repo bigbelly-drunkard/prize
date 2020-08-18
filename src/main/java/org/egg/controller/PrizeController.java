@@ -2,8 +2,8 @@ package org.egg.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.egg.biz.PrizeBiz;
-import org.egg.model.DTO.PrizeBean;
 import org.egg.model.VO.GameTenRes;
+import org.egg.model.VO.PrizeVo;
 import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.utils.CustomerUtil;
@@ -25,16 +25,28 @@ public class PrizeController extends BaseController {
     @Autowired
     private PrizeBiz prizeBiz;
 
+    /**
+     * 核心抽奖
+     * @param activeNo
+     * @return
+     */
     @PostMapping("/r/{activeNo}")
-    public CommonSingleResult<PrizeBean> p(@PathVariable(value = "activeNo") String activeNo) {
+    public CommonSingleResult<PrizeVo> p(@PathVariable(value = "activeNo") String activeNo) {
         return prizeBiz.p(activeNo, CustomerUtil.getCustomer().getCustomerNo());
     }
 
-    @PostMapping("/g}")
+    /**
+     * 十秒游戏命中
+     * @return
+     */
+    @PostMapping("/g")
     public CommonSingleResult<GameTenRes> getHit() {
         return prizeBiz.game4TenHit(CustomerUtil.getCustomer().getCustomerNo());
     }
-
+    /**
+     * 十秒游戏领取
+     * @return
+     */
     @PostMapping("/c/{pid}")
     public BaseResult confirmHit(@PathVariable(value = "pid") String pid) {
         return prizeBiz.confirmHit(CustomerUtil.getCustomer().getCustomerNo(), pid);

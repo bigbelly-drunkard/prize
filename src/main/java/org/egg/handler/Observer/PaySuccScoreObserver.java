@@ -91,6 +91,6 @@ public class PaySuccScoreObserver implements Observer {
             default:
                 break;
         }
-        flowRecordService.changeScoreOrGold(cid, FlowRecordTypeEnum.SCORE, new BigDecimal(score));
+        flowRecordService.changeScoreOrGold(cid, FlowRecordTypeEnum.SCORE, new BigDecimal(score),"积分礼包"+amount+" 元");
     }
 }

@@ -31,7 +31,7 @@ public class ScSendPrizeHandler extends AbstractSendPrize {
     public void sendPrizeHandler(String customerId, PrizeBean prizeBean) {
         log.info("发送定额积分，customerId={},prizeBean={}", customerId,
                 JSONObject.toJSONString(prizeBean));
-        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, getPrice(prizeBean));
+        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, getPrice(prizeBean),"定额积分奖品"+prizeBean.getName());
         log.info("发送定额积分成功");
     }
 

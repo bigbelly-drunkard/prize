@@ -26,4 +26,5 @@ public class PrizeBean {
     private String typeCode;
     private BigDecimal needScore;
     private BigDecimal needGold;
+    private BigDecimal prizeNum;
 }

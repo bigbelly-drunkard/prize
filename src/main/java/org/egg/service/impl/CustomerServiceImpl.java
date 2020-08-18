@@ -13,6 +13,7 @@ import org.egg.utils.DateUtil;
 import org.egg.utils.IdMarkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -46,17 +47,19 @@ public class CustomerServiceImpl {
      * @return
      */
     public boolean checkLoadFactor(BigDecimal value, String customerId, boolean sync) {
-        if (sync) {
-//             同步累计缓存中的因子值
-            sumLoadFactor4Cache(customerId);
-        }
-        CustomerExample customerExample = new CustomerExample();
-        CustomerExample.Criteria criteria = customerExample.createCriteria();
-        criteria.andCustomerNoEqualTo(customerId);
-        List<Customer> customers = customerMapper.selectByExample(customerExample);
-        Customer customer = customers.get(0);
-        BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
-        return loadFactor.compareTo(value) == 1;
+//        todo 控制不合理
+        return true;
+//        if (sync) {
+////             同步累计缓存中的因子值
+//            sumLoadFactor4Cache(customerId);
+//        }
+//        CustomerExample customerExample = new CustomerExample();
+//        CustomerExample.Criteria criteria = customerExample.createCriteria();
+//        criteria.andCustomerNoEqualTo(customerId);
+//        List<Customer> customers = customerMapper.selectByExample(customerExample);
+//        Customer customer = customers.get(0);
+//        BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
+//        return loadFactor.compareTo(value) >- 1;
     }
 
     /**
@@ -85,6 +88,9 @@ public class CustomerServiceImpl {
         CustomerExample.Criteria criteria = customerExample.createCriteria();
         criteria.andCustomerNoEqualTo(cid);
         List<Customer> customers = customerMapper.selectByExample(customerExample);
+        if (CollectionUtils.isEmpty(customers)) {
+            return null;
+        }
         Customer customer = customers.get(0);
         return customer;
     }
@@ -94,6 +100,9 @@ public class CustomerServiceImpl {
         CustomerExample.Criteria criteria = customerExample.createCriteria();
         criteria.andWxMiniOpenIdEqualTo(miniOpenId);
         List<Customer> customers = customerMapper.selectByExample(customerExample);
+        if (CollectionUtils.isEmpty(customers)) {
+            return null;
+        }
         Customer customer = customers.get(0);
         return customer;
     }

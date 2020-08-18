@@ -16,12 +16,12 @@ public class AccessOriginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        if ("POST".equals(httpServletRequest.getMethod())) {
-            httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST");
-        } else {
-            httpServletResponse.setHeader("Access-Control-Allow-Methods","GET");
-
-        }
+            httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+//        if ("POST".equals(httpServletRequest.getMethod())) {
+//        } else {
+//            httpServletResponse.setHeader("Access-Control-Allow-Methods","GET");
+//
+//        }
         httpServletResponse.setHeader("Access-Control-Max-Age","60");
         //ajax 自定义header头key,value
         httpServletResponse.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type");

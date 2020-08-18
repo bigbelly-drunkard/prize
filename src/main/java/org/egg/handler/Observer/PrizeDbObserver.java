@@ -10,6 +10,8 @@ import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 /**
  * @author dataochen
  * @Description 扣除积分等数据库操作
@@ -26,11 +28,11 @@ public class PrizeDbObserver implements Observer {
     @Override
     public void update(Object obj) {
         PrizeBean obj1 = (PrizeBean) obj;
-        if (null != obj1.getNeedScore()) {
-            flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.SCORE, obj1.getNeedScore().negate());
+        if (null != obj1.getNeedScore()&& BigDecimal.ZERO.compareTo(obj1.getNeedScore())==-1) {
+            flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.SCORE, obj1.getNeedScore().negate(),"抽奖扣除积分");
         }
-        if (null != obj1.getNeedGold()) {
-            flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, obj1.getNeedGold().negate());
+        if (null != obj1.getNeedGold()&& BigDecimal.ZERO.compareTo(obj1.getNeedGold())==-1) {
+            flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, obj1.getNeedGold().negate(),"抽奖扣除金豆");
         }
     }
 

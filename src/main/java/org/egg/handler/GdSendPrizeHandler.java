@@ -31,7 +31,7 @@ public class GdSendPrizeHandler extends AbstractSendPrize {
     public void sendPrizeHandler(String customerId, PrizeBean prizeBean) {
         log.info("发送定额金豆，customerId={},prizeBean={}", customerId,
                 JSONObject.toJSONString(prizeBean));
-        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, getPrice(prizeBean));
+        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, getPrice(prizeBean),"定额金豆奖品"+prizeBean.getName());
         log.info("发送定额金豆成功");
     }
 

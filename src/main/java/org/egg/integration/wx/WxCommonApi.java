@@ -474,7 +474,7 @@ public class WxCommonApi {
         param.put("wxappid", config.getAppID());
         param.put("send_name", "蚂蚁科技积分商城");
         param.put("re_openid", openId);
-        BigDecimal bigDecimal = amount.multiply(new BigDecimal("100")).setScale(2);
+        BigDecimal bigDecimal = amount.multiply(new BigDecimal("100")).setScale(2,BigDecimal.ROUND_HALF_UP);
         param.put("total_amount", bigDecimal.toString());
         param.put("total_num", 1 + "");
         param.put("wishing", "恭喜您获的红包，点击立即领取红包");

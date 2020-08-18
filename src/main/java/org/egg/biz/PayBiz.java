@@ -37,7 +37,7 @@ import java.util.List;
 @Component
 @Slf4j
 public class PayBiz {
-//    @Autowired
+    //    @Autowired
 //    private SnowFlake snowFlake;
     @Autowired
     private CustomerServiceImpl customerService;
@@ -253,7 +253,7 @@ public class PayBiz {
                 payRecord.setOrderMsg("金豆提现");
                 payRecordService.createPayNo(payRecord, PayTypeEnum.CASH);
 //                1.扣金豆
-                flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, amount.negate());
+                flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, amount.negate(), "提现扣除金豆");
 //                2.转账
                 WxCompanyPayRequestDto wxCompanyPayRequestDto = new WxCompanyPayRequestDto();
                 wxCompanyPayRequestDto.setTotalAmount(payRecord.getPayAmount());
@@ -262,7 +262,9 @@ public class PayBiz {
                 BaseResult result1 = wxCommonApi.companyPay(wxCompanyPayRequestDto);
                 if (!result1.isSuccess()) {
 //                    失败回滚金豆
-                    flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, amount);
+                    flowRecordService.changeScoreOrGold(CustomerUtil.getCustomer().getCustomerNo(), FlowRecordTypeEnum.GOLD, amount, "提现失败回滚金豆");
+                    log.error("提现失败，result1={}", JSONObject.toJSONString(result1));
+                    throw new CommonException(result1);
                 }
             }
         });
@@ -277,7 +279,7 @@ public class PayBiz {
      * @return
      */
     private BigDecimal gold2Money(BigDecimal goldAmount) {
-        BigDecimal bigDecimal = goldAmount.multiply(new BigDecimal("0.08")).setScale(2);
+        BigDecimal bigDecimal = goldAmount.multiply(new BigDecimal("0.08")).setScale(2,BigDecimal.ROUND_HALF_UP);
         return bigDecimal;
     }
 }

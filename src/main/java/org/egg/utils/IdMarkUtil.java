@@ -14,7 +14,7 @@ public class IdMarkUtil {
     private static final long start = 1583225611000L;
     private static SnowFlake snowFlake;
     static{
-        SnowFlake snowFlake = new SnowFlake(1, 1);
+         snowFlake = new SnowFlake(1, 1);
 
     }
     /**

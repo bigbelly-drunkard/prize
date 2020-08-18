@@ -53,7 +53,7 @@ public class PrizeUtil {
         BigDecimal subtract = new BigDecimal("1").subtract(pro);
         int n = prizeBeans.size();
         prizeBeans.stream().forEach(x -> {
-            BigDecimal multiply = x.getFactor().multiply(new BigDecimal(n)).setScale(10);
+            BigDecimal multiply = x.getFactor().multiply(new BigDecimal(n)).setScale(10,BigDecimal.ROUND_HALF_UP);
 //            x.setRate(new BigDecimal("1").divide(multiply, 10, 4));
             x.setRate(subtract.divide(multiply, 10, 4));
         });

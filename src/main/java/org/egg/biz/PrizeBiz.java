@@ -11,6 +11,7 @@ import org.egg.handler.Observer.PrizeSendObserver;
 import org.egg.model.DO.Customer;
 import org.egg.model.DTO.PrizeBean;
 import org.egg.model.VO.GameTenRes;
+import org.egg.model.VO.PrizeVo;
 import org.egg.observer.subjects.CommonObserver;
 import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
@@ -18,6 +19,7 @@ import org.egg.service.impl.CustomerServiceImpl;
 import org.egg.service.impl.RedisServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
+import org.egg.utils.BeanUtil;
 import org.egg.utils.IdMarkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -78,7 +80,7 @@ public class PrizeBiz {
                     prizeBean.setNeedScore(new BigDecimal(score));
                     prizeBean.setNeedGold(new BigDecimal(gold));
                     prizeBeans.add(prizeBean);
-                    if (value.equals(ss + "." + "S." + aDefault)) {
+                    if (key.equals(ss + "." + "S." + aDefault)) {
                         prizeDefaultCache.put(ss, prizeBean);
                     }
                 }
@@ -142,8 +144,8 @@ public class PrizeBiz {
      *
      * @param activeNo
      */
-    public CommonSingleResult<PrizeBean> p(String activeNo, String customerId) {
-        CommonSingleResult<PrizeBean> result = new CommonSingleResult<>();
+    public CommonSingleResult<PrizeVo> p(String activeNo, String customerId) {
+        CommonSingleResult<PrizeVo> result = new CommonSingleResult<>();
         bizTemplate.process(result, new TemplateCallBack() {
             @Override
             public void doCheck() {
@@ -191,14 +193,18 @@ public class PrizeBiz {
                         continue;
                     }
                 }
-                res = prizeDefaultCache.get(activeName);
+                if (null == res) {
+                    res = prizeDefaultCache.get(activeName);
+                }
 //         通知者  1.扣积分 2.发奖品 反参id如果为null 降级为未中奖
                 getPrizeSuccObserver.notifyObserver(res);
                 if (res == null || res.getId() == null) {
                     log.info("发奖失败 降级默认为未中奖");
                     res = prizeDefaultCache.get(activeName);
                 }
-                result.setData(res);
+                PrizeVo prizeVo = new PrizeVo();
+                BeanUtil.copyProperties(res,prizeVo);
+                result.setData(prizeVo);
 
             }
         });

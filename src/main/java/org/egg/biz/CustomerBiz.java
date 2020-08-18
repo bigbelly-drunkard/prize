@@ -8,7 +8,6 @@ import org.egg.enums.UserStatusEnum;
 import org.egg.exception.CommonException;
 import org.egg.model.DO.Customer;
 import org.egg.model.VO.CustomerVo;
-import org.egg.model.wechat.AccessTokenMiniResult;
 import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.CustomerServiceImpl;
@@ -40,7 +39,7 @@ public class CustomerBiz {
      *
      * @return
      */
-    public CommonSingleResult<Customer> miniLoginFast(AccessTokenMiniResult accessTokenMiniResult) {
+    public CommonSingleResult<Customer> miniLoginFast(String openId) {
         CommonSingleResult<Customer> result = new CommonSingleResult<>();
         bizTemplate.processTX(result, new TemplateCallBack() {
             @Override
@@ -50,18 +49,19 @@ public class CustomerBiz {
 
             @Override
             public void doAction() {
-                Customer customer = customerService.queryCustomerByWxMiniOpenId(accessTokenMiniResult.getOpenid());
+                Customer customer = customerService.queryCustomerByWxMiniOpenId(openId);
                 if (customer == null) {
                     Customer customer1 = new Customer();
-                    customer1.setWxMiniOpenId(accessTokenMiniResult.getOpenid());
+                    customer1.setWxMiniOpenId(openId);
                     customerService.createCustomer(customer1);
-                    localCache.setMiniOpenId_user_cache(accessTokenMiniResult.getOpenid(), customer1);
+                    localCache.setMiniOpenId_user_cache(openId, customer1);
                     result.setData(customer1);
                 } else {
                     if (!UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
-                        log.error("用户状态异常 openId={},user={}", accessTokenMiniResult.getOpenid(), JSONObject.toJSONString(customer));
+                        log.error("用户状态异常 openId={},user={}", openId, JSONObject.toJSONString(customer));
                         throw new CommonException(CommonErrorEnum.ACCOUNT_EXCEPTION);
                     }
+                    localCache.setMiniOpenId_user_cache(openId, customer);
                     result.setData(customer);
                 }
             }

@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 
 /**
  * @author dataochen
- * @Description 随机红包奖励
+ * @Description 随机红包奖励 最低一分钱
  * @date: 2020/8/4 9:50
  */
 @Component(value = "RRP")
@@ -53,7 +53,7 @@ public class RrpSendPrizeHandler extends AbstractSendPrize {
 
     @Override
     public BigDecimal getPrice(PrizeBean prizeBean) {
-        BigDecimal bigDecimal = new BigDecimal(Math.random() + "").multiply(prizeBean.getFactor()).setScale(2);
+        BigDecimal bigDecimal = new BigDecimal(Math.random() + "").multiply(prizeBean.getFactor()).setScale(2,BigDecimal.ROUND_HALF_UP);
         bigDecimal = bigDecimal.compareTo(BigDecimal.ZERO) != 1 ? new BigDecimal("0.01") : bigDecimal;
         log.info("随机金额 bigDecimal={}", bigDecimal);
         return bigDecimal;

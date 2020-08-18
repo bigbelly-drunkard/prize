@@ -36,11 +36,11 @@ public class MsgBiz {
     private void init() throws IOException {
 //        初始化昵称
         try {
-            File file= ResourceUtils.getFile("classpath:file/nickName.txt");
+            File file = ResourceUtils.getFile("classpath:file/nickName.txt");
 //            URL systemResource = ClassLoader.getSystemResource("file/nickName.txt");
 //            String file1 = systemResource.getFile();
 //            File file = new File(file1);
-            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file),"UTF-8");
+            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String str = null;
             while ((str = bufferedReader.readLine()) != null) {
@@ -113,8 +113,8 @@ public class MsgBiz {
     private String getMsg() {
         String msg = "";
         String nickName = getNickName();
-        int v = (int) Math.random() * 35 + 1;
-        switch (v % 10) {
+        int v = (int) (Math.random() * 35) + 1;
+        switch (v) {
             case 1:
                 msg = "[积分商城]:恭喜 " + nickName + " 获得10积分礼包一份";
                 break;
@@ -200,7 +200,7 @@ public class MsgBiz {
                 msg = "[积分活动]:恭喜 " + nickName + " 获得1元金豆";
                 break;
             case 29:
-                msg = "[积分活动]:恭喜 " + nickName + " 获得2元金豆";
+                msg = "[积分活动]:恭喜 " + nickName + " 获得2元积分";
                 break;
             case 30:
                 msg = "[积分活动]:恭喜 " + nickName + " 获得5元金豆";
@@ -209,7 +209,7 @@ public class MsgBiz {
                 msg = "[积分活动]:恭喜 " + nickName + " 获得100元金豆";
                 break;
             case 32:
-                msg = "[积分活动]:恭喜 " + nickName + " 获得200元金豆";
+                msg = "[积分活动]:恭喜 " + nickName + " 获得200元积分";
                 break;
             case 33:
                 msg = "[积分活动]:恭喜 " + nickName + " 获得3000元金豆";
@@ -218,7 +218,7 @@ public class MsgBiz {
                 msg = "[积分活动]:恭喜 " + nickName + " 获得25元随机金豆";
                 break;
             case 35:
-                msg = "[金豆提现]:恭喜 " + nickName + " 提现" + (int) (Math.random() * 999) + 1 + "元现金";
+                msg = "[金豆提现]:恭喜 " + nickName + " 提现" + ((int) (Math.random() * 999) + 1) + "元现金";
                 break;
             default:
                 break;

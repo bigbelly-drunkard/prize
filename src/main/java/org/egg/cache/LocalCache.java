@@ -1,5 +1,6 @@
 package org.egg.cache;
 
+import lombok.extern.slf4j.Slf4j;
 import org.egg.model.DO.Customer;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * 本地缓存
  */
 @Component
+@Slf4j
 public class LocalCache {
+
+
     /**
      * 所有miniopenid 登录session sessionId就是openId
      * 登录时录入
@@ -39,7 +43,7 @@ public class LocalCache {
             boolean tooBig = size() > 70;
 
             if (tooBig) {
-                System.out.println("最近最少使用的key=" + eldest.getKey());
+                log.debug("最近最少使用的key=" + eldest.getKey());
             }
             return tooBig;
         }

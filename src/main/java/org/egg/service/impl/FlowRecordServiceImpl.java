@@ -36,11 +36,11 @@ public class FlowRecordServiceImpl {
      * @param value              可能为正 可能为负数
      */
     @Transactional(rollbackFor = Exception.class)
-    public void changeScoreOrGold(String customerId, FlowRecordTypeEnum flowRecordTypeEnum, BigDecimal value) {
+    public void changeScoreOrGold(String customerId, FlowRecordTypeEnum flowRecordTypeEnum, BigDecimal value,String reason) {
         FlowRecord flowRecord = new FlowRecord();
         flowRecord.setCustomerNo(customerId);
         flowRecord.setCreatedDate(new Date());
-        flowRecord.setRecordReason("");
+        flowRecord.setRecordReason(reason);
         flowRecord.setRecordType(flowRecordTypeEnum.getCode());
         flowRecord.setValue(value);
         flowRecordMapper.insertSelective(flowRecord);

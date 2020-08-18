@@ -46,7 +46,7 @@ public class RedisBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 BigDecimal value = new BigDecimal("0.5");
-                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value);
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日签到奖励");
             }
         });
         log.info("{} 签到成功", customerId);
@@ -70,7 +70,7 @@ public class RedisBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 BigDecimal value = new BigDecimal("2");
-                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value);
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日分享奖励");
             }
         });
         log.info("{} 每日分享成功", customerId);
@@ -94,7 +94,7 @@ public class RedisBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 BigDecimal value = new BigDecimal("0.1");
-                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value);
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日答题奖励");
             }
         });
         log.info("{} 每日答题成功", customerId);
