@@ -21,17 +21,20 @@ import java.util.List;
  * @date: 2020/8/4 10:01
  */
 @Slf4j
+//@DependsOn("payRecordService")
 public abstract class AbstractSendPrize implements SendPrizeHandler {
     private PayRecordServiceImpl payRecordService;
     private List<String> needPay = Arrays.asList("RP", "RRP");
 
     public AbstractSendPrize() {
-        payRecordService = (PayRecordServiceImpl) ApplicationContextUtil.getObject("payRecordService");
     }
 
     @Override
     public void sendPrize(String customerId, PrizeBean prizeBean) {
         if (needPay.contains(prizeBean.getTypeCode())) {
+            if (null == payRecordService) {
+                payRecordService = (PayRecordServiceImpl) ApplicationContextUtil.getObject("payRecordService");
+            }
             PayRecord payRecord = insertPayRecord(customerId, prizeBean);
             try {
                 sendPrizeHandler(customerId, prizeBean, payRecord);

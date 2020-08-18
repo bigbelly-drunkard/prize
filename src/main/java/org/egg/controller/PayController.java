@@ -70,6 +70,9 @@ public class PayController {
     public BaseResult cash(@PathVariable(value = "amount") BigDecimal amount) {
         return payBiz.cash(CustomerUtil.getCustomer().getCustomerNo(), amount);
     }
+    /**
+     * 金豆兑换
+     */
 
 
 }

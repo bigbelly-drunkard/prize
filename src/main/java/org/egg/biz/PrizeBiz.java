@@ -64,9 +64,9 @@ public class PrizeBiz {
         for (String ss : split) {
             String aDefault = properties.get(ss + "." + "default").toString();
             String need = properties.get(ss + "." + "need").toString();
-            String[] split1 = need.split("|");
-            String score = split[0];
-            String gold = split[1];
+            String[] split1 = need.split("\\|");
+            String score = split1[0];
+            String gold = split1[1];
             ArrayList<PrizeBean> prizeBeans = new ArrayList<>();
             properties.forEach((key, value) -> {
 

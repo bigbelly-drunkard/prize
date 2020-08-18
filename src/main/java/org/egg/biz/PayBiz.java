@@ -19,10 +19,7 @@ import org.egg.service.impl.FlowRecordServiceImpl;
 import org.egg.service.impl.PayRecordServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
-import org.egg.utils.CheckUtil;
-import org.egg.utils.CustomerUtil;
-import org.egg.utils.DateUtil;
-import org.egg.utils.SnowFlake;
+import org.egg.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -40,8 +37,8 @@ import java.util.List;
 @Component
 @Slf4j
 public class PayBiz {
-    @Autowired
-    private SnowFlake snowFlake;
+//    @Autowired
+//    private SnowFlake snowFlake;
     @Autowired
     private CustomerServiceImpl customerService;
     @Autowired
@@ -86,7 +83,7 @@ public class PayBiz {
             public void doAction() {
                 Customer customer = customerService.queryCustomerByCustomerId(customerId);
                 PayRecord payRecord = new PayRecord();
-                payRecord.setPayNo(snowFlake.nextId() + "");
+                payRecord.setPayNo(IdMarkUtil.getUuid(TableTypeEnum.PAY_RECORD));
                 WxPrePayRequestDto wxPrePayRequestDto = new WxPrePayRequestDto();
                 wxPrePayRequestDto.setOutTradeNo(payRecord.getPayNo());
                 wxPrePayRequestDto.setClientInfo(payReq.getClientInfo());
@@ -249,7 +246,7 @@ public class PayBiz {
             public void doAction() {
                 BigDecimal money = gold2Money(amount);
                 PayRecord payRecord = new PayRecord();
-                payRecord.setPayNo(snowFlake.nextId() + "");
+                payRecord.setPayNo(IdMarkUtil.getUuid(TableTypeEnum.PAY_RECORD));
                 payRecord.setPayChannel(ChannelEnum.WX_MINI.getCode());
                 payRecord.setPayAmount(money);
                 payRecord.setCustomerNo(customerId);

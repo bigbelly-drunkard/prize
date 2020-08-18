@@ -51,6 +51,9 @@ public class LocalCache {
 
 
     public Customer getCustomerByMiniOpenId(String openId) {
+        if (null == openId) {
+            return null;
+        }
         return miniOpenId_user_cache.get(openId);
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
  * @Description
  * @date: 2020/7/30 18:28
  */
-@Component
+@Component(value = "payRecordService")
 @Slf4j
 public class PayRecordServiceImpl {
     @Autowired

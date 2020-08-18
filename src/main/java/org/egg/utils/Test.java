@@ -5,7 +5,9 @@ import com.github.wxpay.sdk.WXPayUtil;
 import org.egg.integration.wx.WxConfig;
 
 import java.beans.IntrospectionException;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,7 +19,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException {
-        pp();
+        File file = new File("file/nickName.txt");
+        URL systemResource = ClassLoader.getSystemResource("file/nickName.txt");
+        String file1 = systemResource.getFile();
+        System.out.println(file1);
+        System.out.println(file.exists());
 
     }
 
