@@ -42,6 +42,7 @@ public class MyWebAppConfigurer
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AccessOriginInterceptor()).addPathPatterns("/**");
 //        // 多个拦截器组成一个拦截器链
 //        // addPathPatterns 用于添加拦截规则
 //        // excludePathPatterns 用户排除拦截
@@ -50,7 +51,6 @@ public class MyWebAppConfigurer
                 .addPathPatterns("/prize/**")
                 .excludePathPatterns("/swagger-ui.html").excludePathPatterns("/i/qml")
         ;
-        registry.addInterceptor(new AccessOriginInterceptor()).addPathPatterns("/**");
     }
     //定义时间格式转换器
     @Bean
