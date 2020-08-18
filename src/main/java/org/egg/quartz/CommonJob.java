@@ -32,8 +32,8 @@ public class CommonJob {
     }
     @Scheduled(cron = "0/1 * * * * ?")
     public void msgMachine() {
-        log.info("msgMachine start");
+//        log.info("msgMachine start");
         msgBiz.robotMsg();
-        log.info("msgMachine end");
+//        log.info("msgMachine end");
     }
 }

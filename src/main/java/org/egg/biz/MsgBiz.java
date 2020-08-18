@@ -12,10 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -43,7 +40,8 @@ public class MsgBiz {
 //            URL systemResource = ClassLoader.getSystemResource("file/nickName.txt");
 //            String file1 = systemResource.getFile();
 //            File file = new File(file1);
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file),"UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String str = null;
             while ((str = bufferedReader.readLine()) != null) {
                 nickNameCache.add(str);
@@ -91,7 +89,7 @@ public class MsgBiz {
      * 每次随机创建0~5个消息
      */
     public void robotMsg() {
-        int v = (int) Math.random() * 5;
+        int v = (int) (Math.random() * 5);
         for (int i = 0; i < v; i++) {
             String msg = getMsg();
             localCache.addMsg(msg);

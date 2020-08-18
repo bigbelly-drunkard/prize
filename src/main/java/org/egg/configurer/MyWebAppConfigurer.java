@@ -44,31 +44,11 @@ public class MyWebAppConfigurer
 //        // 多个拦截器组成一个拦截器链
 //        // addPathPatterns 用于添加拦截规则
 //        // excludePathPatterns 用户排除拦截
-//        registry.addInterceptor(new AccessOriginInterceptor()).addPathPatterns("/**").excludePathPatterns("/css/**")
-//                .excludePathPatterns("/easyui/**").excludePathPatterns("/fonts/**").excludePathPatterns("/images/**")
-//                .excludePathPatterns("/js/**");
-//        registry.addInterceptor(new AppInterceptor()).addPathPatterns("/**").excludePathPatterns("/css/**")
-//                .excludePathPatterns("/easyui/**").excludePathPatterns("/fonts/**").excludePathPatterns("/images/**")
-//                .excludePathPatterns("/js/**");
-        //登录页，注册页，400，500页,引导页；登录接口，注册接口，检查登录名唯一接口，渠道回执接口
-//        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/login")
-//                .excludePathPatterns("/user/register").excludePathPatterns("/error/**").excludePathPatterns("/logOut")
-//                .excludePathPatterns("/user/checkLoginName").excludePathPatterns("/publishOrder/updateStatusByPaySucc")
-//                .excludePathPatterns("/showXY").excludePathPatterns("/showPOList")
-//                .excludePathPatterns("/publishOrder/queryList").excludePathPatterns("/boss/**")
-//                .excludePathPatterns("/user/wxLogin").excludePathPatterns("/showSpecification")
-//                .excludePathPatterns("/toLogin/**").excludePathPatterns("/toRegister").excludePathPatterns("/").excludePathPatterns("/wx/**")
-//                .excludePathPatterns("/showShareCommend").excludePathPatterns("/pc/**").
-//                excludePathPatterns("/showAgentRecommend").excludePathPatterns("/feedBack/**").excludePathPatterns("/css/**")
-//                .excludePathPatterns("/easyui/**").excludePathPatterns("/fonts/**").excludePathPatterns("/images/**")
-//                .excludePathPatterns("/js/**");
         registry.addInterceptor(new MiniLoginInterceptor(localCache))
-                .addPathPatterns("/**")
+                .addPathPatterns("/customer/**").addPathPatterns("/i/**").addPathPatterns("/p/**")
+                .addPathPatterns("/prize/**")
+                .excludePathPatterns("/swagger-ui.html").excludePathPatterns("/i/qml")
         ;
-//        registry.addInterceptor(new BossLoginInterceptor()).addPathPatterns("/boss/**").excludePathPatterns("/boss/login")
-//                .excludePathPatterns("/boss/toBossLogin").excludePathPatterns("/css/**")
-//                .excludePathPatterns("/easyui/**").excludePathPatterns("/fonts/**").excludePathPatterns("/images/**")
-//                .excludePathPatterns("/js/**");
     }
     //定义时间格式转换器
     @Bean

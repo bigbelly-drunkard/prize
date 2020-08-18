@@ -36,7 +36,7 @@ public class LocalCache {
 
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
-            boolean tooBig = size() > 10;
+            boolean tooBig = size() > 70;
 
             if (tooBig) {
                 System.out.println("最近最少使用的key=" + eldest.getKey());

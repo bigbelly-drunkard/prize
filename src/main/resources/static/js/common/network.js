@@ -1,3 +1,4 @@
+var host = "http://localhost:8080/";
 /**
  * 静默请求
  * @param url
@@ -24,8 +25,9 @@ function call(url, param, callback) {
  * @param callback
  */
 function call_common(url, param, slientFlag, callback) {
+
     $.ajax({
-        url: url,
+        url: host+url,
         type: 'post',
         data: param,
         dataType: 'json',
