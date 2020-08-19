@@ -27,9 +27,9 @@ public class LocalCache {
      */
     private ConcurrentHashMap<String, Customer> miniOpenId_user_cache = new ConcurrentHashMap<>();
     /**
-     * 所有用户的负载因子变动
+     * 所有用户的收益金额变动
      */
-    private ConcurrentHashMap<String, List<BigDecimal>> loadFactor_change_cache = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, List<BigDecimal>> amount_change_cache = new ConcurrentHashMap<>();
     /**
      * msg集合 LRU
      * k:时间
@@ -65,14 +65,14 @@ public class LocalCache {
         miniOpenId_user_cache.put(openId, user);
     }
 
-    public ConcurrentHashMap<String, List<BigDecimal>> getLoadFactor_change_cache() {
-        return loadFactor_change_cache;
+    public ConcurrentHashMap<String, List<BigDecimal>> getAmount_change_cache() {
+        return amount_change_cache;
     }
 
-    public void addLoadFactorChangeCache(String customerId, BigDecimal value) {
-        List<BigDecimal> bigDecimals = loadFactor_change_cache.get(customerId);
+    public void addAmountChangeCache(String customerId, BigDecimal value) {
+        List<BigDecimal> bigDecimals = amount_change_cache.get(customerId);
         if (null == bigDecimals) {
-            loadFactor_change_cache.put(customerId, new LinkedList<>());
+            amount_change_cache.put(customerId, new LinkedList<>());
             return;
         }
         bigDecimals.add(value);

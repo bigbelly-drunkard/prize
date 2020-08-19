@@ -2,11 +2,9 @@ package org.egg.handler.Observer;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.egg.biz.LoadFactorBiz;
 import org.egg.handler.SendPrizeHandler;
 import org.egg.model.DTO.PrizeBean;
 import org.egg.observer.Observer;
-import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ public class PrizeSendObserver implements Observer {
             log.error("无sendPrizeHandler obj1={}", JSONObject.toJSONString(obj1));
             return;
         }
-        sendPrizeHandler.sendPrize(CustomerUtil.getCustomer().getCustomerNo(),obj1);
+        sendPrizeHandler.sendPrize(obj1.getCid(),obj1);
 
     }
 

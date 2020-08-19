@@ -145,6 +145,7 @@ public class PrizeBiz {
      * @param activeNo
      */
     public CommonSingleResult<PrizeVo> p(String activeNo, String customerId) {
+        log.info("抽奖start,{},{}", activeNo, customerId);
         CommonSingleResult<PrizeVo> result = new CommonSingleResult<>();
         bizTemplate.process(result, new TemplateCallBack() {
             @Override
@@ -158,7 +159,7 @@ public class PrizeBiz {
                 BigDecimal score = customer.getScore();
                 switch (activeNo) {
                     case "A":
-                        if (score.compareTo(new BigDecimal("10")) != 1) {
+                        if (score.compareTo(new BigDecimal("10")) == -1) {
                             log.error("A活动 用户积分不够");
                             throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
                         }
@@ -180,10 +181,13 @@ public class PrizeBiz {
                     default:
                         break;
                 }
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 1; i++) {
                     try {
                         PrizeBean prizeBean = commonLogic(activeName);
-                        boolean b = customerService.checkLoadFactor(prizeBean.getFactor(), customerId, true);
+                        if (prizeBean.getPrize().compareTo(BigDecimal.ZERO) != 1) {
+                            break;
+                        }
+                        boolean b = customerService.checkLoadFactor(prizeBean.getPrize(), customerId, true);
                         if (b) {
                             res = prizeBean;
                             break;
@@ -197,17 +201,19 @@ public class PrizeBiz {
                     res = prizeDefaultCache.get(activeName);
                 }
 //         通知者  1.扣积分 2.发奖品 反参id如果为null 降级为未中奖
+                res.setCid(customerId);
                 getPrizeSuccObserver.notifyObserver(res);
                 if (res == null || res.getId() == null) {
                     log.info("发奖失败 降级默认为未中奖");
                     res = prizeDefaultCache.get(activeName);
                 }
                 PrizeVo prizeVo = new PrizeVo();
-                BeanUtil.copyProperties(res,prizeVo);
+                BeanUtil.copyProperties(res, prizeVo);
                 result.setData(prizeVo);
 
             }
         });
+        log.info("抽奖结果 {}", JSONObject.toJSONString(result));
         return result;
     }
 
@@ -239,7 +245,7 @@ public class PrizeBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 BigDecimal score = customer.getScore();
-                if (score.compareTo(new BigDecimal("10")) != 1) {
+                if (score.compareTo(new BigDecimal("10")) == -1) {
                     log.error(" 用户积分不够");
                     throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
                 }
@@ -324,6 +330,7 @@ public class PrizeBiz {
         BigDecimal bigDecimal = new BigDecimal(random + "");
         for (PrizeBean prizeBean : prizeBeans) {
             if (prizeBean.getRate().compareTo(bigDecimal) == 1) {
+                log.info("抽到奖品待确定是否可命中{}", prizeBean.getName());
                 return prizeBean;
             }
             bigDecimal = bigDecimal.subtract(prizeBean.getRate());
@@ -339,6 +346,7 @@ public class PrizeBiz {
         prizeBean.setFactor(new BigDecimal(split[1]));
         prizeBean.setRate(new BigDecimal(split[2]));
         prizeBean.setTypeCode(split[3]);
+        prizeBean.setPrize(new BigDecimal(split[4]));
         return prizeBean;
     }
 

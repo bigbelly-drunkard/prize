@@ -10,7 +10,7 @@ public class Kd100BaiduApiTest extends BaseTest {
     @Test
     public void query() throws Exception {
         String wuliuNo = "773023256455956";
-        Kd100BaiduApi.query(wuliuNo);
+//        Kd100BaiduApi.query(wuliuNo);
     }
 
 }

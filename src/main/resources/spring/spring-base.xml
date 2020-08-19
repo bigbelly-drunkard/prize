@@ -38,6 +38,8 @@
         <constructor-arg>
             <list>
                 <ref bean="paySuccLoadFactorObserver"/>
+                <ref bean="paySuccScoreObserver"/>
+                <ref bean="paySuccMemberObserver"/>
             </list>
         </constructor-arg>
     </bean>

@@ -28,10 +28,10 @@ public class RedisServiceImpl {
      */
     private static final String KEY_04 = "P_";
     /**
-     * 核心负载因子 总值
-     * 奖金池=核心负载因子*盈利率
+     * 总收益金额 总值
+     * 奖金池=总收益金额*盈利率
      */
-    private static final String LOAD_FACTORY_ALL = "LOAD_FACTORY_ALL";
+    private static final String AMOUNT_ALL = "AMOUNT_ALL";
 
     /**
      * 检查每日的key是否存在
@@ -81,23 +81,27 @@ public class RedisServiceImpl {
      * 校验是否超过奖金池
      * 30% 盈利率
      * 奖金池=核心负载因子*盈利率
+     * needAmount 单位：元
+     * 单位：分
      * @return
      */
-    public boolean checkLoadFactory(BigDecimal needAmount) {
-        BigDecimal o = (BigDecimal) redisUtil.get(LOAD_FACTORY_ALL);
-        BigDecimal bigDecimal = o.multiply(new BigDecimal("0.3")).setScale(2, BigDecimal.ROUND_HALF_UP);
+    public boolean checkAmountAll(BigDecimal needAmount) {
+        int o = (int) redisUtil.get(AMOUNT_ALL)/100;
+        BigDecimal bigDecimal = new BigDecimal("0.3").multiply(new BigDecimal(o)).setScale(2, BigDecimal.ROUND_HALF_UP);
+        log.debug("奖金池{}",bigDecimal);
         return bigDecimal.compareTo(needAmount) > -1;
 
     }
 
     /**
      * 增加或减少 负载因子
-     * 目前标准：1元 1因子
-     *
+     * 目前标准：
+     *单位：元
+     * redis只支持long 所以单位为分
      * @param amount
      */
-    public void addLoadFactory(BigDecimal amount) {
-        redisUtil.incr(LOAD_FACTORY_ALL, Long.valueOf(amount.setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+    public void addAmount(BigDecimal amount) {
+        redisUtil.incr(AMOUNT_ALL, amount.multiply(new BigDecimal("100")).intValue());
     }
 
 }

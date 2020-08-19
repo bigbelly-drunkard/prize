@@ -2,6 +2,7 @@ package org.egg.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.egg.biz.LoadFactorBiz;
 import org.egg.enums.FlowRecordTypeEnum;
 import org.egg.model.DO.PayRecord;
 import org.egg.model.DTO.PrizeBean;
@@ -21,6 +22,8 @@ import java.math.BigDecimal;
 public class GdSendPrizeHandler extends AbstractSendPrize {
     @Autowired
     private FlowRecordServiceImpl flowRecordService;
+    @Autowired
+    private LoadFactorBiz loadFactorBiz;
 
     @Override
     public void sendPrizeHandler(String customerId, PrizeBean prizeBean, PayRecord payRecord) {
@@ -31,7 +34,9 @@ public class GdSendPrizeHandler extends AbstractSendPrize {
     public void sendPrizeHandler(String customerId, PrizeBean prizeBean) {
         log.info("发送定额金豆，customerId={},prizeBean={}", customerId,
                 JSONObject.toJSONString(prizeBean));
-        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, getPrice(prizeBean),"定额金豆奖品"+prizeBean.getName());
+        BigDecimal price = getPrice(prizeBean);
+        flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, price,"定额金豆奖品"+prizeBean.getName());
+        loadFactorBiz.goldSend(price,customerId);
         log.info("发送定额金豆成功");
     }
 

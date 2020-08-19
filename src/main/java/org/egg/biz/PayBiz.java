@@ -110,7 +110,7 @@ public class PayBiz {
 
     }
 
-    public BaseResult cancelPay(String outTradeNo,String cid) {
+    public BaseResult cancelPay(String outTradeNo, String cid) {
         log.info("取消支付单开始{}", outTradeNo);
         BaseResult result = new BaseResult();
         bizTemplate.process(result, new TemplateCallBack() {
@@ -127,7 +127,7 @@ public class PayBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 if (!payRecord.getCustomerNo().equals(cid)) {
-                    log.error("非法请求 cid={},payRecord.getCustomerNo={}",cid,payRecord.getCustomerNo());
+                    log.error("非法请求 cid={},payRecord.getCustomerNo={}", cid, payRecord.getCustomerNo());
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
 
                 }
@@ -342,7 +342,10 @@ public class PayBiz {
 
     /**
      * 金豆转换现金
-     *
+     * * 5000以下 7.5元；
+     * 5000-10000 20%；
+     * 10000+ 10%；
+     *todo 手续费待定
      * @param goldAmount
      * @return
      */

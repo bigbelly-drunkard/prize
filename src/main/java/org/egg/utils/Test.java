@@ -7,6 +7,7 @@ import org.egg.integration.wx.WxConfig;
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,10 +19,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException, IOException {
-        double cos = Math.cos(2000 / 1000d);
-        double cos2 = Math.cos(1000 / 1000d);
-        System.out.println(cos);
-        System.out.println(cos2);
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add("1");
+        strings.add("2");
+        strings.add("3");
+        strings.forEach(x->{
+            if (x.equals("2")) {
+                return;
+            }
+            System.out.println(x);
+
+        });
     }
 
     private static void testa(String notifyData) throws Exception {

@@ -18,6 +18,7 @@ public class PrizeBean {
      * 价值因子
      */
     private BigDecimal factor;
+    private BigDecimal prize;
 
     private BigDecimal rate;
     /**
@@ -27,4 +28,5 @@ public class PrizeBean {
     private BigDecimal needScore;
     private BigDecimal needGold;
     private BigDecimal prizeNum;
+    private String cid;
 }

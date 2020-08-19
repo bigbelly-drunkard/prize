@@ -45,13 +45,13 @@ public class CustomerServiceImpl {
      * 1.比较奖金池是否满足
      * 2.计算用户负载因子 算法：使用cos函数绝对值 [0,1]，使用cos绝对值来计算此次奖品是否可以再次命中
      *
-     * @param value      因子数
+     * @param value      价值
      * @param customerId
      * @param sync
      * @return
      */
     public boolean checkLoadFactor(BigDecimal value, String customerId, boolean sync) {
-        boolean b = redisService.checkLoadFactory(value);
+        boolean b = redisService.checkAmountAll(value);
         if (!b) {
             log.info("奖金池不满足此奖品 value={}", value);
             return false;
@@ -72,7 +72,8 @@ public class CustomerServiceImpl {
         if (cos < -1) {
             cos = -cos;
         }
-        return Math.random() > cos;
+        log.debug("cos={}",cos);
+        return Math.random() < cos;
     }
 
     /**
@@ -80,15 +81,18 @@ public class CustomerServiceImpl {
      */
     public void sumLoadFactor4Cache(String customerId) {
 
-        ConcurrentHashMap<String, List<BigDecimal>> loadFactor_change_cache = localCache.getLoadFactor_change_cache();
+        ConcurrentHashMap<String, List<BigDecimal>> amount_change_cache = localCache.getAmount_change_cache();
         if (null == customerId) {
-            loadFactor_change_cache.forEach((key, value) -> {
+            amount_change_cache.forEach((key, value) -> {
                 BigDecimal reduce = value.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+                if (reduce.compareTo(BigDecimal.ZERO)!=1) {
+                    return;
+                }
                 changeCustomerLoadFactor(key, reduce);
             });
         } else {
-            List<BigDecimal> bigDecimals = loadFactor_change_cache.get(customerId);
-            if (null == bigDecimals) {
+            List<BigDecimal> bigDecimals = amount_change_cache.get(customerId);
+            if (CollectionUtils.isEmpty(bigDecimals)) {
                 return;
             }
             BigDecimal reduce = bigDecimals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -166,7 +170,7 @@ public class CustomerServiceImpl {
      * @param customerId
      */
     private void changeCustomerLoadFactor(String customerId, BigDecimal addLoadFactor) {
-        HashMap<String, Object> stringObjectHashMap = new HashMap<>(3);
+        HashMap<String, Object> stringObjectHashMap = new HashMap<>(2);
         stringObjectHashMap.put("customerId", customerId);
         stringObjectHashMap.put("addLoadFactor", addLoadFactor);
         customerMapperExt.updateLoadFactor(stringObjectHashMap);

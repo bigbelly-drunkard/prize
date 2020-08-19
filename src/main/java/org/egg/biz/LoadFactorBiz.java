@@ -31,8 +31,8 @@ public class LoadFactorBiz {
      * @param amount 商品金额 单位 元
      */
     public void buyGood(BigDecimal amount, String customerId) {
-        localCache.addLoadFactorChangeCache(customerId, amount);
-        changeAllLoadFactory(amount);
+        localCache.addAmountChangeCache(customerId, amount);
+        changeAllAmount(amount);
     }
 //=============================扣减 区域=========================================================
 
@@ -47,8 +47,8 @@ public class LoadFactorBiz {
         if (amount.compareTo(BigDecimal.ZERO) == 1) {
             amount = amount.negate();
         }
-        localCache.addLoadFactorChangeCache(customerId, amount);
-        changeAllLoadFactory(amount);
+        localCache.addAmountChangeCache(customerId, amount);
+        changeAllAmount(amount);
 
     }
 
@@ -63,8 +63,8 @@ public class LoadFactorBiz {
         if (amount.compareTo(BigDecimal.ZERO) == 1) {
             amount = amount.negate();
         }
-        localCache.addLoadFactorChangeCache(customerId, amount);
-        changeAllLoadFactory(amount);
+        localCache.addAmountChangeCache(customerId, amount);
+        changeAllAmount(amount);
     }
 
     /**
@@ -78,16 +78,30 @@ public class LoadFactorBiz {
         if (amount.compareTo(BigDecimal.ZERO) == 1) {
             amount = amount.negate();
         }
-        localCache.addLoadFactorChangeCache(customerId, amount);
-        changeAllLoadFactory(amount);
+        localCache.addAmountChangeCache(customerId, amount);
+        changeAllAmount(amount);
     }
 
+    /**
+     * 金豆奖品
+     * 负载因子10:1
+     * @param amount 负载因子
+     * @param customerId
+     */
+    public void goldSend(BigDecimal amount, String customerId) {
+        if (amount.compareTo(BigDecimal.ZERO) == 1) {
+            amount = amount.negate();
+        }
+        BigDecimal divide = amount.divide(BigDecimal.TEN, BigDecimal.ROUND_HALF_UP);
+        localCache.addAmountChangeCache(customerId, divide);
+        changeAllAmount(amount);
+    }
     /**
      * 修改奖金池的负载因子
      * @param amount
      */
-    private void changeAllLoadFactory(BigDecimal amount) {
-        redisService.addLoadFactory(amount);
+    private void changeAllAmount(BigDecimal amount) {
+        redisService.addAmount(amount);
     }
 
 }
