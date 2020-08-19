@@ -13,6 +13,7 @@ public enum PayStatusEnum {
     PENDING("PENDING",""),
     SUCCESS("SUCCESS",""),
     FAIL("FAIL",""),
+    CANCEL("CANCEL",""),
     ;
     private static Map<String, PayStatusEnum> codeEnumMap = new HashMap<>();
     static {

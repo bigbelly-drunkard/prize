@@ -48,6 +48,16 @@ public class PayController {
     }
 
     /**
+     *取消支付单
+     * @param request
+     * @return
+     */
+    @PostMapping("/cancelPay/{outTradeNo}")
+    public BaseResult cancelPay(@PathVariable(value = "outTradeNo") String outTradeNo, HttpServletRequest request) {
+        return payBiz.cancelPay(outTradeNo, CustomerUtil.getCustomer().getCustomerNo());
+    }
+
+    /**
      * 查询支付结果
      *
      * @param payNo
@@ -78,8 +88,8 @@ public class PayController {
     /**
      * 金豆兑换
      */
-    @PostMapping
-    public BaseResult exchange(BigDecimal bigDecimal) {
+    @PostMapping("/exchange/{bigDecimal}")
+    public BaseResult exchange(@PathVariable(value = "bigDecimal") BigDecimal bigDecimal) {
         return payBiz.exchange(bigDecimal, CustomerUtil.getCustomer().getCustomerNo());
     }
 

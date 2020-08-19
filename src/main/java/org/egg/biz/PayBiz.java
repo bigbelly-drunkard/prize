@@ -110,6 +110,41 @@ public class PayBiz {
 
     }
 
+    public BaseResult cancelPay(String outTradeNo,String cid) {
+        log.info("取消支付单开始{}", outTradeNo);
+        BaseResult result = new BaseResult();
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+                CheckUtil.isNotBlank("outTradeNo", outTradeNo);
+            }
+
+            @Override
+            public void doAction() {
+                PayRecord payRecord = payRecordService.queryDetail(outTradeNo);
+                if (null == payRecord) {
+                    log.error("支付单不存在 outTradeNo={}", outTradeNo);
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                if (!payRecord.getCustomerNo().equals(cid)) {
+                    log.error("非法请求 cid={},payRecord.getCustomerNo={}",cid,payRecord.getCustomerNo());
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+
+                }
+                PayStatusEnum enumByCode = PayStatusEnum.getEnumByCode(payRecord.getPayStatus());
+                if (PayStatusEnum.SUCCESS == enumByCode || PayStatusEnum.FAIL == enumByCode || PayStatusEnum.CANCEL == enumByCode) {
+                    log.error("{}订单已是终态", outTradeNo);
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                }
+                payRecord.setPayStatus(PayStatusEnum.CANCEL.getCode());
+                payRecordService.updateStatus(payRecord, PayStatusEnum.PENDING.getCode());
+            }
+        });
+        log.info("取消支付单结束{},结果{}", outTradeNo, JSONObject.toJSONString(result));
+        return result;
+
+    }
+
     /**
      * 查询支付结果页
      *
@@ -137,7 +172,8 @@ public class PayBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
 
                 }
-                if (PayStatusEnum.SUCCESS.getCode().equals(payRecord.getPayStatus()) || PayStatusEnum.FAIL.getCode().equals(payRecord.getPayStatus())) {
+                if (PayStatusEnum.SUCCESS.getCode().equals(payRecord.getPayStatus()) || PayStatusEnum.FAIL.getCode().equals(payRecord.getPayStatus())
+                        || PayStatusEnum.CANCEL.getCode().equals(payRecord.getPayStatus())) {
                     log.info("支付单已经为终态，payRecord={}", JSONObject.toJSONString(payRecord));
                     recordCommonSingleResult.setData(payRecord);
                     return;
@@ -300,7 +336,7 @@ public class PayBiz {
                 flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, amount, "金豆兑换");
             }
         });
-        log.info("exchange result={}",JSONObject.toJSONString(result));
+        log.info("exchange result={}", JSONObject.toJSONString(result));
         return result;
     }
 
