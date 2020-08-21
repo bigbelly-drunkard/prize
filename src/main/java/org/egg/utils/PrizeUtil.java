@@ -41,7 +41,7 @@ public class PrizeUtil {
                 PrizeBean prizeBean = parseValue(s);
                 String substring = key.toString().substring(key.toString().indexOf( "S.")+2);
                 prizeBean.setId(Long.valueOf(substring));
-                if (BigDecimal.ZERO.compareTo(prizeBean.getFactor()) == -1) {
+                if (BigDecimal.ZERO.compareTo(prizeBean.getPrize()) == -1) {
                     prizeBeans.add(prizeBean);
                 }
             }
@@ -53,7 +53,7 @@ public class PrizeUtil {
         BigDecimal subtract = new BigDecimal("1").subtract(pro);
         int n = prizeBeans.size();
         prizeBeans.stream().forEach(x -> {
-            BigDecimal multiply = x.getFactor().multiply(new BigDecimal(n)).setScale(10,BigDecimal.ROUND_HALF_UP);
+            BigDecimal multiply = x.getPrize().multiply(new BigDecimal(n)).setScale(10,BigDecimal.ROUND_HALF_UP);
 //            x.setRate(new BigDecimal("1").divide(multiply, 10, 4));
             x.setRate(subtract.divide(multiply, 10, 4));
         });
@@ -71,6 +71,7 @@ public class PrizeUtil {
         prizeBean.setFactor(new BigDecimal(split[1]));
         prizeBean.setRate(new BigDecimal(split[2]));
         prizeBean.setTypeCode(split[3]);
+        prizeBean.setPrize(new BigDecimal(split[4]));
         return prizeBean;
     }
 
