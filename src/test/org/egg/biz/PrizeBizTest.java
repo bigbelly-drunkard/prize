@@ -42,6 +42,16 @@ public class PrizeBizTest extends BaseTest {
         }
     }
 
+    @Test
+    public void testP() {
+        buyGood();
+        try {
+            p();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 造数据
      * 1.
