@@ -7,7 +7,6 @@ import org.egg.integration.wx.WxConfig;
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,10 +18,21 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException, IOException {
-        Integer j=100;
-        float o=(float) j;
-        BigDecimal bigDecimal = new BigDecimal("0.3").multiply(new BigDecimal(o)).setScale(2, BigDecimal.ROUND_HALF_UP);
-        System.out.println(bigDecimal);
+        for (int i = 0; i < 7; i++) {
+            double d = Math.pow(10,1);
+            double week = Math.pow(10,i);
+//            d%1000
+            double cos = Math.cos((d%1000) / 1000);
+            if (cos < -1) {
+                cos = -cos;
+            }
+            System.out.println("========"+d+"========");
+            System.out.println(cos);
+//        添加奖金池因子 奖金池越大 几率越大 反正越小 [1,0.9]
+            double v = (0.2 * (week%1000) / ( 1000)) + 0.9;
+            System.out.println(cos * v);
+            System.out.println("\n");
+        }
 
     }
 
@@ -51,7 +61,7 @@ public class Test {
         Integer i3 = 5;
         Integer i4 = 10;
         Integer total = 1000000;
-        Integer tt=total;
+        Integer tt = total;
         for (int j = 0; j < tt; j++) {
             double random = Math.random() * 100;
             if (random < 2.5) {
@@ -73,7 +83,7 @@ public class Test {
 
             }
         }
-        System.out.println("total="+total);
+        System.out.println("total=" + total);
         System.out.println(atomicInteger);
         System.out.println(atomicInteger2);
         System.out.println(atomicInteger3);

@@ -5,7 +5,6 @@ import org.egg.cache.LocalCache;
 import org.egg.enums.CustomerTypeEnum;
 import org.egg.enums.TableTypeEnum;
 import org.egg.enums.UserStatusEnum;
-import org.egg.exception.CommonException;
 import org.egg.mapper.CustomerMapper;
 import org.egg.mapper.CustomerMapperExt;
 import org.egg.model.DO.Customer;
@@ -55,8 +54,8 @@ public class CustomerServiceImpl {
         boolean b = redisService.checkAmountAll(value);
         if (!b) {
             log.info("奖金池不满足此奖品 value={}", value);
-            throw new CommonException("MOCK");
-//            return false;
+//            throw new CommonException("MOCK");
+            return false;
         }
 //        计算用户负载因子 算法：用户因子越大 中奖奖励越小 最后趋近为0
         if (sync) {
@@ -70,13 +69,13 @@ public class CustomerServiceImpl {
         Customer customer = customers.get(0);
         BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
 //        https://zh.numberempire.com/graphingcalculator.php 函数绘图可视化 100*cos(x/1000)
-        double cos = Math.cos(loadFactor.doubleValue() / 1000);
+        double cos = Math.cos((loadFactor.doubleValue()%1000) / 1000);
         if (cos < -1) {
             cos = -cos;
         }
         log.debug("cos={}",cos);
 //        添加奖金池因子 奖金池越大 几率越大 反正越小 [1,0.8]
-        double v = (0.2 * redisService.getWEEK_LAST_POOL().get() / (100 * 10000)) + 0.8;
+        double v = (0.2 * (redisService.getWEEK_LAST_POOL().get()%10000 )/ ( 10000)) + 0.8;
         return Math.random() < cos*v;
     }
 
