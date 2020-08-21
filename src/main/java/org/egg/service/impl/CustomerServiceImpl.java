@@ -75,7 +75,9 @@ public class CustomerServiceImpl {
             cos = -cos;
         }
         log.debug("cos={}",cos);
-        return Math.random() < cos;
+//        添加奖金池因子 奖金池越大 几率越大 反正越小 [1,0.8]
+        double v = (0.2 * redisService.getWEEK_LAST_POOL().get() / (100 * 10000)) + 0.8;
+        return Math.random() < cos*v;
     }
 
     /**

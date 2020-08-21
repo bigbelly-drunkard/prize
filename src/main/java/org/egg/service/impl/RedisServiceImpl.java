@@ -156,4 +156,7 @@ public class RedisServiceImpl {
         redisUtil.incr(AMOUNT_ALL, amount.multiply(new BigDecimal("100")).intValue());
     }
 
+    public AtomicDouble getWEEK_LAST_POOL() {
+        return WEEK_LAST_POOL;
+    }
 }
