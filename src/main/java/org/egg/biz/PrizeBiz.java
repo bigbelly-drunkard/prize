@@ -173,7 +173,7 @@ public class PrizeBiz {
             @Override
             public void doAction() {
                 String activeName = "";
-                PrizeBean res = null;
+                PrizeBean res = new PrizeBean();
                 switch (activeNo) {
                     case "A":
                         activeName = "A";
@@ -187,9 +187,11 @@ public class PrizeBiz {
                         if (prizeBean.getPrize().compareTo(BigDecimal.ZERO) != 1) {
                             break;
                         }
+//                        每次需要新对象 不能对原对象进行修改
                         boolean b = customerService.checkLoadFactor(prizeBean.getPrize(), customerId, true);
                         if (b) {
-                            res = prizeBean;
+//                            res = prizeBean;
+                            BeanUtil.copyProperties(prizeBean, res);
                             break;
                         }
                     } catch (IOException e) {
@@ -197,8 +199,9 @@ public class PrizeBiz {
                         continue;
                     }
                 }
-                if (null == res) {
-                    res = prizeDefaultCache.get(activeName);
+                if (res.getName() == null) {
+                    PrizeBean prizeBean = prizeDefaultCache.get(activeName);
+                    BeanUtil.copyProperties(prizeBean, res);
                 }
 //         通知者  1.扣积分 2.发奖品 反参id如果为null 降级为未中奖
                 res.setCid(customerId);

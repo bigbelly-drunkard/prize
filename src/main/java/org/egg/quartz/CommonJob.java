@@ -3,6 +3,7 @@ package org.egg.quartz;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.biz.MsgBiz;
 import org.egg.service.impl.CustomerServiceImpl;
+import org.egg.service.impl.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,8 @@ public class CommonJob {
     private CustomerServiceImpl customerService;
     @Autowired
     private MsgBiz msgBiz;
+    @Autowired
+    private RedisServiceImpl redisService;
 
     /**
      * 同步累计缓存中的负载因子值
@@ -35,5 +38,11 @@ public class CommonJob {
 //        log.info("msgMachine start");
         msgBiz.robotMsg();
 //        log.info("msgMachine end");
+    }
+    @Scheduled(cron = "0 0 0 1/7 * ?")
+    public void weekLastAmountCalc() {
+        log.info("weekLastAmountCalc start");
+        redisService.getWeekLast();
+        log.info("weekLastAmountCalc end");
     }
 }

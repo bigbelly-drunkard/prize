@@ -5,10 +5,7 @@ import org.egg.model.DO.Customer;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -72,7 +69,7 @@ public class LocalCache {
     public void addAmountChangeCache(String customerId, BigDecimal value) {
         List<BigDecimal> bigDecimals = amount_change_cache.get(customerId);
         if (null == bigDecimals) {
-            amount_change_cache.put(customerId, new LinkedList<>());
+            amount_change_cache.put(customerId, Collections.synchronizedList(new LinkedList<>()));
             return;
         }
         bigDecimals.add(value);

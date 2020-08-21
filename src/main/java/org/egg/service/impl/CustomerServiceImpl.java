@@ -5,6 +5,7 @@ import org.egg.cache.LocalCache;
 import org.egg.enums.CustomerTypeEnum;
 import org.egg.enums.TableTypeEnum;
 import org.egg.enums.UserStatusEnum;
+import org.egg.exception.CommonException;
 import org.egg.mapper.CustomerMapper;
 import org.egg.mapper.CustomerMapperExt;
 import org.egg.model.DO.Customer;
@@ -54,7 +55,8 @@ public class CustomerServiceImpl {
         boolean b = redisService.checkAmountAll(value);
         if (!b) {
             log.info("奖金池不满足此奖品 value={}", value);
-            return false;
+            throw new CommonException("MOCK");
+//            return false;
         }
 //        计算用户负载因子 算法：用户因子越大 中奖奖励越小 最后趋近为0
         if (sync) {
@@ -88,6 +90,7 @@ public class CustomerServiceImpl {
                 if (reduce.compareTo(BigDecimal.ZERO)!=1) {
                     return;
                 }
+                value.clear();
                 changeCustomerLoadFactor(key, reduce);
             });
         } else {
@@ -96,6 +99,7 @@ public class CustomerServiceImpl {
                 return;
             }
             BigDecimal reduce = bigDecimals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+            bigDecimals.clear();
             changeCustomerLoadFactor(customerId, reduce);
         }
     }

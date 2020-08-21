@@ -92,9 +92,9 @@ public class LoadFactorBiz {
         if (amount.compareTo(BigDecimal.ZERO) == 1) {
             amount = amount.negate();
         }
-        BigDecimal divide = amount.divide(BigDecimal.TEN, BigDecimal.ROUND_HALF_UP);
+        BigDecimal divide = amount.divide(BigDecimal.TEN,2, BigDecimal.ROUND_HALF_UP);
         localCache.addAmountChangeCache(customerId, divide);
-        changeAllAmount(amount);
+        changeAllAmount(divide);
     }
     /**
      * 修改奖金池的负载因子

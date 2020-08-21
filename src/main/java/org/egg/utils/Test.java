@@ -7,7 +7,7 @@ import org.egg.integration.wx.WxConfig;
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,17 +19,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException, IOException {
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("1");
-        strings.add("2");
-        strings.add("3");
-        strings.forEach(x->{
-            if (x.equals("2")) {
-                return;
-            }
-            System.out.println(x);
+        Integer j=100;
+        float o=(float) j;
+        BigDecimal bigDecimal = new BigDecimal("0.3").multiply(new BigDecimal(o)).setScale(2, BigDecimal.ROUND_HALF_UP);
+        System.out.println(bigDecimal);
 
-        });
     }
 
     private static void testa(String notifyData) throws Exception {
