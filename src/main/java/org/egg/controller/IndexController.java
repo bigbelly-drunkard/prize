@@ -8,6 +8,7 @@ import org.egg.response.BaseResult;
 import org.egg.response.CommonListResult;
 import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ public class IndexController {
 
     /**
      * 签到
+     *
      * @return
      */
     @PostMapping("/qd")
@@ -36,7 +38,8 @@ public class IndexController {
     }
 
     /**
-     *答题
+     * 答题
+     *
      * @return
      */
     @PostMapping("/dt")
@@ -46,6 +49,7 @@ public class IndexController {
 
     /**
      * 分享
+     *
      * @return
      */
     @PostMapping("/share")
@@ -53,8 +57,8 @@ public class IndexController {
         return redisBiz.share(CustomerUtil.getCustomer().getCustomerNo());
     }
 
-    @PostMapping("/qml")
-    public CommonListResult<MsgRes> queryMsgList() {
-        return msgBiz.queryMsgList();
+    @PostMapping("/qml/{type}")
+    public CommonListResult<MsgRes> queryMsgList(@PathVariable(value = "type") int type) {
+        return msgBiz.queryMsgList(type);
     }
 }

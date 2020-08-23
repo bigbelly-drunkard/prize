@@ -67,11 +67,12 @@ public class PrizeUtil {
     private PrizeBean parseValue(String value) {
         PrizeBean prizeBean = new PrizeBean();
         String[] split = value.split("#");
-        prizeBean.setName(split[0]);
-        prizeBean.setFactor(new BigDecimal(split[1]));
-        prizeBean.setRate(new BigDecimal(split[2]));
-        prizeBean.setTypeCode(split[3]);
-        prizeBean.setPrize(new BigDecimal(split[4]));
+        prizeBean.setId(Long.valueOf(split[0]));
+        prizeBean.setName(split[1]);
+        prizeBean.setFactor(new BigDecimal(split[2]));
+        prizeBean.setRate(new BigDecimal(split[3]));
+        prizeBean.setTypeCode(split[4]);
+        prizeBean.setPrize(new BigDecimal(split[5]));
         return prizeBean;
     }
 

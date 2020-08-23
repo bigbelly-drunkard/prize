@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -54,21 +55,30 @@ public class MsgBiz {
 
     /**
      * 查询所有消息
-     *
+     *type 0:全部 1：积分活动
      * @return
      */
-    public CommonListResult<MsgRes> queryMsgList() {
+    public CommonListResult<MsgRes> queryMsgList(int type) {
         log.info("queryMsgList start");
         CommonListResult<MsgRes> msgResCommonListResult = new CommonListResult<>();
         bizTemplate.process(msgResCommonListResult, new TemplateCallBack() {
             @Override
             public void doCheck() {
-
             }
 
             @Override
             public void doAction() {
-                Map<String, String> msgMap = localCache.getMsgMap();
+                Map<String, String> msgMap = new HashMap<String, String>();
+                switch (type) {
+                    case 0:
+                        msgMap = localCache.getMsgMap();
+                        break;
+                    case 1:
+                        msgMap = localCache.getMsgMapPaoMaDeng();
+                        break;
+                    default:
+                        break;
+                }
                 ArrayList<MsgRes> msgRes1 = new ArrayList<>(msgMap.size());
                 msgMap.forEach((key, value) -> {
                     MsgRes msgRes = new MsgRes();
@@ -93,6 +103,10 @@ public class MsgBiz {
         for (int i = 0; i < v; i++) {
             String msg = getMsg();
             localCache.addMsg(msg);
+            //        分类记录 1.跑马灯活动
+            if (msg.startsWith("[积分活动]:")) {
+                localCache.addMsgPaoMaDeng(msg.substring("[积分活动]:".length()));
+            }
         }
     }
 

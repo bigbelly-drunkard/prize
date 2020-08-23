@@ -76,7 +76,7 @@ public class PrizeBiz {
                     String s = value.toString();
                     PrizeBean prizeBean = parseValue(s);
                     String substring = key.toString().substring(key.toString().indexOf("S.") + 2);
-                    prizeBean.setId(Long.valueOf(substring));
+//                    prizeBean.setId(Long.valueOf(substring));
                     prizeBean.setNeedScore(new BigDecimal(score));
                     prizeBean.setNeedGold(new BigDecimal(gold));
                     prizeBeans.add(prizeBean);
@@ -345,11 +345,12 @@ public class PrizeBiz {
     private PrizeBean parseValue(String value) {
         PrizeBean prizeBean = new PrizeBean();
         String[] split = value.split("#");
-        prizeBean.setName(split[0]);
-        prizeBean.setFactor(new BigDecimal(split[1]));
-        prizeBean.setRate(new BigDecimal(split[2]));
-        prizeBean.setTypeCode(split[3]);
-        prizeBean.setPrize(new BigDecimal(split[4]));
+        prizeBean.setId(Long.valueOf(split[0]));
+        prizeBean.setName(split[1]);
+        prizeBean.setFactor(new BigDecimal(split[2]));
+        prizeBean.setRate(new BigDecimal(split[3]));
+        prizeBean.setTypeCode(split[4]);
+        prizeBean.setPrize(new BigDecimal(split[5]));
         return prizeBean;
     }
 
