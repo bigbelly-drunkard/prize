@@ -179,7 +179,9 @@ public class PrizeBiz {
                         activeName = "A";
                         break;
                     default:
-                        break;
+                        log.error("活动号不合法");
+                        throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+//                        break;
                 }
                 for (int i = 0; i < 1; i++) {
                     try {
@@ -204,11 +206,15 @@ public class PrizeBiz {
                     BeanUtil.copyProperties(prizeBean, res);
                 }
 //         通知者  1.扣积分 2.发奖品 反参id如果为null 降级为未中奖
+                res.setActiveName(activeName);
                 res.setCid(customerId);
                 getPrizeSuccObserver.notifyObserver(res);
                 if (res == null || res.getId() == null) {
                     log.info("发奖失败 降级默认为未中奖");
-                    res = prizeDefaultCache.get(activeName);
+                    PrizeBean prizeBean = prizeDefaultCache.get(activeName);
+                    BeanUtil.copyProperties(prizeBean, res);
+                    res.setActiveName(activeName);
+                    res.setCid(customerId);
                 }
                 PrizeVo prizeVo = new PrizeVo();
                 BeanUtil.copyProperties(res, prizeVo);

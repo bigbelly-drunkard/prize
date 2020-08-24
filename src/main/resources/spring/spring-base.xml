@@ -30,6 +30,7 @@
             <list>
                 <ref bean="prizeDbObserver"/>
                 <ref bean="prizeSendObserver"/>
+                <ref bean="prizeMsgObserver"/>
             </list>
         </constructor-arg>
     </bean>

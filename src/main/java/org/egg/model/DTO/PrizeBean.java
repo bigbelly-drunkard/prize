@@ -29,4 +29,5 @@ public class PrizeBean {
     private BigDecimal needGold;
     private BigDecimal prizeNum;
     private String cid;
+    private String activeName;
 }

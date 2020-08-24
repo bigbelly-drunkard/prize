@@ -1,8 +1,10 @@
 package org.egg.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayUtil;
 import org.egg.integration.wx.WxConfig;
+import org.egg.model.DTO.PrizeBean;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
@@ -18,22 +20,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException, IOException {
-        for (int i = 0; i < 7; i++) {
-            double d = Math.pow(10,1);
-            double week = Math.pow(10,i);
-//            d%1000
-            double cos = Math.cos((d%1000) / 1000);
-            if (cos < -1) {
-                cos = -cos;
-            }
-            System.out.println("========"+d+"========");
-            System.out.println(cos);
-//        添加奖金池因子 奖金池越大 几率越大 反正越小 [1,0.9]
-            double v = (0.2 * (week%1000) / ( 1000)) + 0.9;
-            System.out.println(cos * v);
-            System.out.println("\n");
-        }
-
+        PrizeBean prizeBean = new PrizeBean();
+        prizeBean.setId(1L);
+        PrizeBean prizeBean1 = new PrizeBean();
+        BeanUtil.copyProperties(prizeBean1, prizeBean);
+        System.out.println(JSONObject.toJSONString(prizeBean));
     }
 
     private static void testa(String notifyData) throws Exception {

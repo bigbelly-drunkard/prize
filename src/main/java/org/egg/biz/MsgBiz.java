@@ -110,6 +110,10 @@ public class MsgBiz {
         }
     }
 
+    public void addRealMsg4PaoMaDeng(String msg) {
+        localCache.addMsgPaoMaDeng(msg);
+    }
+
     private String getNickName() {
         double v = Math.random() * nickNameCache.size();
         return nickNameCache.get((int) v);

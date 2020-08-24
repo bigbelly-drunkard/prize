@@ -41,7 +41,7 @@ public enum PrizeTypeEnum {
         return desc;
     }
 
-    public PrizeTypeEnum getEnumByCode(String code) {
+    public static PrizeTypeEnum getEnumByCode(String code) {
         return codeEnum.get(code);
     }
 }
