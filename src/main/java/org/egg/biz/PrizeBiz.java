@@ -157,11 +157,18 @@ public class PrizeBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 BigDecimal score = customer.getScore();
+                BigDecimal gold = customer.getGold();
                 switch (activeNo) {
                     case "A":
                         if (score.compareTo(new BigDecimal("10")) == -1) {
                             log.error("A活动 用户积分不够");
                             throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
+                        }
+                        break;
+                    case "B":
+                        if (gold.compareTo(new BigDecimal("10")) == -1) {
+                            log.error("B活动 用户金豆不够");
+                            throw new CommonException(CommonErrorEnum.GOLD_NOT_ENOUGH);
                         }
                         break;
                     default:
@@ -177,6 +184,9 @@ public class PrizeBiz {
                 switch (activeNo) {
                     case "A":
                         activeName = "A";
+                        break;
+                    case "B":
+                        activeName = "B";
                         break;
                     default:
                         log.error("活动号不合法");
