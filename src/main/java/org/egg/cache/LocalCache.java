@@ -61,6 +61,22 @@ public class LocalCache {
             return tooBig;
         }
     };
+    /**
+     * 抽奖跑马灯消息
+     */
+    private Map<String, String> msgMapZhuanPan = new LinkedHashMap<String, String>(100, .75F,
+            false) {
+
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+            boolean tooBig = size() > 70;
+
+            if (tooBig) {
+                log.debug("msgMapZhuanPan最近最少使用的key=" + eldest.getKey());
+            }
+            return tooBig;
+        }
+    };
 
     public ConcurrentHashMap<String, Customer> getMiniOpenId_user_cache() {
         return miniOpenId_user_cache;
@@ -98,6 +114,9 @@ public class LocalCache {
     public void addMsgPaoMaDeng(String msg) {
         msgMapPaoMaDeng.put(System.currentTimeMillis() + "", msg);
     }
+    public void addMsgZhuanPan(String msg) {
+        msgMapZhuanPan.put(System.currentTimeMillis() + "", msg);
+    }
 
     public Map<String, String> getMsgMap() {
         return msgMap;
@@ -105,5 +124,9 @@ public class LocalCache {
 
     public Map<String, String> getMsgMapPaoMaDeng() {
         return msgMapPaoMaDeng;
+    }
+
+    public Map<String, String> getMsgMapZhuanPan() {
+        return msgMapZhuanPan;
     }
 }

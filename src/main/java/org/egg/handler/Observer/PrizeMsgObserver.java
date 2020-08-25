@@ -50,6 +50,9 @@ public class PrizeMsgObserver implements Observer {
             case "A":
                 msgBiz.addRealMsg4PaoMaDeng(stringBuilder.toString());
                 break;
+            case "B":
+                msgBiz.addRealMsg4ZhuanPan(stringBuilder.toString());
+                break;
             default:
                 break;
         }

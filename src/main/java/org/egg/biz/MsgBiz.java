@@ -55,7 +55,8 @@ public class MsgBiz {
 
     /**
      * 查询所有消息
-     *type 0:全部 1：积分活动
+     * type 0:全部 1：积分活动
+     *
      * @return
      */
     public CommonListResult<MsgRes> queryMsgList(int type) {
@@ -75,6 +76,9 @@ public class MsgBiz {
                         break;
                     case 1:
                         msgMap = localCache.getMsgMapPaoMaDeng();
+                        break;
+                    case 2:
+                        msgMap = localCache.getMsgMapZhuanPan();
                         break;
                     default:
                         break;
@@ -107,11 +111,18 @@ public class MsgBiz {
             if (msg.startsWith("[积分活动]:")) {
                 localCache.addMsgPaoMaDeng(msg.substring("[积分活动]:".length()));
             }
+            if (msg.startsWith("[金豆活动]:")) {
+                localCache.addMsgZhuanPan(msg.substring("[金豆活动]:".length()));
+            }
+
         }
     }
 
     public void addRealMsg4PaoMaDeng(String msg) {
         localCache.addMsgPaoMaDeng(msg);
+    }
+public void addRealMsg4ZhuanPan(String msg) {
+        localCache.addMsgZhuanPan(msg);
     }
 
     private String getNickName() {
