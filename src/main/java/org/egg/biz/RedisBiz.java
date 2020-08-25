@@ -43,7 +43,7 @@ public class RedisBiz {
                 boolean b = redisService.checkCustomer4Day1(customerId);
                 if (!b) {
                     log.info("用户今天已经签到过");
-                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                    throw new CommonException(CommonErrorEnum.ALREADY_DO_QD);
                 }
                 BigDecimal value = new BigDecimal("0.5");
                 flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日签到奖励");
@@ -67,7 +67,7 @@ public class RedisBiz {
                 boolean b = redisService.checkCustomer4Day2(customerId);
                 if (!b) {
                     log.info("用户今天已经分享过");
-                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+                    throw new CommonException(CommonErrorEnum.ALREADY_DO_SHARE);
                 }
                 BigDecimal value = new BigDecimal("2");
                 flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日分享奖励");

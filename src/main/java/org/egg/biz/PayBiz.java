@@ -57,23 +57,25 @@ public class PayBiz {
             @Override
             public void doCheck() {
                 CheckUtil.isNotNull("payReq", payReq);
-                BigDecimal amount = payReq.getAmount();
-                if (null == amount || amount.compareTo(BigDecimal.ZERO) == -1) {
-                    log.error("支付金额不对 amount={}", amount);
-                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
-                }
+                //                 校验商品价格是否合法
                 OrderTypeEnum enumByCode = OrderTypeEnum.getEnumByCode(payReq.getOrderType());
                 if (null == enumByCode) {
                     log.error("非法参数");
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
-//                 校验商品价格是否合法
 //                会员类 校验金额
                 if (OrderTypeEnum.SCORE != enumByCode) {
-                    if (enumByCode.getPrize().compareTo(amount) != 1) {
-                        log.error("非法参数,下单金额不一致 amount={},prize={}", amount, enumByCode.getPrize());
-                        throw new CommonException(CommonErrorEnum.PARAM_ERROR);
-                    }
+                    payReq.setAmount(enumByCode.getPrize());
+                    payReq.setOrderMsg(enumByCode.getDesc());
+//                    if (enumByCode.getPrize().compareTo(amount) != 1) {
+//                        log.error("非法参数,下单金额不一致 amount={},prize={}", amount, enumByCode.getPrize());
+//                        throw new CommonException(CommonErrorEnum.PARAM_ERROR);
+//                    }
+                }
+                BigDecimal amount = payReq.getAmount();
+                if (null == amount || amount.compareTo(BigDecimal.ZERO) == -1) {
+                    log.error("支付金额不对 amount={}", amount);
+                    throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
 
 
@@ -345,7 +347,8 @@ public class PayBiz {
      * * 5000以下 7.5元；
      * 5000-10000 20%；
      * 10000+ 10%；
-     *todo 手续费待定
+     * todo 手续费待定
+     *
      * @param goldAmount
      * @return
      */

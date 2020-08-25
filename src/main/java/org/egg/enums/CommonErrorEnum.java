@@ -171,9 +171,13 @@ public enum CommonErrorEnum {
      */
     GOLD_NOT_ENOUGH("PRO3300016", "GOLD_NOT_ENOUGH"),
     /**
-     * 已经做了
+     * 已经每日签到过了
      */
-    ALREADY_DO("PRO3300017", "ALREADY_DO"),
+    ALREADY_DO_QD("PRO3300017", "ALREADY_DO_QD"),
+    /**
+     * 已经每日分享过了
+     */
+    ALREADY_DO_SHARE("PRO3300018", "ALREADY_DO_SHARE"),
 
 
     /**
