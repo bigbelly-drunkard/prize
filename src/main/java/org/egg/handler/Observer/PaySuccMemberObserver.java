@@ -3,6 +3,7 @@ package org.egg.handler.Observer;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.enums.OrderTypeEnum;
 import org.egg.enums.PayStatusEnum;
+import org.egg.enums.PayTypeEnum;
 import org.egg.model.DO.PayRecord;
 import org.egg.observer.Observer;
 import org.egg.service.impl.CustomerServiceImpl;
@@ -23,7 +24,12 @@ public class PaySuccMemberObserver implements Observer {
     @Override
     public void update(Object obj) {
         PayRecord obj1 = (PayRecord) obj;
+        if (!PayTypeEnum.PAY.getCode().equals(obj1.getPayType())) {
+            log.debug("非支付单，跳过会员开通观察者");
+            return;
+        }
         OrderTypeEnum enumByCode1 = OrderTypeEnum.getEnumByCode(obj1.getOrderType());
+
         PayStatusEnum enumByCode = PayStatusEnum.getEnumByCode(obj1.getPayStatus());
         switch (enumByCode) {
             case SUCCESS:

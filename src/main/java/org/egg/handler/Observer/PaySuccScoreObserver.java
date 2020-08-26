@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.egg.enums.FlowRecordTypeEnum;
 import org.egg.enums.OrderTypeEnum;
 import org.egg.enums.PayStatusEnum;
+import org.egg.enums.PayTypeEnum;
 import org.egg.model.DO.PayRecord;
 import org.egg.observer.Observer;
 import org.egg.service.impl.FlowRecordServiceImpl;
@@ -26,8 +27,12 @@ public class PaySuccScoreObserver implements Observer {
     @Override
     public void update(Object obj) {
         PayRecord obj1 = (PayRecord) obj;
+        if (!PayTypeEnum.PAY.getCode().equals(obj1.getPayType())) {
+            log.debug("非支付单，跳过购买积分观察者");
+            return;
+        }
         if (!OrderTypeEnum.SCORE.getCode().equals(obj1.getOrderType())) {
-            log.info("不是积分商品类型，跳过;obj1.getOrderType()={}",obj1.getOrderType());
+            log.info("不是积分商品类型，跳过购买积分观察者;obj1.getOrderType()={}",obj1.getOrderType());
             return;
         }
         PayStatusEnum enumByCode = PayStatusEnum.getEnumByCode(obj1.getPayStatus());

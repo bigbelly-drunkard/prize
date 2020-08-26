@@ -132,7 +132,7 @@ public class PrizeBiz {
         prizeBean7.setTypeCode(PrizeTypeEnum.RANDOM_SCORE.getCode());
         prizeBean7.setFactor(new BigDecimal("10"));
         prizeBean7.setRate(new BigDecimal("0.2"));
-        prizeBean7.setName("最高100随机积分礼包");
+        prizeBean7.setName("最高1000随机积分礼包");
         gameTenCache.put("7", prizeBean7);
 
     }
@@ -201,6 +201,7 @@ public class PrizeBiz {
                         }
 //                        每次需要新对象 不能对原对象进行修改
                         boolean b = customerService.checkLoadFactor(prizeBean.getPrize(), customerId, true);
+                        log.debug("checkLoadFactor {}",b);
                         if (b) {
 //                            res = prizeBean;
                             BeanUtil.copyProperties(prizeBean, res);
@@ -273,6 +274,7 @@ public class PrizeBiz {
             @Override
             public void doAction() {
                 GameTenRes gameTenRes = new GameTenRes();
+//                todo checkLoadFactory
 //                1.中奖几率 1/3
                 double random = Math.random();
                 if (random < 2 / 3) {
