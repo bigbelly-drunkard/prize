@@ -80,6 +80,20 @@ public class CustomerServiceImpl {
         return b1;
     }
 
+    public boolean checkLoadFactor4Cid(String customerId, BigDecimal value, boolean sync) {
+        if (sync) {
+//             同步累计缓存中的因子值
+            sumLoadFactor4Cache(customerId);
+        }
+        CustomerExample customerExample = new CustomerExample();
+        CustomerExample.Criteria criteria = customerExample.createCriteria();
+        criteria.andCustomerNoEqualTo(customerId);
+        List<Customer> customers = customerMapper.selectByExample(customerExample);
+        Customer customer = customers.get(0);
+        BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
+        return value.compareTo(loadFactor) != 1;
+    }
+
     /**
      * 累加负载因子
      */

@@ -89,53 +89,27 @@ public class PrizeBiz {
             prizeListCache.put(ss, prizeBeans);
         }
 //        gameTenCache
+        initGameTenCache();
     }
 
-    private void initGameTen() {
-        PrizeBean prizeBean1 = new PrizeBean();
-        prizeBean1.setTypeCode(PrizeTypeEnum.RED_PACKAGE.getCode());
-        prizeBean1.setFactor(new BigDecimal("5"));
-        prizeBean1.setRate(new BigDecimal("0.4"));
-        prizeBean1.setName("5元现金红包");
-        gameTenCache.put("1", prizeBean1);
-        PrizeBean prizeBean2 = new PrizeBean();
-        prizeBean2.setTypeCode(PrizeTypeEnum.GOLD.getCode());
-        prizeBean2.setFactor(new BigDecimal("5"));
-        prizeBean2.setRate(new BigDecimal("0.4"));
-        prizeBean2.setName("50金豆");
-        gameTenCache.put("2", prizeBean2);
-        PrizeBean prizeBean3 = new PrizeBean();
-        prizeBean3.setTypeCode(PrizeTypeEnum.RED_PACKAGE.getCode());
-        prizeBean3.setFactor(new BigDecimal("9.8"));
-        prizeBean3.setRate(new BigDecimal("0.2"));
-        prizeBean3.setName("9.8元现金红包");
-        gameTenCache.put("3", prizeBean3);
-        PrizeBean prizeBean4 = new PrizeBean();
-        prizeBean4.setTypeCode(PrizeTypeEnum.SCORE.getCode());
-        prizeBean4.setFactor(new BigDecimal("6.6"));
-        prizeBean4.setRate(new BigDecimal("0.4"));
-        prizeBean4.setName("66积分礼包");
-        gameTenCache.put("4", prizeBean4);
-        PrizeBean prizeBean5 = new PrizeBean();
-        prizeBean5.setTypeCode(PrizeTypeEnum.RANDOM_RED_PACKAGE.getCode());
-        prizeBean5.setFactor(new BigDecimal("8.8"));
-        prizeBean5.setRate(new BigDecimal("0.2"));
-        prizeBean5.setName("最高8.8元随机现金红包");
-        gameTenCache.put("5", prizeBean5);
-        PrizeBean prizeBean6 = new PrizeBean();
-        prizeBean6.setTypeCode(PrizeTypeEnum.RED_PACKAGE.getCode());
-        prizeBean6.setFactor(new BigDecimal("2"));
-        prizeBean6.setRate(new BigDecimal("1"));
-        prizeBean6.setName("2元现金红包");
-        gameTenCache.put("6", prizeBean6);
-        PrizeBean prizeBean7 = new PrizeBean();
-        prizeBean7.setTypeCode(PrizeTypeEnum.RANDOM_SCORE.getCode());
-        prizeBean7.setFactor(new BigDecimal("10"));
-        prizeBean7.setRate(new BigDecimal("0.2"));
-        prizeBean7.setName("最高1000随机积分礼包");
-        gameTenCache.put("7", prizeBean7);
-
+    private void initGameTenCache() throws IOException {
+        Resource resource = new ClassPathResource(PRIZE_PATH);
+        Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+        String need = properties.get("C" + "." + "need").toString();
+        String[] split1 = need.split("\\|");
+        String score = split1[0];
+        String gold = split1[1];
+        properties.forEach((key, value) -> {
+            if (key.toString().startsWith("C.S.")) {
+                String s = value.toString();
+                PrizeBean prizeBean = parseValue(s);
+                prizeBean.setNeedScore(new BigDecimal(score));
+                prizeBean.setNeedGold(new BigDecimal(gold));
+                gameTenCache.put(prizeBean.getId() + "", prizeBean);
+            }
+        });
     }
+
 
     /**
      * 抽奖
@@ -201,7 +175,7 @@ public class PrizeBiz {
                         }
 //                        每次需要新对象 不能对原对象进行修改
                         boolean b = customerService.checkLoadFactor(prizeBean.getPrize(), customerId, true);
-                        log.debug("checkLoadFactor {}",b);
+                        log.debug("checkLoadFactor {}", b);
                         if (b) {
 //                            res = prizeBean;
                             BeanUtil.copyProperties(prizeBean, res);
@@ -240,7 +214,6 @@ public class PrizeBiz {
     /**
      * 加权抽奖
      * 1.vip加权
-     * 2.老用户 （入金-出金）/入金 比例加权
      */
     public void pWeight() {
 
@@ -274,25 +247,48 @@ public class PrizeBiz {
             @Override
             public void doAction() {
                 GameTenRes gameTenRes = new GameTenRes();
-//                todo checkLoadFactory
-//                1.中奖几率 1/3
-                double random = Math.random();
-                if (random < 2 / 3) {
+                Calendar calendar = Calendar.getInstance();
+                //firstDayOfWeek 0-6
+                int firstDayOfWeek = calendar.getFirstDayOfWeek();
+                PrizeBean prizeBean = gameTenCache.get(firstDayOfWeek + 1 + "");
+                PrizeTypeEnum enumByCode = PrizeTypeEnum.getEnumByCode(prizeBean.getTypeCode());
+                BigDecimal factor = prizeBean.getFactor();
+                BigDecimal bigDecimal = new BigDecimal(Math.random() + "").multiply(prizeBean.getFactor()).setScale(2, BigDecimal.ROUND_HALF_UP);
+                switch (enumByCode) {
+                    case RANDOM_GOLD:
+//                        最少1金豆
+                        bigDecimal = bigDecimal.compareTo(BigDecimal.ZERO) != 1 ? new BigDecimal("1") : bigDecimal;
+                        break;
+                    case RANDOM_RED_PACKAGE:
+//                        最少0.01分
+                        bigDecimal = bigDecimal.compareTo(BigDecimal.ZERO) != 1 ? new BigDecimal("0.01") : bigDecimal;
+                        break;
+                    case RANDOM_SCORE:
+//                        最少1积分
+                        bigDecimal = bigDecimal.compareTo(BigDecimal.ZERO) != 1 ? new BigDecimal("1") : bigDecimal;
+                        break;
+                    default:
+                        break;
+                }
+//                 checkLoadFactor4Cid
+                boolean b = customerService.checkLoadFactor4Cid(customerId, prizeBean.getPrize(), true);
+                log.debug("customerService.checkLoadFactor4Cid {}", b);
+                if (!b) {
                     log.info("此处不可中奖");
                     gameTenRes.setHitFlag(false);
                     result.setData(gameTenRes);
                     return;
                 }
-                Calendar calendar = Calendar.getInstance();
-                int firstDayOfWeek = calendar.getFirstDayOfWeek();
-                PrizeBean prizeBean = gameTenCache.get(firstDayOfWeek + 1 + "");
+                prizeBean.setCid(customerId);
                 String uuid = IdMarkUtil.getUuid(TableTypeEnum.OTHER);
                 redisService.setPid(customerId, uuid, prizeBean);
                 gameTenRes.setHitFlag(true);
                 gameTenRes.setPid(uuid);
+                gameTenRes.setId(prizeBean.getId() + "");
+                gameTenRes.setPrizeNum(bigDecimal);
                 gameTenRes.setName(prizeBean.getName());
                 result.setData(gameTenRes);
-                log.info("此次中奖了，gameTenRes={}", JSONObject.toJSONString(gameTenRes));
+                log.info("此次可中奖了，gameTenRes={}", JSONObject.toJSONString(gameTenRes));
 
             }
         });

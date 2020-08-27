@@ -2,6 +2,8 @@ package org.egg.model.VO;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @author dataochen
  * @Description
@@ -12,4 +14,6 @@ public class GameTenRes {
     private String name;
     private boolean hitFlag;
     private String pid;
+    private String id;
+    private BigDecimal prizeNum;
 }
