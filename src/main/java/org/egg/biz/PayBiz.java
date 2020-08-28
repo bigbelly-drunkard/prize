@@ -282,11 +282,12 @@ public class PayBiz {
 
             @Override
             public void doAction() {
-                BigDecimal money = gold2Money(amount);
+                BigDecimal fee = gold2Money(amount);
+                BigDecimal rmb = amount.subtract(fee).divide(BigDecimal.TEN,4);
                 PayRecord payRecord = new PayRecord();
                 payRecord.setPayNo(IdMarkUtil.getUuid(TableTypeEnum.PAY_RECORD));
                 payRecord.setPayChannel(ChannelEnum.WX_MINI.getCode());
-                payRecord.setPayAmount(money);
+                payRecord.setPayAmount(rmb);
                 payRecord.setCustomerNo(customerId);
                 payRecord.setOrderMsg("金豆提现");
                 payRecordService.createPayNo(payRecord, PayTypeEnum.CASH);
@@ -344,16 +345,31 @@ public class PayBiz {
 
     /**
      * 金豆转换现金
-     * * 5000以下 7.5元；
-     * 5000-10000 20%；
-     * 10000+ 10%；
-     * todo 手续费待定
+     * 25以下 不允许
+     * 25-100 25
+     * 100-500 20%
+     * 500-1000 15%
+     * 1000+ 10%
      *
      * @param goldAmount
      * @return
      */
     private BigDecimal gold2Money(BigDecimal goldAmount) {
-        BigDecimal bigDecimal = goldAmount.multiply(new BigDecimal("0.08")).setScale(2, BigDecimal.ROUND_HALF_UP);
-        return bigDecimal;
+        BigDecimal fee = new BigDecimal("25");
+        if (goldAmount.compareTo(new BigDecimal("25")) != 1) {
+            log.error("提取金豆数量不超过25");
+            throw new CommonException(CommonErrorEnum.GOLD_NOT_ENOUGH);
+        }
+        if (goldAmount.compareTo(new BigDecimal("100")) == -1) {
+            return new BigDecimal("25");
+        }
+        if (goldAmount.compareTo(new BigDecimal("500")) == -1) {
+            return goldAmount.multiply(new BigDecimal("0.2")).setScale(1, BigDecimal.ROUND_HALF_UP);
+        }
+        if (goldAmount.compareTo(new BigDecimal("1000")) == -1) {
+            return goldAmount.multiply(new BigDecimal("0.15")).setScale(1, BigDecimal.ROUND_HALF_UP);
+        }
+        return goldAmount.multiply(new BigDecimal("0.1")).setScale(1, BigDecimal.ROUND_HALF_UP);
+
     }
 }

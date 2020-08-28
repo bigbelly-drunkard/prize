@@ -209,7 +209,6 @@ function confirmPrice() {
         type: 'POST',
         url: '/active/g',
         dataType: 'json',
-        //mock todo
         headers: {openId: openId4Mini},
         data: {},
         success: function (result) {
@@ -234,7 +233,6 @@ function joinTeam() {
         type: 'POST',
         url: '/active/j',
         dataType: 'json',
-        //mock todo
         headers: {openId: openId4Mini},
         data: {teamNo: teamNoShare, shareUserNo: shareUserNo},
         success: function (result) {

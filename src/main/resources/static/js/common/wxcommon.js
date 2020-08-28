@@ -18,7 +18,7 @@ $(function () {
 
 
         wx.ready(function () {
-            // xxx 如果需要在分享里有动态信息就需要这个标志位了 之前发现初始化后无法动态改标题
+            //  如果需要在分享里有动态信息就需要这个标志位了 之前发现初始化后无法动态改标题
             setInterval(function () {
 
                 if (shareFlag) {
@@ -54,7 +54,7 @@ function wxpay(data) {
         Location.href = data.mwebUrl;
         return;
     }
-    //fixme test code_url
+    // test code_url
     if (data.codeUrl != null && data.codeUrl != '') {
         //h5支付
         console.log(data.codeUrl);

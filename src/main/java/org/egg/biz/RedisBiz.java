@@ -76,7 +76,6 @@ public class RedisBiz {
         log.info("{} 每日分享成功", customerId);
         return result;
     }
-//todo
     public BaseResult dt(String customerId) {
         log.info("{} 准备每日答题", customerId);
         BaseResult result = new BaseResult();

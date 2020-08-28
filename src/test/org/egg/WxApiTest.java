@@ -80,7 +80,6 @@ public class WxApiTest {
         Date now = new Date();
         String nonce_str = String.valueOf(Math.random() * now.getTime() + now.getTime());
         data.put("nonce_str", nonce_str);
-        // TODO: 2019/1/2
         data.put("partner_trade_no", "testpartnertradeno");
         data.put("openid", "oE9L54n9gqyHGf82EYmE5Wk-uYcY");
         data.put("check_name", "NO_CHECK");

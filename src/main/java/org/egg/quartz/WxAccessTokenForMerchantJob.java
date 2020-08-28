@@ -31,7 +31,7 @@
 //        Thread.currentThread().setName("WxAccessTokenForMerchantJob"+ DateUtil.format(new Date(),DateUtil.YMDHMSSS));
 //        long start = System.currentTimeMillis();
 //        LOGGER.info("WxAccessTokenForMerchantJob start");
-////        XXX 暂时只有小程序
+////         暂时只有小程序
 ////        wechatService.getAccessTokenForMerchant(ChannelEnum.WX);
 //        wechatService.getAccessTokenForMerchant(ChannelEnum.WX_MINI);
 //        long end = System.currentTimeMillis();

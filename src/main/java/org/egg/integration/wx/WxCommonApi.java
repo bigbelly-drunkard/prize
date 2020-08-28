@@ -131,7 +131,7 @@ public class WxCommonApi {
                             break;
                     }
                     break;
-                case PC:// TODO: 2018/11/4 二维码？
+                case PC://  2018/11/4 二维码？
                     data.put("trade_type", "NATIVE");
                     break;
 
@@ -241,7 +241,7 @@ public class WxCommonApi {
         WxMiniConfig config = null;
         try {
 //            config = new WxConfig();
-//            xxx 只支持微信小程序支付 后期流水表添加渠道字段来区分微信支付和小程序支付
+//             只支持微信小程序支付 后期流水表添加渠道字段来区分微信支付和小程序支付
             config = new WxMiniConfig();
         } catch (Exception e) {
             LOGGER.error("微信支付 加载证书失败 e={}", e);
@@ -286,7 +286,6 @@ public class WxCommonApi {
             return result;
         }
         try {
-            // TODO: 2019/12/8 微信和小程序是否需要区分？
             Map<String, String> data = new HashMap<String, String>(16);
             WXPayConfig config;
             if (StringUtils.isEmpty(wxCompanyPayRequestDto.getMiniOpenId())) {
@@ -487,7 +486,7 @@ public class WxCommonApi {
         InetAddress address = InetAddress.getLocalHost();
         param.put("client_ip", address.getHostAddress());
 //        param.put("act_name", "感谢您关注公众号");
-//        todo 营销信息文案
+//         营销信息文案
         param.put("remark", "【蚂蚁科技积分商城】");
 
 
@@ -543,12 +542,11 @@ public class WxCommonApi {
         int amount1 = (int) (amount * 100);
         param.put("total_amount", 1000 + "");
         param.put("total_num", 10 + "");
-        // TODO: 2020/2/24
         param.put("wishing", "点击立即领取红包");
         InetAddress address = InetAddress.getLocalHost();
         param.put("client_ip", address.getHostAddress());
 //        param.put("act_name", "感谢您关注公众号");
-//        todo 营销信息文案
+//         营销信息文案
         param.put("remark", "【蚂蚁科技积分商城】");
         param.put("amt_type", "ALL_RAND");
 
@@ -597,11 +595,10 @@ public class WxCommonApi {
 //        int amount1 = (int) (amount*100);
         param.put("total_amount", 100 + "");
         param.put("total_num", 1 + "");
-        // TODO: 2020/2/24
         param.put("wishing", "点击立即领取红包");
 //        act_name字段必填,并且少于32个字符
 //        param.put("act_name", "首次登录奖励红包");
-//        todo 营销信息文案
+//         营销信息文案
         param.put("remark", "xx");
         param.put("notify_way", "MINI_PROGRAM_JSAPI");
 

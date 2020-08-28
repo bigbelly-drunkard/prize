@@ -743,7 +743,7 @@ public class RedisUtil {
     }
 
     /**
-     * 注解事物类型 如果有watch 重新走这个方法 就没有走反射代理类了 ？？？ todo
+     * 注解事物类型 如果有watch 重新走这个方法 就没有走反射代理类了 ？？？
      *
      * @param redisTransaction
      * @return

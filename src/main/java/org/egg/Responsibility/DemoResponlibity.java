@@ -17,7 +17,7 @@ public class DemoResponlibity {
     synchronized  void addHandler(Responsibility responsibilitie) {
         vectors.add(responsibilitie);
     }
-//XXX 每一次执行，都重新构建了责任链
+// 每一次执行，都重新构建了责任链
     void execute(CommonContext commonContext) {
         for (int i = 0; i < vectors.size(); i++) {
             if (i==vectors.size()-1) {

@@ -416,7 +416,6 @@ public class WechatServiceImpl {
         WxTemplateMsgReqDto wxTemplateMsgReqDto = new WxTemplateMsgReqDto();
         wxTemplateMsgReqDto.setTouser(openId);
         wxTemplateMsgReqDto.setData(wxTemplateMsgData);
-        // TODO: 2018/7/27 二期
         switch (wxTemplateMsgTypeEnum) {
             case PUB_SUCC:
                 wxTemplateMsgReqDto.setTemplate_id(MSG_ID_ORDER_PUBLISH_SUCC);

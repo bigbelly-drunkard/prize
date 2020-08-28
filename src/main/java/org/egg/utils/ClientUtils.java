@@ -89,8 +89,7 @@ public class ClientUtils {
             } else {
                 clientInfo.setClientSourceEnum(ClientSourceEnum.PC);
             }
-//        XXX 降级处理，全部都是微信浏览器，走微信公众号支付
-//        clientInfo.setClientChromeEnum(ClientChromeEnum.WX);
+//         降级处理，全部都是微信浏览器，走微信公众号支付
             if (clientInfo.getUserAgent().toLowerCase().contains("micromessenger")) {
                 clientInfo.setClientChromeEnum(ClientChromeEnum.WX);
             } else {
