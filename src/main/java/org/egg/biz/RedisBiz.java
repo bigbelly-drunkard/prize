@@ -1,10 +1,12 @@
 package org.egg.biz;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.enums.CommonErrorEnum;
 import org.egg.enums.FlowRecordTypeEnum;
 import org.egg.exception.CommonException;
 import org.egg.response.BaseResult;
+import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.FlowRecordServiceImpl;
 import org.egg.service.impl.RedisServiceImpl;
 import org.egg.template.BizTemplate;
@@ -46,7 +48,7 @@ public class RedisBiz {
                     throw new CommonException(CommonErrorEnum.ALREADY_DO_QD);
                 }
                 BigDecimal value = new BigDecimal("0.5");
-                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日签到奖励");
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value, "每日签到奖励");
             }
         });
         log.info("{} 签到成功", customerId);
@@ -70,12 +72,13 @@ public class RedisBiz {
                     throw new CommonException(CommonErrorEnum.ALREADY_DO_SHARE);
                 }
                 BigDecimal value = new BigDecimal("2");
-                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日分享奖励");
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value, "每日分享奖励");
             }
         });
         log.info("{} 每日分享成功", customerId);
         return result;
     }
+
     public BaseResult dt(String customerId) {
         log.info("{} 准备每日答题", customerId);
         BaseResult result = new BaseResult();
@@ -93,10 +96,34 @@ public class RedisBiz {
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
                 }
                 BigDecimal value = new BigDecimal("0.1");
-                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value,"每日答题奖励");
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value, "每日答题奖励");
             }
         });
         log.info("{} 每日答题成功", customerId);
+        return result;
+    }
+
+    public CommonSingleResult<Boolean> getSwitch(Boolean wantSwitch) {
+        log.info("getSwitch start");
+        CommonSingleResult<Boolean> result = new CommonSingleResult<>();
+        bizTemplate.process(result, new TemplateCallBack() {
+            @Override
+            public void doCheck() {
+
+            }
+
+            @Override
+            public void doAction() {
+                if (null == wantSwitch) {
+                    boolean aSwitch = redisService.getSwitch();
+                    result.setData(aSwitch);
+                } else {
+                    boolean b = redisService.setSwitch(wantSwitch);
+                    result.setData(b);
+                }
+            }
+        });
+        log.info("getSwitch end result={}", JSONObject.toJSONString(result));
         return result;
     }
 }

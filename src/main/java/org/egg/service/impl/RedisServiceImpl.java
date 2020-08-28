@@ -31,6 +31,7 @@ public class RedisServiceImpl {
      */
     private static final String KEY_04 = "P_";
     private static final String KEY_05 = "WX_OPENID_";
+    private static final String KEY_06 = "APPROVE_SWITCH";
     /**
      * 总收益金额 总值
      */
@@ -179,4 +180,22 @@ public class RedisServiceImpl {
         }
 
     }
+
+    /**
+     * 默认关闭
+     * 获取开关
+     * @return
+     */
+    public boolean getSwitch() {
+        Object o = redisUtil.get(KEY_06);
+        if (null == o) {
+            return false;
+        }
+        return Boolean.valueOf(o.toString());
+    }
+
+    public boolean setSwitch(boolean flag) {
+        return redisUtil.set(KEY_06, false);
+    }
+
 }
