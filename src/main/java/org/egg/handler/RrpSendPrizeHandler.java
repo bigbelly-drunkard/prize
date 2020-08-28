@@ -3,7 +3,6 @@ package org.egg.handler;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.biz.LoadFactorBiz;
-import org.egg.enums.CommonErrorEnum;
 import org.egg.exception.CommonException;
 import org.egg.integration.wx.WxCommonApi;
 import org.egg.model.DO.PayRecord;
@@ -37,12 +36,7 @@ public class RrpSendPrizeHandler extends AbstractSendPrize {
         wxCompanyPayRequestDto.setOutTradeNo(payRecord.getPayNo());
         wxCompanyPayRequestDto.setMiniOpenId(CustomerUtil.getCustomer().getWxMiniOpenId());
         wxCompanyPayRequestDto.setTotalAmount(payRecord.getPayAmount());
-//        fixme mock
-//        BaseResult result = wxCommonApi.companyPay(wxCompanyPayRequestDto);
-        BaseResult result = new BaseResult();
-        result.setError(CommonErrorEnum.SUCCESS);
-        result.setSuccess(true);
-        //       fixme mock end
+        BaseResult result = wxCommonApi.companyPay(wxCompanyPayRequestDto);
         if (!result.isSuccess()) {
             log.warn("发送红包失败，result={}", JSONObject.toJSONString(result));
             throw new CommonException(result);

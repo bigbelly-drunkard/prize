@@ -279,6 +279,12 @@ public class WxCommonApi {
     public BaseResult companyPay(WxCompanyPayRequestDto wxCompanyPayRequestDto) {
         wxCompanyPayRequestDto.setIp("212.64.11.168");
         BaseResult result = new BaseResult();
+        if (Boolean.valueOf(MOCK_FLAG)) {
+            LOGGER.info("mock open");
+            result.setError(CommonErrorEnum.SUCCESS);
+            result.setSuccess(true);
+            return result;
+        }
         try {
             // TODO: 2019/12/8 微信和小程序是否需要区分？
             Map<String, String> data = new HashMap<String, String>(16);
