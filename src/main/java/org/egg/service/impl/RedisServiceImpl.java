@@ -30,6 +30,7 @@ public class RedisServiceImpl {
      * pid
      */
     private static final String KEY_04 = "P_";
+    private static final String KEY_05 = "WX_OPENID_";
     /**
      * 总收益金额 总值
      */
@@ -158,5 +159,24 @@ public class RedisServiceImpl {
 
     public AtomicDouble getWEEK_LAST_POOL() {
         return WEEK_LAST_POOL;
+    }
+
+    /**
+     * 检查用户是否第一次登陆
+     * @param openId
+     * @return
+     */
+    public boolean checkFirstLogin(String openId) {
+        Object andSet = null;
+        try {
+            andSet = redisUtil.getAndSet(KEY_05 + openId, new Date());
+            if (null == andSet) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 }

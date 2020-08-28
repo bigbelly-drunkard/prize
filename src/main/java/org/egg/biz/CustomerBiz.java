@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.cache.LocalCache;
 import org.egg.enums.CommonErrorEnum;
+import org.egg.enums.FlowRecordTypeEnum;
 import org.egg.enums.UserStatusEnum;
 import org.egg.exception.CommonException;
 import org.egg.model.DO.Customer;
@@ -11,12 +12,16 @@ import org.egg.model.VO.CustomerVo;
 import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.CustomerServiceImpl;
+import org.egg.service.impl.FlowRecordServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
 import org.egg.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.math.BigDecimal;
 
 /**
  * @author dataochen
@@ -32,6 +37,11 @@ public class CustomerBiz {
     private CustomerServiceImpl customerService;
     @Autowired
     private LocalCache localCache;
+    @Autowired
+    private FlowRecordServiceImpl flowRecordService;
+    @Value("${switch.first.login.active}")
+    private String switchOne;
+
 
     /**
      * 小程序 快速登录
@@ -56,6 +66,10 @@ public class CustomerBiz {
                     customerService.createCustomer(customer1);
                     localCache.setMiniOpenId_user_cache(openId, customer1);
                     result.setData(customer1);
+//
+                    if (Boolean.valueOf(switchOne)) {
+                        flowRecordService.changeScoreOrGold(customer1.getCustomerNo(), FlowRecordTypeEnum.SCORE, new BigDecimal("30"), "首次登陆赠送30积分");
+                    }
                 } else {
                     if (!UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
                         log.error("用户状态异常 openId={},user={}", openId, JSONObject.toJSONString(customer));
@@ -91,7 +105,7 @@ public class CustomerBiz {
     }
 
     public BaseResult updateHead(String cid, String headUrl, String nickName) {
-        log.info("updateHead {},headUrl={},nickName={}",cid,headUrl,nickName);
+        log.info("updateHead {},headUrl={},nickName={}", cid, headUrl, nickName);
         BaseResult result = new BaseResult();
         bizTemplate.process(result, new TemplateCallBack() {
             @Override
