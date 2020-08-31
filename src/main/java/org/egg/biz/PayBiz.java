@@ -103,6 +103,7 @@ public class PayBiz {
                 payRecord.setCustomerNo(customerId);
                 payRecord.setOrderMsg(payReq.getOrderMsg());
                 payRecord.setOrderType(payReq.getOrderType());
+                pay.setAmount(payReq.getAmount());
                 payRecordService.createPayNo(payRecord, PayTypeEnum.PAY);
                 result.setData(pay);
             }

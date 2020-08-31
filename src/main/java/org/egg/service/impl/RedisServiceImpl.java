@@ -195,7 +195,7 @@ public class RedisServiceImpl {
     }
 
     public boolean setSwitch(boolean flag) {
-        return redisUtil.set(KEY_06, false);
+        return redisUtil.set(KEY_06, flag);
     }
 
 }

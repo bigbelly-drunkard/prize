@@ -1,12 +1,16 @@
 package org.egg.model.DTO;
 
+import lombok.Data;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author cdt
  * @Description 支付反参实体
  * @date: 2018/3/29 15:44
  */
+@Data
 public class WxPrePayResultDto implements Serializable {
     private static final long serialVersionUID = -5066149409423631947L;
     private String prepay_id;
@@ -34,91 +38,6 @@ public class WxPrePayResultDto implements Serializable {
 
     private String orderNo;
 
-    public String getOrderNo() {
-        return orderNo;
-    }
+    private BigDecimal amount;
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public String getPrepay_id() {
-        return prepay_id;
-    }
-
-    public void setPrepay_id(String prepay_id) {
-        this.prepay_id = prepay_id;
-    }
-
-    public String getNonceStr() {
-        return nonceStr;
-    }
-
-    public void setNonceStr(String nonceStr) {
-        this.nonceStr = nonceStr;
-    }
-
-    public String getPaySign() {
-        return paySign;
-    }
-
-    public void setPaySign(String paySign) {
-        this.paySign = paySign;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
-
-    public String getOutTradeNo() {
-        return outTradeNo;
-    }
-
-    public void setOutTradeNo(String outTradeNo) {
-        this.outTradeNo = outTradeNo;
-    }
-
-    public String getPayType() {
-        return payType;
-    }
-
-    public void setPayType(String payType) {
-        this.payType = payType;
-    }
-
-    public Long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public String getPackageValue() {
-        return packageValue;
-    }
-
-    public void setPackageValue(String packageValue) {
-        this.packageValue = packageValue;
-    }
-
-    public String getMwebUrl() {
-        return mwebUrl;
-    }
-
-    public void setMwebUrl(String mwebUrl) {
-        this.mwebUrl = mwebUrl;
-    }
-
-    public String getCodeUrl() {
-        return codeUrl;
-    }
-
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
-    }
 }
