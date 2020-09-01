@@ -24,7 +24,7 @@ public class AccessOriginInterceptor implements HandlerInterceptor {
 //        }
         httpServletResponse.setHeader("Access-Control-Max-Age","60");
         //ajax 自定义header头key,value
-        httpServletResponse.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type,openid");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type,openid,openId");
         if ("OPTIONS".equals(httpServletRequest.getMethod())) {
             return false;
         }

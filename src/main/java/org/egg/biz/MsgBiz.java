@@ -1,6 +1,5 @@
 package org.egg.biz;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.egg.cache.LocalCache;
 import org.egg.model.VO.MsgRes;
@@ -14,7 +13,10 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author dataochen
@@ -92,7 +94,7 @@ public class MsgBiz {
                 msgResCommonListResult.setData(msgRes1);
             }
         });
-        log.info("queryMsgList msgResCommonListResult={}", JSONObject.toJSONString(msgResCommonListResult));
+//        log.info("queryMsgList msgResCommonListResult={}", JSONObject.toJSONString(msgResCommonListResult));
         return msgResCommonListResult;
     }
 

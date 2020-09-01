@@ -141,7 +141,7 @@ public class WxController extends BaseController {
     public CommonSingleResult<AccessTokenMiniResult> init(String code, HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("init code={}", code);
         CommonSingleResult<AccessTokenMiniResult> accessTokenMiniResultCommonSingleResult = new CommonSingleResult<>();
-        AccessTokenMiniResult accessToken = new AccessTokenMiniResult();
+        AccessTokenMiniResult accessToken;
 //        初始化小程序来源标示
         ClientUtils.setCookie(ConstantsUtil.MINI_FLAG_COOKIE_NAME, "true", response);
         //1.请求access_token
@@ -162,9 +162,10 @@ public class WxController extends BaseController {
     }
     @PostMapping("/miniMock")
     @ResponseBody
-    public CommonSingleResult<Customer> mockFastMini() {
+    public CommonSingleResult<Customer> mockFastMini(HttpServletResponse response) {
         String openId = "cdt";
         CommonSingleResult<Customer> customerCommonSingleResult = customerBiz.miniLoginFast(openId);
+        ClientUtils.setCookie("openId", openId, response);
         return customerCommonSingleResult;
     }
     //================================================ private ==================================================

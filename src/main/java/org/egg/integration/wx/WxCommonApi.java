@@ -144,7 +144,10 @@ public class WxCommonApi {
 //        商户id trade_type=NATIVE时（即扫码支付），此参数必传。此参数为二维码中包含的商品ID，商户自行定义。
 //        data.put("product_id", "12");
 //附加数据 	附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
-        data.put("attach", wxPrePayRequestDto.getAttachJson());
+        String attachJson = wxPrePayRequestDto.getAttachJson();
+        if (!StringUtils.isBlank(attachJson)) {
+            data.put("attach", wxPrePayRequestDto.getAttachJson());
+        }
 //     用户标识 trade_type=JSAPI时（即公众号支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识。
 //        data.put("userNo", wxPrePayRequestDto.getUserNo());
 //        data.put("sign", WxPayUtil.paySign(data));
@@ -454,13 +457,13 @@ public class WxCommonApi {
      * 发送现金红包
      * 暂不关系结果
      *
-     * @param amount 单位元
+     * @param amount   单位元
      * @param openId
      * @param miniFlag https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
      *                 注意：当状态为FAIL时，存在业务结果未明确的情况。所以如果状态是FAIL，请务必再请求一次查询接口[请务必关注错误代码（err_code字段），通过查询得到的红包状态确认此次发放的结果。]，以确认此次发放的结果。
      * @throws Exception
      */
-    public void sendRedPackage(String openId, boolean miniFlag,BigDecimal amount) throws Exception {
+    public void sendRedPackage(String openId, boolean miniFlag, BigDecimal amount) throws Exception {
         WXPayConfig config = null;
         try {
             if (miniFlag) {
@@ -479,7 +482,7 @@ public class WxCommonApi {
         param.put("wxappid", config.getAppID());
         param.put("send_name", "蚂蚁科技积分商城");
         param.put("re_openid", openId);
-        BigDecimal bigDecimal = amount.multiply(new BigDecimal("100")).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal bigDecimal = amount.multiply(new BigDecimal("100")).setScale(2, BigDecimal.ROUND_HALF_UP);
         param.put("total_amount", bigDecimal.toString());
         param.put("total_num", 1 + "");
         param.put("wishing", "恭喜您获的红包，点击立即领取红包");

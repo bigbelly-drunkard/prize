@@ -44,7 +44,7 @@
     </appender>
     <logger name="org.springframework" level="INFO">
     </logger>
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="DETAIL"/>
         <appender-ref ref="ERROR"/>
         <appender-ref ref="CONSOLE"/>
