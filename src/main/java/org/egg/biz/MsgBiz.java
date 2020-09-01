@@ -10,13 +10,11 @@ import org.egg.template.TemplateCallBack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author dataochen
@@ -142,6 +140,9 @@ public void addRealMsg4ZhuanPan(String msg) {
     private String getMsg() {
         String msg = "";
         String nickName = getNickName();
+        if (StringUtils.isEmpty(nickName)) {
+            nickName = "玩家" + (int) (Math.random() * 1000) + 1000;
+        }
         int v = (int) (Math.random() * 35) + 1;
         switch (v) {
             case 1:
