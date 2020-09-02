@@ -19,13 +19,21 @@ public class WxCommonApiTest extends BaseTest {
 //        {"nonce_str":"1.7339196142619736E12","amount":"9","mchid":"1545385531","openid":"oD9tp5OW_wYQz72cfxWVU3l7NVGs","partner_trade_no":"716652805350",
 // "mch_appid":"wx7d53782fc19bb0f4","sign":"8EAC3B020B4FF435443C28FF8B96F360","check_name":"NO_CHECK","spbill_create_ip":"47.98.196.102"}
         WxCompanyPayRequestDto wxCompanyPayRequestDto = new WxCompanyPayRequestDto();
-        wxCompanyPayRequestDto.setMiniOpenId("oD9tp5OW_wYQz72cfxWVU3l7NVGs");
-        wxCompanyPayRequestDto.setIp("47.98.196.102");
-        wxCompanyPayRequestDto.setOutTradeNo("716652805350");
-        wxCompanyPayRequestDto.setTotalAmount(new BigDecimal("0.9"));
+        wxCompanyPayRequestDto.setMiniOpenId("ouNFZ5EVm9XccgfFgeQNZZzbLS14");
+        wxCompanyPayRequestDto.setIp("212.64.11.168");
+        wxCompanyPayRequestDto.setOutTradeNo("3663138371582074881");
+        wxCompanyPayRequestDto.setTotalAmount(new BigDecimal("0.3"));
         wxCommonApi.companyPay(wxCompanyPayRequestDto);
     }
 
+    @Test
+    public void refund() {
+        String outTradeNo = "366313837158207488";
+        String outRefundNo = System.currentTimeMillis()+"";
+        int totalFee=100;
+        int refundFee=1;
+        wxCommonApi.refundApi(outTradeNo, outRefundNo, totalFee, refundFee, "");
+    }
     @Test
     public void sendMiniRedPackage() {
         String openId = "oD9tp5OW_wYQz72cfxWVU3l7NVGs";

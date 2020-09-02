@@ -278,6 +278,8 @@ public class WxCommonApi {
      *
      * @param wxCompanyPayRequestDto
      * @return
+     *
+     * err_code=NOTENOUGH, return_msg=支付失败,
      */
     public BaseResult companyPay(WxCompanyPayRequestDto wxCompanyPayRequestDto) {
         wxCompanyPayRequestDto.setIp("212.64.11.168");
@@ -394,9 +396,11 @@ public class WxCommonApi {
     /**
      * 退款申请
      * https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4
-     *
+     *fee 单位 分
      * @param outTradeNo 原商户订单号
      * @return
+     *
+     * "err_code":"NOTENOUGH" 基本账户余额不足，请充值后重新发起
      */
     public BaseResult refundApi(String outTradeNo, String outRefundNo, int totalFee, int refundFee, String refundMsg) {
         BaseResult result = BaseResult.builder();
