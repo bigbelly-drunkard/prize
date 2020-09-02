@@ -30,6 +30,7 @@ public class PaySuccMemberObserver implements Observer {
         }
         OrderTypeEnum enumByCode1 = OrderTypeEnum.getEnumByCode(obj1.getOrderType());
 
+
         PayStatusEnum enumByCode = PayStatusEnum.getEnumByCode(obj1.getPayStatus());
         switch (enumByCode) {
             case SUCCESS:
@@ -64,7 +65,7 @@ public class PaySuccMemberObserver implements Observer {
                 day=1095;
                 break;
             default:
-                break;
+                return;
         }
         customerService.updateMember(cid, day);
     }

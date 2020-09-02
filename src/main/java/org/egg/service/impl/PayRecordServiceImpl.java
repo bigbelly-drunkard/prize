@@ -35,7 +35,7 @@ public class PayRecordServiceImpl {
      * @return
      */
     public void createPayNo(PayRecord payRecord,PayTypeEnum payTypeEnum) {
-        payRecord.setPayStatus(PayStatusEnum.INIT.getCode());
+        payRecord.setPayStatus(PayStatusEnum.PENDING.getCode());
         payRecord.setCreatedDate(new Date());
         payRecord.setPayType(payTypeEnum.getCode());
         payRecordMapper.insertSelective(payRecord);

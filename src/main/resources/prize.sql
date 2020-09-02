@@ -71,6 +71,7 @@ CREATE TABLE `pay_record` (
   `error_msg` varchar(255) DEFAULT NULL,
   `customer_no` varchar(255) DEFAULT NULL,
   `order_msg` varchar(255) DEFAULT NULL,
+  `order_type` varchar(255) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `modified_date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

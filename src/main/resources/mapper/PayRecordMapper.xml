@@ -12,6 +12,7 @@
     <result column="error_msg" jdbcType="VARCHAR" property="errorMsg" />
     <result column="customer_no" jdbcType="VARCHAR" property="customerNo" />
     <result column="order_msg" jdbcType="VARCHAR" property="orderMsg" />
+    <result column="order_type" jdbcType="VARCHAR" property="orderType" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate" />
   </resultMap>
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, pay_no, pay_channel, pay_type, pay_amount, channel_no, pay_status, error_msg, 
-    customer_no, order_msg, created_date, modified_date
+    customer_no, order_msg, order_type, created_date, modified_date
   </sql>
   <select id="selectByExample" parameterType="org.egg.model.DO.PayRecordExample" resultMap="BaseResultMap">
     select
@@ -115,11 +116,13 @@
     insert into pay_record (pay_no, pay_channel, pay_type, 
       pay_amount, channel_no, pay_status, 
       error_msg, customer_no, order_msg, 
-      created_date, modified_date)
+      order_type, created_date, modified_date
+      )
     values (#{payNo,jdbcType=VARCHAR}, #{payChannel,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, 
       #{payAmount,jdbcType=DECIMAL}, #{channelNo,jdbcType=VARCHAR}, #{payStatus,jdbcType=VARCHAR}, 
       #{errorMsg,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR}, #{orderMsg,jdbcType=VARCHAR}, 
-      #{createdDate,jdbcType=TIMESTAMP}, #{modifiedDate,jdbcType=TIMESTAMP})
+      #{orderType,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedDate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.egg.model.DO.PayRecord">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -153,6 +156,9 @@
       </if>
       <if test="orderMsg != null">
         order_msg,
+      </if>
+      <if test="orderType != null">
+        order_type,
       </if>
       <if test="createdDate != null">
         created_date,
@@ -188,6 +194,9 @@
       </if>
       <if test="orderMsg != null">
         #{orderMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
@@ -236,6 +245,9 @@
       <if test="record.orderMsg != null">
         order_msg = #{record.orderMsg,jdbcType=VARCHAR},
       </if>
+      <if test="record.orderType != null">
+        order_type = #{record.orderType,jdbcType=VARCHAR},
+      </if>
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       </if>
@@ -259,6 +271,7 @@
       error_msg = #{record.errorMsg,jdbcType=VARCHAR},
       customer_no = #{record.customerNo,jdbcType=VARCHAR},
       order_msg = #{record.orderMsg,jdbcType=VARCHAR},
+      order_type = #{record.orderType,jdbcType=VARCHAR},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       modified_date = #{record.modifiedDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -295,6 +308,9 @@
       <if test="orderMsg != null">
         order_msg = #{orderMsg,jdbcType=VARCHAR},
       </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
       <if test="createdDate != null">
         created_date = #{createdDate,jdbcType=TIMESTAMP},
       </if>
@@ -315,6 +331,7 @@
       error_msg = #{errorMsg,jdbcType=VARCHAR},
       customer_no = #{customerNo,jdbcType=VARCHAR},
       order_msg = #{orderMsg,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

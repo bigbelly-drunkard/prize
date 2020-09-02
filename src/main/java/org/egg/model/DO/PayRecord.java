@@ -32,14 +32,6 @@ public class PayRecord {
 
     private Date modifiedDate;
 
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
-    }
-
     public Long getId() {
         return id;
     }
@@ -118,6 +110,14 @@ public class PayRecord {
 
     public void setOrderMsg(String orderMsg) {
         this.orderMsg = orderMsg == null ? null : orderMsg.trim();
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType == null ? null : orderType.trim();
     }
 
     public Date getCreatedDate() {

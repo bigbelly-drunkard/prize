@@ -120,7 +120,7 @@
         <!--&gt;-->
             <!--<generatedKey column="id" sqlStatement="MYSQL" identity="true"/>-->
         <!--</table>-->
-        <table tableName="customer" domainObjectName="Customer" enableCountByExample="true"
+        <table tableName="pay_record" domainObjectName="PayRecord" enableCountByExample="true"
                enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true" enableSelectByPrimaryKey="true"
                selectByPrimaryKeyQueryId="true"

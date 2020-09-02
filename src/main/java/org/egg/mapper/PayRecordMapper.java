@@ -1,10 +1,9 @@
 package org.egg.mapper;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.egg.model.DO.PayRecord;
 import org.egg.model.DO.PayRecordExample;
-
-import java.util.List;
 
 public interface PayRecordMapper {
     int countByExample(PayRecordExample example);

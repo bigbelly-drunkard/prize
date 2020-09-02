@@ -786,6 +786,76 @@ public class PayRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andOrderTypeIsNull() {
+            addCriterion("order_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeIsNotNull() {
+            addCriterion("order_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeEqualTo(String value) {
+            addCriterion("order_type =", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeNotEqualTo(String value) {
+            addCriterion("order_type <>", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeGreaterThan(String value) {
+            addCriterion("order_type >", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("order_type >=", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeLessThan(String value) {
+            addCriterion("order_type <", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeLessThanOrEqualTo(String value) {
+            addCriterion("order_type <=", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeLike(String value) {
+            addCriterion("order_type like", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeNotLike(String value) {
+            addCriterion("order_type not like", value, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeIn(List<String> values) {
+            addCriterion("order_type in", values, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeNotIn(List<String> values) {
+            addCriterion("order_type not in", values, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeBetween(String value1, String value2) {
+            addCriterion("order_type between", value1, value2, "orderType");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTypeNotBetween(String value1, String value2) {
+            addCriterion("order_type not between", value1, value2, "orderType");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedDateIsNull() {
             addCriterion("created_date is null");
             return (Criteria) this;
