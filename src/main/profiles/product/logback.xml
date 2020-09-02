@@ -8,7 +8,7 @@
 <!--    http://www.qos.ch/shop/products/professionalSupport         -->
 <!--                                                                -->
 <configuration scan="true">
-    <property name="APP" value="feimaotui"/>
+    <property name="APP" value="prize"/>
     <property name="LOG_HOME" value="/export/log/${APP}"/>
     <!--<property name="LOG_HOME" value="/Users/datao/D/log/${APP}"/>-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -47,7 +47,7 @@
     </appender>
     <logger name="org.springframework" level="INFO">
     </logger>
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="DETAIL"/>
         <appender-ref ref="ERROR"/>
         <appender-ref ref="CONSOLE"/>

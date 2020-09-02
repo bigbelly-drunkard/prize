@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jingda</groupId>
-    <artifactId>feimaotui</artifactId>
+    <artifactId>prize</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>feimaotui</name>
+    <name>prize</name>
     <packaging>war</packaging>
     <!--<packaging>jar</packaging>-->
     <properties>
@@ -208,11 +208,6 @@
                     <groupId>org.apache.curator</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.jingda</groupId>
-            <artifactId>feimaotui_api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>

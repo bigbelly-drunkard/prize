@@ -61,8 +61,8 @@ public class Swagger2 {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("feimaotui APIS")
-                .description("feimaotui APIS")
+                .title("prize APIS")
+                .description("prize APIS")
                 .termsOfServiceUrl("http://www.jingdakongjian.com")
                 .version("1.0")
                 .build();

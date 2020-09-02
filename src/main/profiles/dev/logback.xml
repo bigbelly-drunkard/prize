@@ -8,7 +8,7 @@
 <!--    http://www.qos.ch/shop/products/professionalSupport         -->
 <!--                                                                -->
 <configuration scan="true">
-    <property name="APP" value="feimaotui"/>
+    <property name="APP" value="prize"/>
     <!--<property name="LOG_HOME" value="/export/log/${APP}"/>-->
     <property name="LOG_HOME" value="/Users/jing/log/${APP}"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
