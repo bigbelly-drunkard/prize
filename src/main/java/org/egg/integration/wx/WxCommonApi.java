@@ -39,6 +39,8 @@ public class WxCommonApi {
 
     @Value("${wx.sandbox.flag}")
     private String SANDBOX_FLAG;
+    @Value("${host}")
+    private String HOST;
     @Value("${wx.mock.flag}")
     private String MOCK_FLAG;
     @Value("${company.pay.url}")
@@ -99,7 +101,7 @@ public class WxCommonApi {
 
         }
 //        商品描述 商品简单描述，该字段请按照规范传递，具体请见参数规定 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_2
-        data.put("body", "积分礼包");
+        data.put("body", wxPrePayRequestDto.getOrderMsg());
 //        商户订单号 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*@ ，且在同一个商户号下唯一。详见商户订单号 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_2
         data.put("out_trade_no", wxPrePayRequestDto.getOutTradeNo());
 //        标价币种 符合ISO 4217标准的三位字母代码，默认人民币：CNY，详细列表请参见货币类型 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_2
@@ -110,9 +112,10 @@ public class WxCommonApi {
         data.put("spbill_create_ip", wxPrePayRequestDto.getClientInfo().getIp());
 //        data.put("spbill_create_ip", "121.69.11.141");
 //        通知地址 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
-        data.put("notify_url", new StringBuilder(wxPrePayRequestDto.getClientInfo().getHost()).append("wx/wxNotify").toString());
+        data.put("notify_url", new StringBuilder(HOST).append("wx/wxNotify").toString());
 //        交易类型 JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里 MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口
         boolean miniProgramFlag = wxPrePayRequestDto.getClientInfo().getMiniProgramFlag();
+        LOGGER.debug("miniProgramFlag={}", miniProgramFlag);
         if (miniProgramFlag) {
             data.put("openid", wxPrePayRequestDto.getMiniOpenId());  // 此处指定为扫码支付
         } else {

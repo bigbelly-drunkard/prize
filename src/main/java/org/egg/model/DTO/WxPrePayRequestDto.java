@@ -44,4 +44,6 @@ public class WxPrePayRequestDto implements Serializable {
      */
     private String miniOpenId;
 
+    private String orderMsg;
+
 }

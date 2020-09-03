@@ -92,6 +92,7 @@ public class PayBiz {
                 wxPrePayRequestDto.setUserNo(customerId);
                 wxPrePayRequestDto.setTotalAmount(payReq.getAmount());
                 wxPrePayRequestDto.setMiniOpenId(customer.getWxMiniOpenId());
+                wxPrePayRequestDto.setOrderMsg(payReq.getOrderMsg());
                 WxPrePayResultDto pay = wxCommonApi.pay(wxPrePayRequestDto);
                 if (null == pay || StringUtils.isEmpty(pay.getPrepay_id())) {
                     log.error("微信小程序支付下单失败");
