@@ -30,4 +30,5 @@ public class PrizeBean {
     private BigDecimal prizeNum;
     private String cid;
     private String activeName;
+    private String nickName;
 }

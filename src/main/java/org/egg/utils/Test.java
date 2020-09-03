@@ -1,14 +1,14 @@
 package org.egg.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayUtil;
 import org.egg.integration.wx.WxConfig;
-import org.egg.model.DTO.PrizeBean;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,11 +20,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException, IOException {
-        PrizeBean prizeBean = new PrizeBean();
-        prizeBean.setId(1L);
-        PrizeBean prizeBean1 = new PrizeBean();
-        BeanUtil.copyProperties(prizeBean1, prizeBean);
-        System.out.println(JSONObject.toJSONString(prizeBean));
+        Calendar calendar = Calendar.getInstance();
+        Date time = calendar.getTime();
+        System.out.println(time);
+        int i = calendar.get(Calendar.DAY_OF_WEEK);
+        System.out.println(i);
     }
 
     private static void testa(String notifyData) throws Exception {

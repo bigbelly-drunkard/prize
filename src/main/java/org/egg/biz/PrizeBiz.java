@@ -2,10 +2,7 @@ package org.egg.biz;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.egg.enums.CommonErrorEnum;
-import org.egg.enums.PrizeTypeEnum;
-import org.egg.enums.TableTypeEnum;
-import org.egg.enums.UserStatusEnum;
+import org.egg.enums.*;
 import org.egg.exception.CommonException;
 import org.egg.handler.Observer.PrizeSendObserver;
 import org.egg.model.DO.Customer;
@@ -16,6 +13,7 @@ import org.egg.observer.subjects.CommonObserver;
 import org.egg.response.BaseResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.service.impl.CustomerServiceImpl;
+import org.egg.service.impl.FlowRecordServiceImpl;
 import org.egg.service.impl.RedisServiceImpl;
 import org.egg.template.BizTemplate;
 import org.egg.template.TemplateCallBack;
@@ -50,7 +48,8 @@ public class PrizeBiz {
     private RedisServiceImpl redisService;
     @Autowired
     private PrizeSendObserver prizeSendObserver;
-
+    @Autowired
+    private FlowRecordServiceImpl flowRecordService;
     private static final String PRIZE_PATH = "/file/prize.properties";
     private Map<String, PrizeBean> gameTenCache = new HashMap<>(8);
 
@@ -121,11 +120,11 @@ public class PrizeBiz {
     public CommonSingleResult<PrizeVo> p(String activeNo, String customerId) {
         log.info("抽奖start,{},{}", activeNo, customerId);
         CommonSingleResult<PrizeVo> result = new CommonSingleResult<>();
+        Customer customer = customerService.queryCustomerByCustomerId(customerId);
         bizTemplate.process(result, new TemplateCallBack() {
             @Override
             public void doCheck() {
                 //         check 积分够不够
-                Customer customer = customerService.queryCustomerByCustomerId(customerId);
                 if (!UserStatusEnum.EFFECT.getCode().equals(customer.getCustomerStatus())) {
                     log.warn("用户状态不合法 customerId={}", customerId);
                     throw new CommonException(CommonErrorEnum.PARAM_ERROR);
@@ -193,6 +192,7 @@ public class PrizeBiz {
 //         通知者  1.扣积分 2.发奖品 反参id如果为null 降级为未中奖
                 res.setActiveName(activeName);
                 res.setCid(customerId);
+                res.setNickName(customer.getNickName());
                 getPrizeSuccObserver.notifyObserver(res);
                 if (res == null || res.getId() == null) {
                     log.info("发奖失败 降级默认为未中奖");
@@ -221,7 +221,7 @@ public class PrizeBiz {
 
     /**
      * 是否可以命中
-     * 一次10积分
+     * 一次1积分
      *
      * @param customerId
      * @return
@@ -242,15 +242,21 @@ public class PrizeBiz {
                     log.error(" 用户积分不够");
                     throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
                 }
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, new BigDecimal("1"), "挑战10秒消耗1积分");
             }
 
             @Override
             public void doAction() {
                 GameTenRes gameTenRes = new GameTenRes();
                 Calendar calendar = Calendar.getInstance();
-                //firstDayOfWeek 0-6
-                int firstDayOfWeek = calendar.getFirstDayOfWeek();
-                PrizeBean prizeBean = gameTenCache.get(firstDayOfWeek + 1 + "");
+                //i 1-7 sunday-SATURDAY
+                int i = calendar.get(Calendar.DAY_OF_WEEK);
+                if (i == 1) {
+                    i = 7;
+                } else {
+                    i = i - 1;
+                }
+                PrizeBean prizeBean = gameTenCache.get(i + "");
                 PrizeTypeEnum enumByCode = PrizeTypeEnum.getEnumByCode(prizeBean.getTypeCode());
                 BigDecimal factor = prizeBean.getFactor();
                 BigDecimal bigDecimal = new BigDecimal(Math.random() + "").multiply(prizeBean.getFactor()).setScale(2, BigDecimal.ROUND_HALF_UP);
