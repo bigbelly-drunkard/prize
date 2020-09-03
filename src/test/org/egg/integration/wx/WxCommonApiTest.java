@@ -1,7 +1,9 @@
 package org.egg.integration.wx;
 
 import org.egg.BaseTest;
+import org.egg.model.DTO.ClientInfo;
 import org.egg.model.DTO.WxCompanyPayRequestDto;
+import org.egg.model.DTO.WxPrePayRequestDto;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,6 +28,19 @@ public class WxCommonApiTest extends BaseTest {
         wxCommonApi.companyPay(wxCompanyPayRequestDto);
     }
 
+    @Test
+    public void pay() {
+        WxPrePayRequestDto wxPrePayRequestDto = new WxPrePayRequestDto();
+        wxPrePayRequestDto.setMiniOpenId("ouNFZ5EVm9XccgfFgeQNZZzbLS14");
+        wxPrePayRequestDto.setTotalAmount(new BigDecimal("1"));
+        wxPrePayRequestDto.setOutTradeNo("test001");
+        ClientInfo clientInfo = new ClientInfo();
+        clientInfo.setMiniProgramFlag(true);
+        clientInfo.setIp("127.0.0.1");
+        wxPrePayRequestDto.setClientInfo(clientInfo);
+//        wxPrePayRequestDto.setOpenId();
+        wxCommonApi.pay(wxPrePayRequestDto);
+    }
     @Test
     public void refund() {
         String outTradeNo = "366313837158207488";

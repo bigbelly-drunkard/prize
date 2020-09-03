@@ -101,7 +101,7 @@ public class WxCommonApi {
 
         }
 //        商品描述 商品简单描述，该字段请按照规范传递，具体请见参数规定 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_2
-        data.put("body", wxPrePayRequestDto.getOrderMsg());
+        data.put("body", StringUtils.isBlank(wxPrePayRequestDto.getOrderMsg())?"商品":wxPrePayRequestDto.getOrderMsg());
 //        商户订单号 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*@ ，且在同一个商户号下唯一。详见商户订单号 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_2
         data.put("out_trade_no", wxPrePayRequestDto.getOutTradeNo());
 //        标价币种 符合ISO 4217标准的三位字母代码，默认人民币：CNY，详细列表请参见货币类型 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_2
