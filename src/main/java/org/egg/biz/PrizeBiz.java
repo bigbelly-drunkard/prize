@@ -242,7 +242,7 @@ public class PrizeBiz {
                     log.error(" 用户积分不够");
                     throw new CommonException(CommonErrorEnum.SCORE_NOT_ENOUGH);
                 }
-                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, new BigDecimal("1"), "挑战10秒消耗1积分");
+                flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, new BigDecimal("-1"), "挑战10秒消耗1积分");
             }
 
             @Override

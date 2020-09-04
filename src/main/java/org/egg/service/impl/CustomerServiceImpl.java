@@ -174,11 +174,11 @@ public class CustomerServiceImpl {
     public void updateMember(String cid, int day) {
         Customer customer = queryCustomerByCustomerId(cid);
         if (CustomerTypeEnum.MEMBER_01.getCode().equals(customer.getCustomerType())) {
-            Date date = DateUtil.addDay(day, customer.getMemberExpire());
+            Date date = DateUtil.addDay2(day, customer.getMemberExpire());
             customer.setMemberExpire(date);
         } else {
             customer.setCustomerType(CustomerTypeEnum.MEMBER_01.getCode());
-            customer.setMemberExpire(DateUtil.addDay(day));
+            customer.setMemberExpire(DateUtil.addDay2(day,new Date()));
         }
         customerMapper.updateByPrimaryKey(customer);
     }
