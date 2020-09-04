@@ -69,13 +69,13 @@ public class CustomerServiceImpl {
         Customer customer = customers.get(0);
         BigDecimal loadFactor = customer.getLoadFactor() == null ? BigDecimal.ZERO : customer.getLoadFactor();
 //        https://zh.numberempire.com/graphingcalculator.php 函数绘图可视化 100*cos(x/1000)
-        double cos = Math.cos((loadFactor.doubleValue()%1000) / 1000);
+        double cos = Math.cos((loadFactor.doubleValue() % 1000) / 1000);
         if (cos < -1) {
             cos = -cos;
         }
-        log.debug("cos={}",cos);
+        log.debug("cos={}", cos);
 //        添加奖金池因子 奖金池越大 几率越大 反正越小 [1,0.8]
-        double v = (0.2 * (redisService.getWEEK_LAST_POOL().get()%10000 )/ ( 10000)) + 0.8;
+        double v = (0.2 * (redisService.getWEEK_LAST_POOL().get() % 10000) / (10000)) + 0.8;
         boolean b1 = Math.random() < cos * v;
         return b1;
     }
@@ -103,7 +103,7 @@ public class CustomerServiceImpl {
         if (null == customerId) {
             amount_change_cache.forEach((key, value) -> {
                 BigDecimal reduce = value.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-                if (reduce.compareTo(BigDecimal.ZERO)!=1) {
+                if (reduce.compareTo(BigDecimal.ZERO) != 1) {
                     return;
                 }
                 value.clear();
@@ -174,11 +174,18 @@ public class CustomerServiceImpl {
     public void updateMember(String cid, int day) {
         Customer customer = queryCustomerByCustomerId(cid);
         if (CustomerTypeEnum.MEMBER_01.getCode().equals(customer.getCustomerType())) {
-            Date date = DateUtil.addDay2(day, customer.getMemberExpire());
-            customer.setMemberExpire(date);
+            Date memberExpire = customer.getMemberExpire();
+//            如果过期 已现在为准
+            if (memberExpire.compareTo(new Date()) == -1) {
+                Date date = DateUtil.addDay2(day, new Date());
+                customer.setMemberExpire(date);
+            } else {
+                Date date = DateUtil.addDay2(day, customer.getMemberExpire());
+                customer.setMemberExpire(date);
+            }
         } else {
             customer.setCustomerType(CustomerTypeEnum.MEMBER_01.getCode());
-            customer.setMemberExpire(DateUtil.addDay2(day,new Date()));
+            customer.setMemberExpire(DateUtil.addDay2(day, new Date()));
         }
         customerMapper.updateByPrimaryKey(customer);
     }

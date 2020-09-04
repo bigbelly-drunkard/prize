@@ -3,12 +3,12 @@ package org.egg.utils;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayUtil;
 import org.egg.integration.wx.WxConfig;
+import org.egg.model.DTO.PrizeBean;
+import org.egg.model.VO.PrizeVo;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,11 +20,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Test {
     public static void main(String[] args) throws IllegalAccessException, IntrospectionException, InvocationTargetException, IOException {
-        Calendar calendar = Calendar.getInstance();
-        Date time = calendar.getTime();
-        System.out.println(time);
-        int i = calendar.get(Calendar.DAY_OF_WEEK);
-        System.out.println(i);
+        PrizeBean prizeBean = new PrizeBean();
+        prizeBean.setId(1L);
+        prizeBean.setNickName("Tao");
+        PrizeVo prizeVo = new PrizeVo();
+        BeanUtil.copyProperties(prizeBean, prizeVo);
+        System.out.println(prizeVo);
     }
 
     private static void testa(String notifyData) throws Exception {

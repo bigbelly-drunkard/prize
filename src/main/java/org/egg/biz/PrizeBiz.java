@@ -200,6 +200,7 @@ public class PrizeBiz {
                     BeanUtil.copyProperties(prizeBean, res);
                     res.setActiveName(activeName);
                     res.setCid(customerId);
+                    res.setNickName(customer.getNickName());
                 }
                 PrizeVo prizeVo = new PrizeVo();
                 BeanUtil.copyProperties(res, prizeVo);

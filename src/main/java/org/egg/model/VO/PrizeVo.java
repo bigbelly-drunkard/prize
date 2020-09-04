@@ -16,5 +16,5 @@ public class PrizeVo {
     private BigDecimal needScore;
     private BigDecimal needGold;
     private BigDecimal prizeNum;
-    private BigDecimal nickName;
+    private String nickName;
 }
