@@ -107,6 +107,23 @@ public class RedisServiceImpl {
     }
 
     /**
+     * 后台 奖金池额度
+     * @param change
+     * @return
+     */
+    public BigDecimal bossPool(BigDecimal change) {
+        AtomicDouble week_last_pool = getWEEK_LAST_POOL();
+        double v = week_last_pool.get();
+        BigDecimal bigDecimal = new BigDecimal(v + "");
+        if (null == change) {
+            return bigDecimal;
+        }
+        BigDecimal add = bigDecimal.add(change);
+        WEEK_LAST_POOL.set(add.doubleValue());
+        return add;
+    }
+
+    /**
      * 计算上一周的奖金池 并清空当前天的金额到上一周内
      */
     public void getWeekLast() {
@@ -127,6 +144,7 @@ public class RedisServiceImpl {
         BigDecimal bigDecimal1 = bigDecimal.compareTo(BigDecimal.ZERO) < 1 ? BigDecimal.TEN : bigDecimal;
         WEEK_LAST_POOL.set(bigDecimal1.doubleValue());
     }
+
 
     private int getDay(Date date) {
         String format = DateUtil.format(date, DateUtil.DMY);
@@ -164,6 +182,7 @@ public class RedisServiceImpl {
 
     /**
      * 检查用户是否第一次登陆
+     *
      * @param openId
      * @return
      */
@@ -184,6 +203,7 @@ public class RedisServiceImpl {
     /**
      * 默认关闭
      * 获取开关
+     *
      * @return
      */
     public boolean getSwitch() {

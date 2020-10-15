@@ -126,4 +126,8 @@ public class RedisBiz {
         log.info("getSwitch end result={}", JSONObject.toJSONString(result));
         return result;
     }
+
+    public BigDecimal bossPool(BigDecimal amount) {
+        return redisService.bossPool(amount);
+    }
 }

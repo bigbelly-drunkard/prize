@@ -9,10 +9,9 @@ import org.egg.response.CommonListResult;
 import org.egg.response.CommonSingleResult;
 import org.egg.utils.CustomerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 /**
  * @author dataochen
@@ -73,5 +72,10 @@ public class IndexController {
     public CommonSingleResult<Boolean> querySwitch4Approve(Boolean flag) {
         CommonSingleResult<Boolean> aSwitch = redisBiz.getSwitch(flag);
         return aSwitch;
+    }
+
+    @GetMapping("/bossPool/{amount}")
+    public BigDecimal bossPool(@PathVariable(value = "amount") BigDecimal amount) {
+        return redisBiz.bossPool(amount);
     }
 }
