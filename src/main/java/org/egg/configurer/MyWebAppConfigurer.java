@@ -49,7 +49,7 @@ public class MyWebAppConfigurer
         registry.addInterceptor(new MiniLoginInterceptor(localCache))
                 .addPathPatterns("/customer/**").addPathPatterns("/i/**").addPathPatterns("/p/**")
                 .addPathPatterns("/prize/**")
-                .excludePathPatterns("/swagger-ui.html").excludePathPatterns("/i/qml/**").excludePathPatterns("/i/qsa/**")
+                .excludePathPatterns("/swagger-ui.html").excludePathPatterns("/i/qml/**").excludePathPatterns("/i/qsa/**").excludePathPatterns("/i/bossPool/**")
         ;
     }
     //定义时间格式转换器
