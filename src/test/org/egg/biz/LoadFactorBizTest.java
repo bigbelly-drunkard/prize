@@ -4,8 +4,6 @@ import org.egg.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
-
 /**
  * @author dataochen
  * @Description
@@ -16,7 +14,7 @@ public class LoadFactorBizTest extends BaseTest {
     private LoadFactorBiz loadFactorBiz;
     @Test
     public void buyGood() throws Exception {
-        loadFactorBiz.buyGood(new BigDecimal("90"), "160963614995124224");
+//        loadFactorBiz.buyGood(new BigDecimal("90"), "160963614995124224");
     }
 
     @Test

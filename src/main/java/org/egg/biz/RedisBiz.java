@@ -47,7 +47,7 @@ public class RedisBiz {
                     log.info("用户今天已经签到过");
                     throw new CommonException(CommonErrorEnum.ALREADY_DO_QD);
                 }
-                BigDecimal value = new BigDecimal("10");
+                BigDecimal value = new BigDecimal("1");
                 flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value, "每日签到奖励");
             }
         });
@@ -71,7 +71,7 @@ public class RedisBiz {
                     log.info("用户今天已经分享过");
                     throw new CommonException(CommonErrorEnum.ALREADY_DO_SHARE);
                 }
-                BigDecimal value = new BigDecimal("15");
+                BigDecimal value = new BigDecimal("2");
                 flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, value, "每日分享奖励");
             }
         });

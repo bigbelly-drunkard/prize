@@ -42,7 +42,7 @@ public class RpSendPrizeHandler extends AbstractSendPrize {
             throw new CommonException(result);
         }
         log.info("发送定额红包成功");
-        loadFactorBiz.redPackage(getPrice(prizeBean), CustomerUtil.getCustomer().getCustomerNo());
+//        loadFactorBiz.redPackage(getPrice(prizeBean), CustomerUtil.getCustomer().getCustomerNo());
         log.info("扣除红包因子");
     }
 

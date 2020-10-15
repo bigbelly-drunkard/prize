@@ -80,6 +80,13 @@ public class CustomerServiceImpl {
         return b1;
     }
 
+    /**
+     * 是否小于或等于个人收益（负载）
+     * @param customerId
+     * @param value
+     * @param sync
+     * @return
+     */
     public boolean checkLoadFactor4Cid(String customerId, BigDecimal value, boolean sync) {
         if (sync) {
 //             同步累计缓存中的因子值

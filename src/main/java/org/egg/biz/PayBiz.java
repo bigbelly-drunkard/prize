@@ -49,6 +49,8 @@ public class PayBiz {
     private BizTemplate bizTemplate;
     @Autowired
     private FlowRecordServiceImpl flowRecordService;
+    @Autowired
+    private LoadFactorBiz loadFactorBiz;
     private List<String> FAIL_CODES = Arrays.asList("CLOSED", "REVOKED", "PAYERROR");
 
     public CommonSingleResult<WxPrePayResultDto> wxMiniPay(String customerId, PayReq payReq) {
@@ -307,6 +309,8 @@ public class PayBiz {
                     log.error("提现失败，result1={}", JSONObject.toJSONString(result1));
                     throw new CommonException(result1);
                 }
+//                3.提现手续费记录收益
+                loadFactorBiz.cash4Fee(fee,customerId);
             }
         });
         log.info("提现结果 result={}", JSONObject.toJSONString(result));
@@ -339,6 +343,7 @@ public class PayBiz {
             public void doAction() {
                 flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.SCORE, amount.negate(), "金豆兑换");
                 flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, amount, "金豆兑换");
+//                todo 修改用户负载
             }
         });
         log.info("exchange result={}", JSONObject.toJSONString(result));

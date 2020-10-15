@@ -30,6 +30,7 @@
             <list>
                 <ref bean="prizeDbObserver"/>
                 <ref bean="prizeSendObserver"/>
+                <ref bean="loadFactorObserver"/>
                 <ref bean="prizeMsgObserver"/>
             </list>
         </constructor-arg>
@@ -38,7 +39,7 @@
     <bean id="payRecordStatusUpdateObserver" class="org.egg.observer.subjects.CommonObserver">
         <constructor-arg>
             <list>
-                <ref bean="paySuccLoadFactorObserver"/>
+                <!--<ref bean="paySuccLoadFactorObserver"/>-->
                 <ref bean="paySuccScoreObserver"/>
                 <ref bean="paySuccMemberObserver"/>
             </list>

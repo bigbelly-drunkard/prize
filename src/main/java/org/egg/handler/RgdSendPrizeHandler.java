@@ -35,7 +35,7 @@ public class RgdSendPrizeHandler extends AbstractSendPrize {
                 JSONObject.toJSONString(prizeBean));
         BigDecimal price = getPrice(prizeBean);
         flowRecordService.changeScoreOrGold(customerId, FlowRecordTypeEnum.GOLD, price,"随机金豆奖品"+prizeBean.getName());
-        loadFactorBiz.goldSend(price,customerId);
+//        loadFactorBiz.goldSend(price,customerId);
         log.info("发送随机金豆成功");
     }
 
